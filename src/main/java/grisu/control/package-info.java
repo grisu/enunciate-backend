@@ -21,4 +21,4 @@
  * interfaces as well as download links for minimal client implementations in Java, C# and Ruby.
  * </p>
  */
-package org.vpac.grisu.control;
+package grisu.control;

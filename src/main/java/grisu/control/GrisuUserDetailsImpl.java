@@ -1,4 +1,4 @@
-package org.vpac.grisu.control;
+package grisu.control;
 
 import org.globus.common.CoGProperties;
 import org.springframework.dao.DataAccessException;

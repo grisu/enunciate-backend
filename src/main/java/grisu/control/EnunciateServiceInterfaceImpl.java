@@ -1,4 +1,13 @@
-package org.vpac.grisu.control;
+package grisu.control;
+
+import grisu.backend.model.ProxyCredential;
+import grisu.backend.model.User;
+import grisu.control.ServiceInterface;
+import grisu.control.exceptions.NoSuchTemplateException;
+import grisu.control.serviceInterfaces.AbstractServiceInterface;
+import grisu.control.serviceInterfaces.LocalServiceInterface;
+import grisu.settings.Environment;
+import grisu.settings.ServiceTemplateManagement;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +23,6 @@ import org.apache.log4j.Logger;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
-import org.vpac.grisu.backend.model.ProxyCredential;
-import org.vpac.grisu.backend.model.User;
-import org.vpac.grisu.control.exceptions.NoSuchTemplateException;
-import org.vpac.grisu.control.serviceInterfaces.AbstractServiceInterface;
-import org.vpac.grisu.control.serviceInterfaces.LocalServiceInterface;
-import org.vpac.grisu.settings.Environment;
-import org.vpac.grisu.settings.ServiceTemplateManagement;
 
 /**
  * This abstract class implements most of the methods of the
@@ -43,7 +45,7 @@ import org.vpac.grisu.settings.ServiceTemplateManagement;
  */
 
 @Path("/grisu")
-@WebService(endpointInterface = "org.vpac.grisu.control.ServiceInterface")
+@WebService(endpointInterface = "grisu.control.ServiceInterface")
 @MTOM(enabled = true)
 // @StreamingAttachment(parseEagerly = true, memoryThreshold = 40000L)
 public class EnunciateServiceInterfaceImpl extends AbstractServiceInterface

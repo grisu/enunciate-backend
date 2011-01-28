@@ -2,7 +2,7 @@
 <project>
 	<parent>
 		<artifactId>backend-modules</artifactId>
-		<groupId>org.vpac.grisu</groupId>
+		<groupId>grisu</groupId>
 		<version>0.3-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -140,13 +140,13 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
 			<version>0.3-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
 			<version>0.3-SNAPSHOT</version>
 			<classifier>sources</classifier>
@@ -154,20 +154,20 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-core</artifactId>
 			<version>0.3-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-client</artifactId>
 			<version>0.3-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-client</artifactId>
 			<version>0.3-SNAPSHOT</version>
 			<classifier>sources</classifier>
@@ -230,7 +230,7 @@
 							<repositoryId>${project.distributionManagementArtifactRepository.id}
 							</repositoryId>
 
-							<groupId>org.vpac.grisu</groupId>
+							<groupId>grisu</groupId>
 							<artifactId>grisu-client-jaxws</artifactId>
 							<version>${project.version}</version>
 							<packaging>jar</packaging>
@@ -253,7 +253,7 @@
 							<repositoryId>${project.distributionManagementArtifactRepository.id}
 							</repositoryId>
 
-							<groupId>org.vpac.grisu</groupId>
+							<groupId>grisu</groupId>
 							<artifactId>grisu-client-jaxws</artifactId>
 							use this project's version
 							<version>${project.version}</version>
@@ -278,7 +278,7 @@
 
 						<repositoryId>${project.distributionManagementArtifactRepository.id}
 
-						</repositoryId> <groupId>org.vpac.grisu</groupId>
+						</repositoryId> <groupId>grisu</groupId>
 						<artifactId>grisu-client-xfire</artifactId>
 						<version>${project.version}</version> <packaging>jar</packaging>
 						<uniqueVersion>false</uniqueVersion>
@@ -297,7 +297,7 @@
 
 						<repositoryId>${project.distributionManagementArtifactRepository.id}
 
-						</repositoryId> <groupId>org.vpac.grisu</groupId>
+						</repositoryId> <groupId>grisu</groupId>
 						<artifactId>grisu-client-xfire</artifactId>
 						<version>${project.version}</version> <packaging>jar</packaging>
 
@@ -323,7 +323,7 @@
 							<repositoryId>${project.distributionManagementArtifactRepository.id}
 							</repositoryId>
 
-							<groupId>org.vpac.grisu</groupId>
+							<groupId>grisu</groupId>
 							<artifactId>grisu-client-enunciate-gwt</artifactId>
 
 							<version>${project.version}</version>

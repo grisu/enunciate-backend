@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.vpac.grisu</groupId>
+	<groupId>grisu</groupId>
 	<artifactId>grisu-client-jaxws</artifactId>
 	<version>0.3-SNAPSHOT</version>
 	<description>
@@ -60,7 +60,7 @@
 <!--		</dependency>-->
 
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-client</artifactId>
 			<version>0.3-SNAPSHOT</version>
 		</dependency>

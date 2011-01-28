@@ -1,4 +1,10 @@
-package org.vpac.grisu.control;
+package grisu.control;
+
+import grisu.backend.model.ProxyCredential;
+import grisu.backend.model.User;
+import grisu.control.serviceInterfaces.AbstractServiceInterface;
+import grisu.settings.MyProxyServerParams;
+import grisu.settings.ServerPropertiesManager;
 
 import org.apache.log4j.Logger;
 import org.globus.myproxy.CredentialInfo;
@@ -9,11 +15,6 @@ import org.springframework.security.GrantedAuthority;
 import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
 import org.springframework.security.userdetails.UserDetails;
-import org.vpac.grisu.backend.model.ProxyCredential;
-import org.vpac.grisu.backend.model.User;
-import org.vpac.grisu.control.serviceInterfaces.AbstractServiceInterface;
-import org.vpac.grisu.settings.MyProxyServerParams;
-import org.vpac.grisu.settings.ServerPropertiesManager;
 
 public class GrisuUserDetails implements UserDetails {
 

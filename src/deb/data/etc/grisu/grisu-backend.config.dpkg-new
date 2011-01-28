@@ -25,7 +25,7 @@
 
 
 # The information manager you want to use. If in the package
-# org.vpac.grisu.control.info then the classname is sufficient, otherwise you need to specify
+# grisu.control.info then the classname is sufficient, otherwise you need to specify
 # the whole path
 
 [InformationManager]
@@ -37,7 +37,7 @@
 #password = password
 
 # The information manager you want to use. If in the package
-# org.vpac.grisu.control.info then the classname is sufficient, otherwise you need to specify
+# grisu.control.info then the classname is sufficient, otherwise you need to specify
 # the whole path
 
 [MatchMaker]
