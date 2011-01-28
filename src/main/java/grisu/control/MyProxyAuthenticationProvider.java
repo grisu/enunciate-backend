@@ -1,4 +1,4 @@
-package org.vpac.grisu.control;
+package grisu.control;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.AuthenticationException;

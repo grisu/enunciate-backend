@@ -218,13 +218,13 @@
 		</dependency>
 
 		<!-- <dependency> -->
-		<!-- <groupId>org.vpac.grisu</groupId> -->
+		<!-- <groupId>grisu</groupId> -->
 		<!-- <artifactId>grisu-client</artifactId> -->
 		<!-- <version>0.3-SNAPSHOT</version> -->
 		<!-- <scope>compile</scope> -->
 		<!-- </dependency> -->
 		<!-- <dependency> -->
-		<!-- <groupId>org.vpac.grisu</groupId> -->
+		<!-- <groupId>grisu</groupId> -->
 		<!-- <artifactId>grisu-client</artifactId> -->
 		<!-- <version>0.3-SNAPSHOT</version> -->
 		<!-- <classifier>sources</classifier> -->
@@ -303,7 +303,7 @@
 					<!-- supplied as necessary -->
 					<!-- -->
 					<!-- <enunciateArtifactId>jaxws.client.library</enunciateArtifactId> -->
-					<!-- <groupId>org.vpac.grisu</groupId> -->
+					<!-- <groupId>grisu</groupId> -->
 					<!-- <artifactId>grisu-client-jaxws</artifactId> -->
 					<!-- <version>${project.version}</version> -->
 					<!-- <packaging>jar</packaging> -->
@@ -333,7 +333,7 @@
 							<!-- supplied as necessary -->
 
 							<enunciateArtifactId>gwt.client.jar</enunciateArtifactId>
-							<groupId>org.vpac.grisu</groupId>
+							<groupId>grisu</groupId>
 							<artifactId>grisu-client-enunciate-gwt</artifactId>
 
 							<version>${project.version}</version>
