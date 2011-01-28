@@ -18,13 +18,6 @@ Checking out sourcecode
 
  `git clone git://github.com/grisu/enunciate-backend.git`
 
-Deploying the backend
----------------------------------
-
-Either install the .war file in the container of your choice or run the enunciate backend via maven & jetty:
-
-    mvn clean install jetty:run-war
-
 Building Grisu using Maven
 ------------------------------------------
 
@@ -39,4 +32,11 @@ Configuring the backend
 --------------------------------------
 
 Please refer to the documentation [here](https://github.com/grisu/grisu/wiki/How-to-configure-a-Grisu-backend)
+
+Deploying the backend
+---------------------------------
+
+Either install the .war file in the container of your choice or run the enunciate backend via maven & jetty:
+
+    mvn clean install jetty:run-war
 
