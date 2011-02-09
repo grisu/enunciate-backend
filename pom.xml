@@ -13,13 +13,14 @@
 	<url>http://maven.apache.org</url>
 	<inceptionYear>2009</inceptionYear>
 	<organization>
-		<name>ARCS</name>
-		<url>http://www.arcs.org.au</url>
+		<name>Grisu open source project</name>
+		<url>http://grisu.github.com/grisu</url>
 	</organization>
 
 	<properties>
 		<enunciate.version>1.21.1</enunciate.version>
-		<gwt.version>2.0.4</gwt.version>
+<!--		<gwt.version>2.0.4</gwt.version>-->
+		<gwt.version>2.1.0</gwt.version>
 		<grisu.dependency.version>0.3-beta5-SNAPSHOT</grisu.dependency.version>
 	</properties>
 
@@ -28,48 +29,70 @@
 		<developerConnection>scm:git:git@github.com:grisu/enunciate-backend.git</developerConnection>
 		<url>https://github.com/grisu/enunciate-backend/tree/master</url>
 	</scm>
+	
 	<repositories>
 		<repository>
-			<id>ARCS</id>
-			<url>http://code.arcs.org.au/nexus/content/groups/public</url>
+			<id>bestgrid.public.release</id>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
 		</repository>
 		<repository>
-			<id>ARCS Snapshots</id>
-			<url>http://code.arcs.org.au/nexus/content/groups/public-snapshots</url>
+			<id>bestgrid.public.snapshot</id>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/
+			</url>
+			<releases>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
 		</repository>
 	</repositories>
 	
-	<pluginRepositories>
-		<pluginRepository>
-			<id>ARCS plugin</id>
-			<url>http://code.arcs.org.au/nexus/content/groups/public</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	    <pluginRepository>
-			<id>ARCS plugin Snapshots</id>
-			<url>http://code.arcs.org.au/nexus/content/groups/public-snapshots</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
+<!--	<pluginRepositories>-->
+<!--		<pluginRepository>-->
+<!--			<id>ARCS plugin</id>-->
+<!--			<url>http://code.arcs.org.au/nexus/content/groups/public</url>-->
+<!--			<layout>default</layout>-->
+<!--			<snapshots>-->
+<!--				<enabled>false</enabled>-->
+<!--			</snapshots>-->
+<!--		</pluginRepository>-->
+<!--	    <pluginRepository>-->
+<!--			<id>ARCS plugin Snapshots</id>-->
+<!--			<url>http://code.arcs.org.au/nexus/content/groups/public-snapshots</url>-->
+<!--			<layout>default</layout>-->
+<!--			<snapshots>-->
+<!--				<enabled>true</enabled>-->
+<!--			</snapshots>-->
+<!--		</pluginRepository>-->
+<!--	</pluginRepositories>-->
 
 	<distributionManagement>
 		<repository>
-			<id>arcs.release</id>
-			<name>ARCS Release Repository</name>
-			<url>http://code.arcs.org.au/nexus/content/repositories/releases</url>
-			<uniqueVersion>false</uniqueVersion>
+			<name>BeSTGRID Releases Repository</name>
+			<id>bestgrid.release</id>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/releases
+			</url>
 		</repository>
 		<snapshotRepository>
-			<id>arcs.snapshot</id>
-			<name>ARCS SNAPSHOT Repository</name>
-			<url>http://code.arcs.org.au/nexus/content/repositories/snapshots</url>
-			<uniqueVersion>false</uniqueVersion>
+			<id>bestgrid.snapshot</id>
+			<name>BeSTGRID Snapshots Repository</name>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/snapshots
+			</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -482,11 +505,11 @@
 	<profiles>
 		<profile>
 			<id>sign</id>
-			<activation>
-				<property>
-					<name>BUILD_NUMBER</name>
-				</property>
-			</activation>
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>BUILD_NUMBER</name>-->
+<!--				</property>-->
+<!--			</activation>-->
 
 			<build>
 				<plugins>
