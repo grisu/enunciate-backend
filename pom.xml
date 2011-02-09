@@ -21,7 +21,7 @@
 		<enunciate.version>1.21.1</enunciate.version>
 <!--		<gwt.version>2.0.4</gwt.version>-->
 		<gwt.version>2.1.0</gwt.version>
-		<grisu.dependency.version>0.3-beta5-SNAPSHOT</grisu.dependency.version>
+		<grisu.dependency.version>0.3</grisu.dependency.version>
 	</properties>
 
 	<scm>
@@ -196,13 +196,13 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.3-SNAPSHOT</version>
+			<version>1.2.3</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.3-SNAPSHOT</version>
+			<version>1.2.3</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
