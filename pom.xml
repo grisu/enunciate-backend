@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
@@ -18,7 +19,7 @@
 
 	<properties>
 		<enunciate.version>1.21.1</enunciate.version>
-<!--		<gwt.version>2.0.4</gwt.version>-->
+		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
 		<grisu.dependency.version>0.3.1</grisu.dependency.version>
 	</properties>
@@ -28,7 +29,7 @@
 		<developerConnection>scm:git:git@github.com:grisu/enunciate-backend.git</developerConnection>
 		<url>https://github.com/grisu/enunciate-backend/tree/master</url>
 	</scm>
-	
+
 	<repositories>
 		<repository>
 			<id>bestgrid.public.release</id>
@@ -60,25 +61,25 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
-<!--	<pluginRepositories>-->
-<!--		<pluginRepository>-->
-<!--			<id>ARCS plugin</id>-->
-<!--			<url>http://code.arcs.org.au/nexus/content/groups/public</url>-->
-<!--			<layout>default</layout>-->
-<!--			<snapshots>-->
-<!--				<enabled>false</enabled>-->
-<!--			</snapshots>-->
-<!--		</pluginRepository>-->
-<!--	    <pluginRepository>-->
-<!--			<id>ARCS plugin Snapshots</id>-->
-<!--			<url>http://code.arcs.org.au/nexus/content/groups/public-snapshots</url>-->
-<!--			<layout>default</layout>-->
-<!--			<snapshots>-->
-<!--				<enabled>true</enabled>-->
-<!--			</snapshots>-->
-<!--		</pluginRepository>-->
-<!--	</pluginRepositories>-->
+
+	<!-- <pluginRepositories> -->
+	<!-- <pluginRepository> -->
+	<!-- <id>ARCS plugin</id> -->
+	<!-- <url>http://code.arcs.org.au/nexus/content/groups/public</url> -->
+	<!-- <layout>default</layout> -->
+	<!-- <snapshots> -->
+	<!-- <enabled>false</enabled> -->
+	<!-- </snapshots> -->
+	<!-- </pluginRepository> -->
+	<!-- <pluginRepository> -->
+	<!-- <id>ARCS plugin Snapshots</id> -->
+	<!-- <url>http://code.arcs.org.au/nexus/content/groups/public-snapshots</url> -->
+	<!-- <layout>default</layout> -->
+	<!-- <snapshots> -->
+	<!-- <enabled>true</enabled> -->
+	<!-- </snapshots> -->
+	<!-- </pluginRepository> -->
+	<!-- </pluginRepositories> -->
 
 	<distributionManagement>
 		<repository>
@@ -498,17 +499,28 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<pushChanges>false</pushChanges>
+					<localCheckout>true</localCheckout>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<id>sign</id>
-<!--			<activation>-->
-<!--				<property>-->
-<!--					<name>BUILD_NUMBER</name>-->
-<!--				</property>-->
-<!--			</activation>-->
+			<!-- <activation> -->
+			<!-- <property> -->
+			<!-- <name>BUILD_NUMBER</name> -->
+			<!-- </property> -->
+			<!-- </activation> -->
 
 			<build>
 				<plugins>
@@ -534,7 +546,7 @@
 			</build>
 
 		</profile>
-	</profiles>	
-	
+	</profiles>
+
 
 </project>
