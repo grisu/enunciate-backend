@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>${grisu.dependency.version}</version>
+	<version>0.4.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
@@ -21,7 +20,7 @@
 		<enunciate.version>1.21.1</enunciate.version>
 <!--		<gwt.version>2.0.4</gwt.version>-->
 		<gwt.version>2.1.0</gwt.version>
-		<grisu.dependency.version>0.3-beta5-SNAPSHOT</grisu.dependency.version>
+		<grisu.dependency.version>0.3</grisu.dependency.version>
 	</properties>
 
 	<scm>
@@ -196,13 +195,13 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.3-SNAPSHOT</version>
+			<version>1.2.3</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.3-SNAPSHOT</version>
+			<version>1.2.3</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
