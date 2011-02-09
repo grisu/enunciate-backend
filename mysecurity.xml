@@ -6,12 +6,12 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
                            http://www.springframework.org/schema/security 
                          http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
-	<bean id="daoAuthenticationProvider" class="org.vpac.grisu.control.MyProxyAuthenticationProvider">
+	<bean id="daoAuthenticationProvider" class="grisu.control.MyProxyAuthenticationProvider">
 		<security:custom-authentication-provider />
 		<property name="userDetailsService" ref="grisuUserDetailsService" />
 		<property name="userCache" ref="userCache" />
 	</bean>
-	<bean id="grisuUserDetailsService" class="org.vpac.grisu.control.GrisuUserDetailsImpl" />
+	<bean id="grisuUserDetailsService" class="grisu.control.GrisuUserDetailsImpl" />
 
 	<bean id="cacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">

@@ -36,8 +36,12 @@
 
 	<!-- Uncomment to enable debug on calpoly code only -->
 	
-	<logger name="org.vpac.grisu">
+	<logger name="grisu">
 		<level value="debug"/>
+		<appender-ref ref="ROLL" />
+	</logger>
+	<logger name="org.apache.commons.vfs.provider">
+		<level value="error"/>
 		<appender-ref ref="ROLL" />
 	</logger>
 	

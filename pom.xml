@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<artifactId>backend-modules</artifactId>
-		<groupId>org.vpac.grisu</groupId>
-		<version>0.3-beta4-SNAPSHOT</version>
-	</parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
+	<version>0.4.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
@@ -16,14 +12,88 @@
 	<url>http://maven.apache.org</url>
 	<inceptionYear>2009</inceptionYear>
 	<organization>
-		<name>ARCS</name>
-		<url>http://www.arcs.org.au</url>
+		<name>Grisu open source project</name>
+		<url>http://grisu.github.com/grisu</url>
 	</organization>
 
 	<properties>
-		<enunciate.version>1.20</enunciate.version>
-		<gwt.version>2.0.4</gwt.version>
+		<enunciate.version>1.21.1</enunciate.version>
+<!--		<gwt.version>2.0.4</gwt.version>-->
+		<gwt.version>2.1.0</gwt.version>
+		<grisu.dependency.version>0.3</grisu.dependency.version>
 	</properties>
+
+	<scm>
+		<connection>scm:git:git://github.com/grisu/enunciate-backend.git</connection>
+		<developerConnection>scm:git:git@github.com:grisu/enunciate-backend.git</developerConnection>
+		<url>https://github.com/grisu/enunciate-backend/tree/master</url>
+	</scm>
+	
+	<repositories>
+		<repository>
+			<id>bestgrid.public.release</id>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>bestgrid.public.snapshot</id>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/
+			</url>
+			<releases>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+<!--	<pluginRepositories>-->
+<!--		<pluginRepository>-->
+<!--			<id>ARCS plugin</id>-->
+<!--			<url>http://code.arcs.org.au/nexus/content/groups/public</url>-->
+<!--			<layout>default</layout>-->
+<!--			<snapshots>-->
+<!--				<enabled>false</enabled>-->
+<!--			</snapshots>-->
+<!--		</pluginRepository>-->
+<!--	    <pluginRepository>-->
+<!--			<id>ARCS plugin Snapshots</id>-->
+<!--			<url>http://code.arcs.org.au/nexus/content/groups/public-snapshots</url>-->
+<!--			<layout>default</layout>-->
+<!--			<snapshots>-->
+<!--				<enabled>true</enabled>-->
+<!--			</snapshots>-->
+<!--		</pluginRepository>-->
+<!--	</pluginRepositories>-->
+
+	<distributionManagement>
+		<repository>
+			<name>BeSTGRID Releases Repository</name>
+			<id>bestgrid.release</id>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/releases
+			</url>
+		</repository>
+		<snapshotRepository>
+			<id>bestgrid.snapshot</id>
+			<name>BeSTGRID Snapshots Repository</name>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/snapshots
+			</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 
 	<dependencies>
@@ -123,26 +193,26 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.bestgrid</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.2</version>
+			<version>1.2.3</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.bestgrid</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.2</version>
+			<version>1.2.3</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
 			<version>${grisu.dependency.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
 			<version>${grisu.dependency.version}</version>
 			<classifier>sources</classifier>
@@ -150,7 +220,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.vpac.grisu</groupId>
+			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
 			<version>${grisu.dependency.version}</version>
 			<scope>compile</scope>
@@ -170,13 +240,13 @@
 		</dependency>
 
 		<!-- <dependency> -->
-		<!-- <groupId>org.vpac.grisu</groupId> -->
+		<!-- <groupId>grisu</groupId> -->
 		<!-- <artifactId>grisu-client</artifactId> -->
 		<!-- <version>0.3-SNAPSHOT</version> -->
 		<!-- <scope>compile</scope> -->
 		<!-- </dependency> -->
 		<!-- <dependency> -->
-		<!-- <groupId>org.vpac.grisu</groupId> -->
+		<!-- <groupId>grisu</groupId> -->
 		<!-- <artifactId>grisu-client</artifactId> -->
 		<!-- <version>0.3-SNAPSHOT</version> -->
 		<!-- <classifier>sources</classifier> -->
@@ -255,7 +325,7 @@
 					<!-- supplied as necessary -->
 					<!-- -->
 					<!-- <enunciateArtifactId>jaxws.client.library</enunciateArtifactId> -->
-					<!-- <groupId>org.vpac.grisu</groupId> -->
+					<!-- <groupId>grisu</groupId> -->
 					<!-- <artifactId>grisu-client-jaxws</artifactId> -->
 					<!-- <version>${project.version}</version> -->
 					<!-- <packaging>jar</packaging> -->
@@ -285,7 +355,7 @@
 							<!-- supplied as necessary -->
 
 							<enunciateArtifactId>gwt.client.jar</enunciateArtifactId>
-							<groupId>org.vpac.grisu</groupId>
+							<groupId>grisu</groupId>
 							<artifactId>grisu-client-enunciate-gwt</artifactId>
 
 							<version>${project.version}</version>
@@ -296,8 +366,6 @@
 
 						</configuration>
 					</execution>
-
-
 
 				</executions>
 
@@ -430,8 +498,43 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>sign</id>
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>BUILD_NUMBER</name>-->
+<!--				</property>-->
+<!--			</activation>-->
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jarsigner-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<alias>grisu</alias>
+							<storepass>FxAKs3p6</storepass>
+							<keypass>FxAKs3p6</keypass>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+
+		</profile>
+	</profiles>	
+	
 
 </project>

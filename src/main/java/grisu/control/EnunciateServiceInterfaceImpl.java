@@ -1,4 +1,13 @@
-package org.vpac.grisu.control;
+package grisu.control;
+
+import grisu.backend.model.ProxyCredential;
+import grisu.backend.model.User;
+import grisu.control.ServiceInterface;
+import grisu.control.exceptions.NoSuchTemplateException;
+import grisu.control.serviceInterfaces.AbstractServiceInterface;
+import grisu.control.serviceInterfaces.LocalServiceInterface;
+import grisu.settings.Environment;
+import grisu.settings.ServiceTemplateManagement;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +23,6 @@ import org.apache.log4j.Logger;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
-import org.vpac.grisu.backend.model.ProxyCredential;
-import org.vpac.grisu.backend.model.User;
-import org.vpac.grisu.control.exceptions.NoSuchTemplateException;
-import org.vpac.grisu.control.serviceInterfaces.AbstractServiceInterface;
-import org.vpac.grisu.control.serviceInterfaces.LocalServiceInterface;
-import org.vpac.grisu.settings.Environment;
-import org.vpac.grisu.settings.ServiceTemplateManagement;
 
 /**
  * This abstract class implements most of the methods of the
@@ -43,20 +45,20 @@ import org.vpac.grisu.settings.ServiceTemplateManagement;
  */
 
 @Path("/grisu")
-@WebService(endpointInterface = "org.vpac.grisu.control.ServiceInterface")
+@WebService(endpointInterface = "grisu.control.ServiceInterface")
 @MTOM(enabled = true)
 // @StreamingAttachment(parseEagerly = true, memoryThreshold = 40000L)
 public class EnunciateServiceInterfaceImpl extends AbstractServiceInterface
-		implements ServiceInterface {
+implements ServiceInterface {
 
 	static {
-		System.out.println("INHERITABLETHREAD");
+		// System.out.println("INHERITABLETHREAD");
 		SecurityContextHolder
-				.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+		.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 	}
 
 	static final Logger myLogger = Logger
-			.getLogger(EnunciateServiceInterfaceImpl.class.getName());
+	.getLogger(EnunciateServiceInterfaceImpl.class.getName());
 
 	private String username;
 	private char[] password;
@@ -68,7 +70,7 @@ public class EnunciateServiceInterfaceImpl extends AbstractServiceInterface
 
 		final GrisuUserDetails gud = getSpringUserDetails();
 		if (gud != null) {
-			myLogger.debug("Found user: " + gud.getUsername());
+			// myLogger.debug("Found user: " + gud.getUsername());
 			return gud.getProxyCredential();
 		} else {
 			myLogger.error("Couldn't find user...");
@@ -106,9 +108,9 @@ public class EnunciateServiceInterfaceImpl extends AbstractServiceInterface
 	private GrisuUserDetails getSpringUserDetails() {
 
 		final SecurityContext securityContext = SecurityContextHolder
-				.getContext();
+		.getContext();
 		final Authentication authentication = securityContext
-				.getAuthentication();
+		.getAuthentication();
 
 		if (authentication != null) {
 			final Object principal = authentication.getPrincipal();
@@ -126,7 +128,7 @@ public class EnunciateServiceInterfaceImpl extends AbstractServiceInterface
 
 		final File file = new File(
 				Environment.getAvailableTemplatesDirectory(), name
-						+ ".template");
+				+ ".template");
 
 		String temp;
 		try {
@@ -164,18 +166,24 @@ public class EnunciateServiceInterfaceImpl extends AbstractServiceInterface
 
 		getCredential();
 
+		// // load archived jobs in background
+		// new Thread() {
+		// @Override
+		// public void run() {
+		// getArchivedJobs(null);
+		// }
+		// }.start();
+
 	}
 
 	public String logout() {
 
 		myLogger.debug("Logging out user: " + getDN());
 
-		getUser().closeFileSystems();
 		// HttpServletRequest req = HTTPRequestContext.get().getRequest();
 		// req.getSession().setAttribute("credential", null);
 
 		return "Logged out.";
 
 	}
-
 }
