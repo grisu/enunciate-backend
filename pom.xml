@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
@@ -61,24 +62,24 @@
 		</repository>
 	</repositories>
 
-	 <pluginRepositories> 
-	 <pluginRepository> 
-	 <id>bestgrid plugin</id> 
-	 <url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public/</url> 
-	 <layout>default</layout> 
-	 <snapshots> 
-	 <enabled>false</enabled> 
-	 </snapshots> 
-	 </pluginRepository> 
-	 <pluginRepository> 
-	 <id>bestgrid plugin Snapshots</id> 
-	 <url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/</url> 
-	 <layout>default</layout> 
-	 <snapshots> 
-	 <enabled>true</enabled> 
-	 </snapshots> 
-	 </pluginRepository> 
-	 </pluginRepositories> 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>bestgrid plugin</id>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>bestgrid plugin Snapshots</id>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<distributionManagement>
 		<repository>
