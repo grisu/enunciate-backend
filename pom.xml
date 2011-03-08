@@ -60,6 +60,35 @@
 				<checksumPolicy>warn</checksumPolicy>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>bestgrid.public.release2</id>
+			<url>http://er77.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>bestgrid.public.snapshot2</id>
+			<url>http://er77.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/
+			</url>
+			<releases>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+		</repository>		
 	</repositories>
 
 	<pluginRepositories>
@@ -85,13 +114,13 @@
 		<repository>
 			<name>BeSTGRID Releases Repository</name>
 			<id>bestgrid.release</id>
-			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/releases
+			<url>http://er77.ceres.auckland.ac.nz/nexus/content/repositories/releases
 			</url>
 		</repository>
 		<snapshotRepository>
-			<id>bestgrid.snapshot</id>
+			<id>bestgrid.snapshot2</id>
 			<name>BeSTGRID Snapshots Repository</name>
-			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/snapshots
+			<url>http://er77.ceres.auckland.ac.nz/nexus/content/repositories/snapshots
 			</url>
 		</snapshotRepository>
 	</distributionManagement>
