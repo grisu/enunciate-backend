@@ -21,7 +21,7 @@
 		<enunciate.version>1.21.1</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
-		<grisu.dependency.version>0.3.3-SNAPSHOT</grisu.dependency.version>
+		<grisu.dependency.version>0.3.3</grisu.dependency.version>
 	</properties>
 
 	<scm>
@@ -113,7 +113,7 @@
 	<distributionManagement>
 		<repository>
 			<name>BeSTGRID Releases Repository</name>
-			<id>bestgrid.release</id>
+			<id>bestgrid.release2</id>
 			<url>http://er77.ceres.auckland.ac.nz/nexus/content/repositories/releases
 			</url>
 		</repository>
