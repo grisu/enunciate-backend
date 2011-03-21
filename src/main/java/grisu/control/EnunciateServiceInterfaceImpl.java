@@ -2,7 +2,6 @@ package grisu.control;
 
 import grisu.backend.model.ProxyCredential;
 import grisu.backend.model.User;
-import grisu.control.ServiceInterface;
 import grisu.control.exceptions.NoSuchTemplateException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.control.serviceInterfaces.LocalServiceInterface;
@@ -142,7 +141,7 @@ implements ServiceInterface {
 	}
 
 	@Override
-	protected User getUser() {
+	protected synchronized User getUser() {
 
 		final GrisuUserDetails gud = getSpringUserDetails();
 		if (gud != null) {

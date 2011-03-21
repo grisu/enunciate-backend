@@ -9,7 +9,10 @@
 # proxyLifetime = 3600
 # the wait time in seconds before a job status gets checked again on a remote endpoint (before that, the last status is returned). this helps making grisu faster, although you sometimes get out of date job statuses, default: 60
 # statusCheckWaitTime = 60
-
+# the timeout for filesystem connections in milliseconds, default: 4000
+# filesystemTimeout = 4000
+# the timeout for filelistings in seconds, default: 20
+# fileListingTimeOut = 20
 
 # The database configuration.
 
@@ -58,6 +61,8 @@
 # jobStatusThreads = 2
 # when submitting a batchjob, how many jobs should be submitted at the same time, default: 2
 # batchJobSubmitThreads = 2
+# when a user first logs in, a cache of accessable/not-accessible mountpoints is build. this setting determines how many concurrent threads are used for that, default: 10 
+# mountPointLookupThreads = 10
 
 # Since the grid is not always very stable, it turned out that retrying an action that failed
 # straight away often works. Here are some settings for that.
