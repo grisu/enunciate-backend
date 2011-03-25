@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.3.3.1-SNAPSHOT</version>
+	<version>0.3.3.1</version>
 	<packaging>war</packaging>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
