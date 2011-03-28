@@ -52,6 +52,13 @@ case "$1" in
 			mv /etc/grisu/grisu-backend.config.dpkg-new /etc/grisu/grisu-backend.config
 		fi		
 		
+		# copy default log4j file
+		if [ -f /etc/grisu/grisu-log4j.xml ]; then
+			rm /etc/grisu/grisu-log4j.xml.dpkg-new
+		else
+			mv /etc/grisu/grisu-log4j.xml.dpkg-new /etc/grisu/grisu-log4j.xml
+		fi		
+		
 		# create log dir
 		if [ ! -d /var/log/grisu ]; then
 			mkdir /var/log/grisu
