@@ -32,8 +32,8 @@
 
 	<repositories>
 		<repository>
-			<id>bestgrid.public.release</id>
-			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
+			<id>releases</id>
+			<url>http://code.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
 			<releases>
 				<enabled>true</enabled>
 				<updatePolicy>daily</updatePolicy>
@@ -46,37 +46,8 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>bestgrid.public.snapshot</id>
-			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/
-			</url>
-			<releases>
-				<enabled>false</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>bestgrid.public.release2</id>
-			<url>http://er77.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>fail</checksumPolicy>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>bestgrid.public.snapshot2</id>
-			<url>http://er77.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/
+			<id>snapshots</id>
+			<url>http://code.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/
 			</url>
 			<releases>
 				<enabled>false</enabled>
@@ -94,7 +65,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>bestgrid plugin</id>
-			<url>http://er77.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
+			<url>http://code.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
 			<layout>default</layout>
 			<snapshots>
 				<enabled>false</enabled>
@@ -102,7 +73,7 @@
 		</pluginRepository>
 		<pluginRepository>
 			<id>bestgrid plugin Snapshots</id>
-			<url>http://er77.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/</url>
+			<url>http://code.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/</url>
 			<layout>default</layout>
 			<snapshots>
 				<enabled>true</enabled>
@@ -113,14 +84,14 @@
 	<distributionManagement>
 		<repository>
 			<name>BeSTGRID Releases Repository</name>
-			<id>bestgrid.release2</id>
-			<url>http://er77.ceres.auckland.ac.nz/nexus/content/repositories/releases
+			<id>bestgrid.release</id>
+			<url>http://code.ceres.auckland.ac.nz/nexus/content/repositories/releases
 			</url>
 		</repository>
 		<snapshotRepository>
-			<id>bestgrid.snapshot2</id>
+			<id>bestgrid.snapshot</id>
 			<name>BeSTGRID Snapshots Repository</name>
-			<url>http://er77.ceres.auckland.ac.nz/nexus/content/repositories/snapshots
+			<url>http://code.ceres.auckland.ac.nz/nexus/content/repositories/snapshots
 			</url>
 		</snapshotRepository>
 	</distributionManagement>
@@ -225,13 +196,13 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.5-SNAPSHOT</version>
+			<version>1.2.6-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.5-SNAPSHOT</version>
+			<version>1.2.6-SNAPSHOT</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
@@ -357,30 +328,30 @@
 					<!-- </configuration> -->
 					<!-- </execution> -->
 
-<!--					<execution>-->
-<!--						<id>install-and-deploy-gwt</id>-->
-<!--						<goals>-->
+					<!-- <execution> -->
+					<!-- <id>install-and-deploy-gwt</id> -->
+					<!-- <goals> -->
 <!---->
 <!---->
-<!--							<goal>install-artifact</goal>-->
-<!--							<goal>deploy-artifact</goal>-->
-<!--						</goals>-->
-<!--						<phase>install</phase>-->
+					<!-- <goal>install-artifact</goal> -->
+					<!-- <goal>deploy-artifact</goal> -->
+					<!-- </goals> -->
+					<!-- <phase>install</phase> -->
 <!---->
-<!--						<configuration>-->
+					<!-- <configuration> -->
 <!---->
-<!--							<enunciateArtifactId>gwt.client.jar</enunciateArtifactId>-->
-<!--							<groupId>grisu</groupId>-->
-<!--							<artifactId>grisu-client-enunciate-gwt</artifactId>-->
+					<!-- <enunciateArtifactId>gwt.client.jar</enunciateArtifactId> -->
+					<!-- <groupId>grisu</groupId> -->
+					<!-- <artifactId>grisu-client-enunciate-gwt</artifactId> -->
 <!---->
-<!--							<version>${project.version}</version>-->
-<!--							<packaging>jar</packaging>-->
+					<!-- <version>${project.version}</version> -->
+					<!-- <packaging>jar</packaging> -->
 <!---->
-<!--							<uniqueVersion>false</uniqueVersion>-->
-<!--							<pomFile>client-gwt.pom</pomFile>-->
+					<!-- <uniqueVersion>false</uniqueVersion> -->
+					<!-- <pomFile>client-gwt.pom</pomFile> -->
 <!---->
-<!--						</configuration>-->
-<!--					</execution>-->
+					<!-- </configuration> -->
+					<!-- </execution> -->
 
 				</executions>
 
@@ -421,6 +392,8 @@
 					<localCheckout>true</localCheckout>
 				</configuration>
 			</plugin>
+
+
 		</plugins>
 	</build>
 
@@ -472,7 +445,7 @@
 					<plugin>
 						<artifactId>jdeb</artifactId>
 						<groupId>org.vafer</groupId>
-						<version>0.9-beta2</version>
+						<version>0.9-beta4-SNAPSHOT</version>
 						<executions>
 							<execution>
 								<phase>package</phase>
