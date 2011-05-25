@@ -31,7 +31,7 @@ case "$1" in
 			rm /etc/grisu/templates_available.tar.bz2
 		fi
 		
-		if [ -d /etc/vomses ]; then
+		if [ -f /etc/vomses/nz ]; then
 			rm /etc/vomses/nz.dpkg-new
 		else
 			mv /etc/vomses/nz.dpkg-new /etc/vomses/nz
