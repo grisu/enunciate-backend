@@ -30,6 +30,12 @@ case "$1" in
 			tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ >> /dev/null
 			rm /etc/grisu/templates_available.tar.bz2
 		fi
+		
+		if [ -d /etc/vomses ]; then
+			rm /etc/vomses/nz.dpkg-new
+		else
+			mv /etc/vomses/nz.dpkg-new /etc/vomses/nz
+		fi
 
 		# remove deployed webapp from tomcat, just to be sure
 		if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then

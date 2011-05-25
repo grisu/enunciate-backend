@@ -500,8 +500,8 @@
 											</mapper>
 										</data>
 										<data>
-											<src>${project.basedir}/src/deb/data/etc/vomses</src>
-											<type>directory</type>
+											<src>${project.basedir}/src/deb/data/etc/vomses/nz.dpkg-new</src>
+											<type>file</type>
 											<mapper>
 												<type>perm</type>
 												<prefix>/etc/vomses</prefix>
