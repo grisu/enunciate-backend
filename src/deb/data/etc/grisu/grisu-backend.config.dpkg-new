@@ -17,6 +17,8 @@
 # filesystemTimeout = 4000
 # the timeout for filelistings in seconds, default: 20
 # fileListingTimeOut = 20
+# whether to cache filesystem home folders (speeds up login after first login), default: true
+# fsCache = true
 
 # The database configuration.
 
