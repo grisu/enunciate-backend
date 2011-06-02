@@ -25,14 +25,14 @@
 		</layout>
 	</appender>
 
-	<!-- <appender name="syslog" class="org.apache.log4j.net.SyslogAppender">
+	<appender name="syslog" class="org.apache.log4j.net.SyslogAppender">
 		<param name="Facility" value="USER" />
 		<param name="SyslogHost" value="localhost" />
 		<param name="Threshold" value="DEBUG" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%5p %d{ISO8601} [%t][%x] %c - %m%n" />
 		</layout>
-	</appender> -->
+	</appender>
 
 
 	<!-- Loggers to filter out various class paths -->
@@ -63,6 +63,7 @@
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="ROLL" />
+		<appender-ref ref="syslog" />
 	</root>
 
 </log4j:configuration>
