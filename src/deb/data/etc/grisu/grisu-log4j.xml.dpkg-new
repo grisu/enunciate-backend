@@ -63,6 +63,7 @@
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="ROLL" />
+		<appender-ref ref="syslog" />
 	</root>
 
 </log4j:configuration>

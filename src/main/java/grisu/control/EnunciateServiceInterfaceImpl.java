@@ -93,6 +93,7 @@ implements ServiceInterface {
 					final byte[] ipAddr = addr.getAddress();
 					hostname = addr.getHostName();
 				} catch (final UnknownHostException e) {
+					myLogger.debug(e);
 					hostname = "Unavailable";
 				}
 			}
