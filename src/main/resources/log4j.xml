@@ -50,13 +50,9 @@
 
 	<logger name="grisu">
 		<level value="debug" />
-		<appender-ref ref="ROLL" />
-		<appender-ref ref="syslog" />
 	</logger>
 	<logger name="org.apache.commons.vfs.provider">
 		<level value="error" />
-		<appender-ref ref="ROLL" />
-		<appender-ref ref="syslog" />
 	</logger>
 
 
