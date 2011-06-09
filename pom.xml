@@ -202,7 +202,7 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.6-SNAPSHOT</version>
+			<version>1.2.6</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
