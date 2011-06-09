@@ -193,12 +193,12 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>grisu</groupId>-->
-<!--			<artifactId>grid-jcommons</artifactId>-->
-<!--			<version>1.2.6-SNAPSHOT</version>-->
-<!--			<scope>compile</scope>-->
-<!--		</dependency>-->
+		<!-- <dependency> -->
+		<!-- <groupId>grisu</groupId> -->
+		<!-- <artifactId>grid-jcommons</artifactId> -->
+		<!-- <version>1.2.6-SNAPSHOT</version> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
@@ -206,12 +206,12 @@
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>grisu</groupId>-->
-<!--			<artifactId>grisu-commons</artifactId>-->
-<!--			<version>${grisu.dependency.version}</version>-->
-<!--			<scope>compile</scope>-->
-<!--		</dependency>-->
+		<!-- <dependency> -->
+		<!-- <groupId>grisu</groupId> -->
+		<!-- <artifactId>grisu-commons</artifactId> -->
+		<!-- <version>${grisu.dependency.version}</version> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
@@ -390,6 +390,10 @@
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<pushChanges>false</pushChanges>
 					<localCheckout>true</localCheckout>
+
+					<!-- During release:perform, enable the "release" profile -->
+					<releaseProfiles>deb</releaseProfiles>
+
 				</configuration>
 			</plugin>
 
