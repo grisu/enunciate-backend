@@ -18,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.xml.ws.soap.MTOM;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
@@ -92,6 +93,9 @@ implements ServiceInterface {
 					final InetAddress addr = InetAddress.getLocalHost();
 					final byte[] ipAddr = addr.getAddress();
 					hostname = addr.getHostName();
+					if (StringUtils.isBlank(hostname)) {
+						hostname = "Unavailable";
+					}
 				} catch (final UnknownHostException e) {
 					myLogger.debug(e);
 					hostname = "Unavailable";
