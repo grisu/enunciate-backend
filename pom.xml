@@ -456,7 +456,7 @@
 									<goal>jdeb</goal>
 								</goals>
 								<configuration>
-									<changesIn>CHANGELOG.txt</changesIn>
+									<changesIn>CHANGES.txt</changesIn>
 									<deb>[[buildDir]]/grisu-backend-ws.deb</deb>
 									<!-- <installDir>/opt/grisu</installDir> -->
 									<dataSet>

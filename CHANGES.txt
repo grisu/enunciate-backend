@@ -1,0 +1,1 @@
+release date=15:14 21.06.2011,version=0.3.4.2,urgency=low,by=Markus Binsteiner <m.binsteiner@auckland.ac.nz>,distribution=unknown
