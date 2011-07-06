@@ -2,11 +2,16 @@ package grisu.control;
 
 import grisu.backend.model.ProxyCredential;
 import grisu.backend.model.User;
+import grisu.backend.utils.CertHelpers;
 import grisu.control.exceptions.NoSuchTemplateException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.control.serviceInterfaces.LocalServiceInterface;
 import grisu.settings.Environment;
+import grisu.settings.MyProxyServerParams;
 import grisu.settings.ServiceTemplateManagement;
+import grith.jgrith.myProxy.MyProxy_light;
+import grith.jgrith.voms.VO;
+import grith.jgrith.voms.VOManagement.VOManagement;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +63,7 @@ implements ServiceInterface {
 	}
 
 	static final Logger myLogger = Logger
-	.getLogger(EnunciateServiceInterfaceImpl.class.getName());
+			.getLogger(EnunciateServiceInterfaceImpl.class.getName());
 
 	private String username;
 	private char[] password;
@@ -75,6 +80,36 @@ implements ServiceInterface {
 		} else {
 			myLogger.error("Couldn't find user...");
 			return null;
+		}
+
+	}
+
+	@Override
+	protected final ProxyCredential getCredential(String fqan,
+			int lifetimeInSeconds) {
+
+		String myProxyServer = MyProxyServerParams.getMyProxyServer();
+		final int myProxyPort = MyProxyServerParams.getMyProxyPort();
+
+		ProxyCredential temp;
+		try {
+			temp = new ProxyCredential(MyProxy_light.getDelegation(
+					myProxyServer, myProxyPort, username, password,
+					lifetimeInSeconds));
+
+			if (StringUtils.isNotBlank(fqan)) {
+
+				final VO vo = VOManagement
+						.getVO(getUser().getFqans().get(fqan));
+				ProxyCredential credToUse = CertHelpers.getVOProxyCredential(
+						vo, fqan, temp);
+				return credToUse;
+			} else {
+				return temp;
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
 	}
@@ -112,9 +147,9 @@ implements ServiceInterface {
 	private GrisuUserDetails getSpringUserDetails() {
 
 		final SecurityContext securityContext = SecurityContextHolder
-		.getContext();
+				.getContext();
 		final Authentication authentication = securityContext
-		.getAuthentication();
+				.getAuthentication();
 
 		if (authentication != null) {
 			final Object principal = authentication.getPrincipal();
