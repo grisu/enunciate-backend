@@ -51,9 +51,8 @@ public class GrisuUserDetails implements UserDetails {
 
 			return new ProxyCredential(proxy);
 		} catch (final Exception e) {
-			e.printStackTrace();
 			myLogger.error("Could not create myproxy credential: "
-					+ e.getLocalizedMessage());
+							+ e.getLocalizedMessage(), e);
 			return null;
 		}
 
@@ -99,7 +98,7 @@ public class GrisuUserDetails implements UserDetails {
 	}
 
 	public synchronized ProxyCredential getProxyCredential()
-	throws AuthenticationException {
+			throws AuthenticationException {
 
 		// myLogger.debug("Getting proxy credential...");
 
@@ -122,7 +121,7 @@ public class GrisuUserDetails implements UserDetails {
 					return proxy;
 				}
 			} catch (final Exception e) {
-				e.printStackTrace();
+				myLogger.error(e);
 			}
 			// myLogger.debug("Old proxy not good enough. Creating new one...");
 		}
@@ -146,7 +145,7 @@ public class GrisuUserDetails implements UserDetails {
 			// }
 
 			throw new AuthenticationException(
-			"Could not get valid myproxy credential.") {
+					"Could not get valid myproxy credential.") {
 			};
 		} else {
 			// myLogger.info("Authentication successful.");
