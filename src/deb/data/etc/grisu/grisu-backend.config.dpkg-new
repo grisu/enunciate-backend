@@ -1,18 +1,24 @@
 # General settings
 
 [General]
-# the directory which Grisu uses to put all jobdirectories into, default: grisu-jobs
-#jobDirName = grisu-jobs
+# the directory which Grisu uses to put all jobdirectories into, default: active-jobs
+# jobDirName = active-jobs
+# the directory which Grisu uses to put all archived jobdirectories under, default: archived-jobs
+# archivedJobDirName = archived-jobs
+# default vo to use to look for filesystems to store archived jobs to if user didn't specify manually
+# archivedJobDefaultVO = /nz/NeSI
 # the minimum proxy lifetime in seconds before Grisu refreshes the credential (if that's to short, some actions may fail. if it's too long the credentials needs refreshing too often), default: 600
 # minProxyLifetime = 600
 # the lifetime of a proxy that gets delegated from MyProxy (in seconds), default: 3600
 # proxyLifetime = 3600
-# the wait time in seconds before a job status gets checked again on a remote endpoint (before that, the last status is returned). this helps making grisu faster, although you sometimes get out of date job statuses, default: 60
-# statusCheckWaitTime = 60
+# the wait time in seconds before a job status gets checked again on a remote endpoint (before that, the last status is returned). this helps making grisu faster, although you sometimes get out of date job statuses, default: 8
+# statusCheckWaitTime = 8
 # the timeout for filesystem connections in milliseconds, default: 4000
 # filesystemTimeout = 4000
 # the timeout for filelistings in seconds, default: 20
 # fileListingTimeOut = 20
+# whether to cache filesystem home folders (speeds up login after first login), default: true
+# fsCache = true
 
 # The database configuration.
 
@@ -61,8 +67,10 @@
 # jobStatusThreads = 2
 # when submitting a batchjob, how many jobs should be submitted at the same time, default: 2
 # batchJobSubmitThreads = 2
-# when a user first logs in, a cache of accessable/not-accessible mountpoints is build. this setting determines how many concurrent threads are used for that, default: 10 
-# mountPointLookupThreads = 10
+# when a user first logs in, a cache of accessable/not-accessible mountpoints is build. this setting determines how many concurrent threads are used for that, default: 8
+# mountPointLookupThreads = 8
+# when Grisu queries archived jobs, it needs to read the grisu dot file which contains job properties. this setting controls how many lookups are made per filesystem, default: 8
+# archivedJobsLookupThreadsPerFilesystem = 8
 
 # Since the grid is not always very stable, it turned out that retrying an action that failed
 # straight away often works. Here are some settings for that.

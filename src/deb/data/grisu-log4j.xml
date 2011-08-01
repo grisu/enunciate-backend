@@ -15,7 +15,7 @@
 
 	</appender>
 
-<!-- 	<appender name="syslog" class="org.apache.log4j.net.SyslogAppender">
+	<!-- <appender name="syslog" class="org.apache.log4j.net.SyslogAppender">
 		<param name="Facility" value="USER" />
 		<param name="SyslogHost" value="localhost" />
 		<param name="Threshold" value="all"/>
@@ -27,7 +27,7 @@
 <!--	<logger name="org.hibernate.engine.loading.LoadContexts"
 		additivity="false">
 		<level value="error" />
-	</logger>-->
+	</logger> -->
 
 	<logger name="org.apache.commons.vfs.provider">
 		<level value="error" />
@@ -40,8 +40,9 @@
 
 	<root>
 		<level value="warn" />
-		<!-- <appender-ref ref="syslog" /> -->
+		<!--<appender-ref ref="syslog" />-->
 		<appender-ref ref="rollingFile" />
 	</root>
 
 </log4j:configuration>
+
