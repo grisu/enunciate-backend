@@ -20,7 +20,7 @@
 		<enunciate.version>1.22</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
-		<grisu.dependency.version>0.3.5</grisu.dependency.version>
+		<grisu.dependency.version>0.3.6-SNAPSHOT</grisu.dependency.version>
 	</properties>
 
 	<scm>
