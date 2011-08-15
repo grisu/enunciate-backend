@@ -140,6 +140,8 @@ implements ServiceInterface {
 			return ServiceInterface.INTERFACE_VERSION;
 		} else if ("NAME".equalsIgnoreCase(key)) {
 			return "Webservice (REST/SOAP) interface";
+		} else if ("BACKEND_VERSION".equalsIgnoreCase(key)) {
+			return BACKEND_VERSION;
 		}
 		return null;
 	}
