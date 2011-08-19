@@ -2,6 +2,7 @@ package grisu.control;
 
 import grisu.backend.model.ProxyCredential;
 import grisu.backend.model.User;
+import grisu.control.exceptions.NoValidCredentialException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.settings.MyProxyServerParams;
 import grisu.settings.ServerPropertiesManager;
@@ -52,8 +53,8 @@ public class GrisuUserDetails implements UserDetails {
 			return new ProxyCredential(proxy);
 		} catch (final Exception e) {
 			myLogger.error("Could not create myproxy credential: "
-							+ e.getLocalizedMessage(), e);
-			return null;
+					+ e.getLocalizedMessage(), e);
+			throw new NoValidCredentialException(e.getLocalizedMessage());
 		}
 
 	}
@@ -126,11 +127,17 @@ public class GrisuUserDetails implements UserDetails {
 			// myLogger.debug("Old proxy not good enough. Creating new one...");
 		}
 
-		final ProxyCredential proxyTemp = createProxyCredential(authentication
-				.getPrincipal().toString(), authentication.getCredentials()
-				.toString(), MyProxyServerParams.DEFAULT_MYPROXY_SERVER,
-				MyProxyServerParams.DEFAULT_MYPROXY_PORT,
-				ServerPropertiesManager.getMyProxyLifetime());
+		ProxyCredential proxyTemp = null;
+		try {
+			proxyTemp = createProxyCredential(authentication
+					.getPrincipal().toString(), authentication.getCredentials()
+					.toString(), MyProxyServerParams.DEFAULT_MYPROXY_SERVER,
+					MyProxyServerParams.DEFAULT_MYPROXY_PORT,
+					ServerPropertiesManager.getMyProxyLifetime());
+		} catch (NoValidCredentialException e) {
+			throw new AuthenticationException(e.getLocalizedMessage(), e) {
+			};
+		}
 
 		if ((proxyTemp == null) || !proxyTemp.isValid()) {
 
