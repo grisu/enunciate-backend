@@ -12,26 +12,30 @@
 	<api-import pattern="grisu.model.dto.*" />
 	<api-import pattern="grisu.frontend.**" />
 	<api-import pattern="grisu.control.ServiceInterface" />
-	<api-import pattern="grisu.control.JobConstants" /> 
-	
+	<api-import pattern="grisu.control.JobConstants" />
+
+	<webapp>
+		<globalServletFilter name="securityFilter"
+			classname="org.springframework.web.filter.DelegatingFilterProxy" />
+	</webapp>
+
 	<modules>
-	
-		<csharp disabled="false" ></csharp>
-		<jaxws-ri disabled="true"/>
-		<xfire disabled="true"/>
+
+		<csharp disabled="false"></csharp>
+		<jaxws-ri disabled="true" />
+		<xfire disabled="true" />
 		<cxf disabled="false" />
 		<jersey disabled="true" />
-		
+
 		<java-client disabled="false" jarName="grisu-client-jaxws.jar">
 		</java-client>
 
-		<gwt disabled="false" rpcModuleName="grisu.GrisuGwt" gwtHome="/opt/gwt-2.0.4" clientJarDownloadable="true" clientJarName="Grisu-gwt-client.jar">
+		<gwt disabled="false" rpcModuleName="grisu.GrisuGwt" gwtHome="/opt/gwt-2.0.4"
+			clientJarDownloadable="true" clientJarName="Grisu-gwt-client.jar">
 		</gwt>
 
-		<spring-app enableSecurity="true">
-			<springImport file="mysecurity.xml"/>
-			<security disableDefaultProvider="true">
-			</security>
+		<spring-app>
+			<springImport uri="classpath:/spring-security.xml" />
 		</spring-app>
 
 		<docs splashPackage="grisu.control" title="Grisu API"
