@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.3.6-SNAPSHOT</version>
+	<version>0.3.7-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
@@ -20,7 +21,10 @@
 		<enunciate.version>1.24</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
-		<grisu.dependency.version>0.3.6-SNAPSHOT</grisu.dependency.version>
+		<grisu.dependency.version>0.3.7-SNAPSHOT</grisu.dependency.version>
+		<spring.version>3.0.2.RELEASE</spring.version>
+		<spring.security.version>3.0.2.RELEASE</spring.security.version>
+		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
 	</properties>
 
 	<scm>
@@ -96,24 +100,14 @@
 	</distributionManagement>
 
 
+
+
 	<dependencies>
 
 		<dependency>
-			<groupId>org.codehaus.enunciate</groupId>
-			<artifactId>enunciate-gwt-rt</artifactId>
-			<version>${enunciate.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-			<version>${gwt.version}</version>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 
 		<dependency>
@@ -129,62 +123,43 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core-tiger</artifactId>
-			<version>2.0.1</version>
-			<exclusions>
-
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-dao</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-			</exclusions>
+		<groupId>org.codehaus.enunciate</groupId>
+		<artifactId>enunciate-spring3-app-rt</artifactId>
+		<version>${enunciate.version}</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
-			<version>2.0.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>${spring.security.version}</version>
 		</dependency>
+
+
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>2.5.4</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.5.4</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>javax.servlet</groupId> -->
+		<!-- <artifactId>servlet-api</artifactId> -->
+		<!-- <version>2.5</version> -->
+		<!-- <type>jar</type> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -239,34 +214,19 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>grisu</groupId> -->
-		<!-- <artifactId>grisu-client</artifactId> -->
-		<!-- <version>0.3-SNAPSHOT</version> -->
-		<!-- <scope>compile</scope> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>grisu</groupId> -->
-		<!-- <artifactId>grisu-client</artifactId> -->
-		<!-- <version>0.3-SNAPSHOT</version> -->
-		<!-- <classifier>sources</classifier> -->
-		<!-- <scope>compile</scope> -->
-		<!-- </dependency> -->
-
 	</dependencies>
+
 
 	<build>
 		<finalName>grisu-ws</finalName>
 		<plugins>
 
-			<!-- replace version in file -->
 			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>maven-replacer-plugin</artifactId>
 				<version>1.3.2</version>
 				<executions>
 					<execution>
-						<!-- the replace should happen before the app is packaged -->
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>replace</goal>
@@ -276,93 +236,45 @@
 
 				<configuration>
 					<includes>
-						<!-- replace the token in this file -->
 						<include>target/classes/enunciate-backend.version</include>
 					</includes>
 					<regex>false</regex>
-					<!-- the name of the token to replace -->
 					<token>VERSION_TOKEN</token>
-					<!-- replace it with the maven project version -->
 					<value>${project.version}</value>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.codehaus.enunciate</groupId>
 				<artifactId>maven-enunciate-cxf-plugin</artifactId>
 				<version>${enunciate.version}</version>
+				<configuration>
+					<configFile>src/conf/enunciate.xml</configFile>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>assemble</goal>
 						</goals>
 					</execution>
-
-					<!-- <execution> -->
-					<!-- <id>install-and-deploy-jaxws</id> -->
-					<!-- <goals> -->
-					<!-- -->
-					<!-- the "install-artifact" goal does a local install of the artifact -->
-					<!-- -->
-					<!-- <goal>install-artifact</goal> -->
-					<!-- the "deploy-artifact" goal deploys the artifact -->
-					<!-- <goal>deploy-artifact</goal> -->
-					<!-- </goals> -->
-					<!-- <phase>install</phase> -->
-
-					<!-- <configuration> -->
-					<!-- -->
-					<!-- the "enunciateArtifactId" element is the only thing required. -->
-					<!-- other options reflect those of the maven deploy plugin, and -->
-					<!-- include options to set the groupId, artifactId, version, -->
-					<!-- classifier, pomFile etc. However, suitable defaults will be -->
-					<!-- supplied as necessary -->
-					<!-- -->
-					<!-- <enunciateArtifactId>jaxws.client.library</enunciateArtifactId> -->
-					<!-- <groupId>grisu</groupId> -->
-					<!-- <artifactId>grisu-client-jaxws</artifactId> -->
-					<!-- <version>${project.version}</version> -->
-					<!-- <packaging>jar</packaging> -->
-					<!-- <uniqueVersion>false</uniqueVersion> -->
-					<!-- <pomFile>client-jaxws.pom</pomFile> -->
-					<!-- </configuration> -->
-					<!-- </execution> -->
-
-					<!-- <execution> -->
-					<!-- <id>install-and-deploy-gwt</id> -->
-					<!-- <goals> -->
-
-
-					<!-- <goal>install-artifact</goal> -->
-					<!-- <goal>deploy-artifact</goal> -->
-					<!-- </goals> -->
-					<!-- <phase>install</phase> -->
-
-					<!-- <configuration> -->
-
-					<!-- <enunciateArtifactId>gwt.client.jar</enunciateArtifactId> -->
-					<!-- <groupId>grisu</groupId> -->
-					<!-- <artifactId>grisu-client-enunciate-gwt</artifactId> -->
-
-					<!-- <version>${project.version}</version> -->
-					<!-- <packaging>jar</packaging> -->
-
-					<!-- <uniqueVersion>false</uniqueVersion> -->
-					<!-- <pomFile>client-gwt.pom</pomFile> -->
-
-					<!-- </configuration> -->
-					<!-- </execution> -->
-
 				</executions>
-
-
-				<dependencies>
-					<dependency>
-						<groupId>org.codehaus.enunciate</groupId>
-						<artifactId>enunciate-gwt</artifactId>
-						<version>${enunciate.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
+
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.enunciate</groupId> -->
+			<!-- <artifactId>maven-enunciate-spring-plugin</artifactId> -->
+			<!-- <version>1.24</version> -->
+			<!-- <configuration> -->
+			<!-- <configFile>src/conf/enunciate.xml</configFile> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>assemble</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -384,7 +296,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.1</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<pushChanges>false</pushChanges>
@@ -398,6 +309,42 @@
 
 
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.enunciate
+										</groupId>
+										<artifactId>
+											maven-enunciate-spring-plugin
+										</artifactId>
+										<versionRange>
+											[1.24,)
+										</versionRange>
+										<goals>
+											<goal>assemble</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<profiles>
@@ -563,6 +510,7 @@
 
 		</profile>
 	</profiles>
+
 
 
 </project>
