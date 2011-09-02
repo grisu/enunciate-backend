@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.3.5</version>
+	<version>0.3.5.2</version>
 	<packaging>war</packaging>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
@@ -20,7 +20,7 @@
 		<enunciate.version>1.22</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
-		<grisu.dependency.version>0.3.5</grisu.dependency.version>
+		<grisu.dependency.version>0.3.5.2</grisu.dependency.version>
 	</properties>
 
 	<scm>
@@ -201,7 +201,7 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.2.8</version>
+			<version>1.3.1</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
