@@ -14,7 +14,7 @@
 <!-- 		<intercept-url pattern="/batchjob/**" access="isAuthenticated()" /> -->
 <!-- 		<intercept-url pattern="/batchjobs/**" access="isAuthenticated()" /> -->
 <!-- 		<intercept-url pattern="/files/**" access="isAuthenticated()" /> -->
-		<intercept-url pattern="/**" filters="isAuthenticated()" />
+		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<http-basic />
 	</http>
 
