@@ -6,8 +6,15 @@
                     http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
 	<http use-expressions="true">
-<!-- 		<intercept-url pattern="/**wsdl" filters="none" /> -->
-<!-- 		<intercept-url pattern="/**" access="isAuthenticated()" /> -->
+		<intercept-url pattern="/**wsdl" filters="none" />
+		<intercept-url pattern="/info/**" filters="none" />
+		<intercept-url pattern="/user/**" access="isAuthenticated()" />
+		<intercept-url pattern="/job/**" access="isAuthenticated()" />
+		<intercept-url pattern="/jobs/**" access="isAuthenticated()" />
+		<intercept-url pattern="/batchjob/**" access="isAuthenticated()" />
+		<intercept-url pattern="/batchjobs/**" access="isAuthenticated()" />
+		<intercept-url pattern="/files/**" access="isAuthenticated()" />
+		<intercept-url pattern="/**" filters="none" />
 		<http-basic />
 	</http>
 
