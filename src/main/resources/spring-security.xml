@@ -7,28 +7,17 @@
 
 	<http use-expressions="true">
 		<intercept-url pattern="/**wsdl" filters="none" />
-		<intercept-url pattern="/info/**" filters="none" />
-		<intercept-url pattern="/user/**" access="isAuthenticated()" />
-		<intercept-url pattern="/job/**" access="isAuthenticated()" />
-		<intercept-url pattern="/jobs/**" access="isAuthenticated()" />
-		<intercept-url pattern="/batchjob/**" access="isAuthenticated()" />
-		<intercept-url pattern="/batchjobs/**" access="isAuthenticated()" />
-		<intercept-url pattern="/files/**" access="isAuthenticated()" />
-		<intercept-url pattern="/**" filters="none" />
+<!-- 		<intercept-url pattern="/info/**" filters="none" /> -->
+<!-- 		<intercept-url pattern="/user/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/job/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/jobs/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/batchjob/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/batchjobs/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/files/**" access="isAuthenticated()" /> -->
+		<intercept-url pattern="/**" filters="isAuthenticated()" />
 		<http-basic />
 	</http>
 
-	<!-- <authentication-manager alias="authenticationManager"> -->
-	<!-- <authentication-provider> -->
-	<!-- <user-service> -->
-	<!-- <user name="rod" password="koala" authorities="supervisor, teller, 
-		user" /> -->
-	<!-- <user name="dianne" password="emu" authorities="teller, user" /> -->
-	<!-- <user name="scott" password="wombat" authorities="user" /> -->
-	<!-- <user name="peter" password="opal" authorities="user" /> -->
-	<!-- </user-service> -->
-	<!-- </authentication-provider> -->
-	<!-- </authentication-manager> -->
 	<authentication-manager>
 		<authentication-provider ref="daoAuthenticationProvider">
 		</authentication-provider>
