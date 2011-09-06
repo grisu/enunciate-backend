@@ -24,7 +24,7 @@ public class AuditAdvice implements MethodInterceptor {
 
 		String[] args = new String[methodInvocation.getArguments().length];
 		for (int i = 0; i < methodInvocation.getArguments().length; i++) {
-			args[i] = methodInvocation.getArguments().toString();
+			args[i] = methodInvocation.getArguments()[i].toString();
 		}
 
 		String argList = StringUtils.join(args, ";");
