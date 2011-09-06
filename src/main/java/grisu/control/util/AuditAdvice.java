@@ -26,7 +26,11 @@ public class AuditAdvice implements MethodInterceptor {
 		if ((argOs != null) && (argOs.length > 0)) {
 			String[] args = new String[argOs.length];
 			for (int i = 0; i < args.length; i++) {
-				args[i] = (argOs[i]).toString();
+				if (argOs[i] == null) {
+					args[i] = "null";
+				} else {
+					args[i] = (argOs[i]).toString();
+				}
 			}
 			argList = StringUtils.join(args, ";");
 		}
