@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -20,6 +21,13 @@ public class AuditAdvice implements MethodInterceptor {
 
 		String method = methodInvocation.getMethod().getName();
 		String dn = null;
+
+		String[] args = new String[methodInvocation.getArguments().length];
+		for (int i = 0; i < methodInvocation.getArguments().length; i++) {
+			args[i] = methodInvocation.getArguments().toString();
+		}
+
+		String argList = StringUtils.join(args, ";");
 
 		final SecurityContext securityContext = SecurityContextHolder
 				.getContext();
@@ -37,10 +45,12 @@ public class AuditAdvice implements MethodInterceptor {
 		Date start = new Date();
 
 		if (dn == null) {
-			myLogger.debug("Entering method: " + method + " time: "
+			myLogger.debug("Entering method: " + method + " arguments: "
+					+ argList + " time: "
 					+ start.getTime());
 		} else {
-			myLogger.debug("Entering method: " + method + " user: " + dn
+			myLogger.debug("Entering method: " + method + " arguments: "
+					+ argList + " user: " + dn
 					+ " time: " + start.getTime());
 		}
 
@@ -51,10 +61,12 @@ public class AuditAdvice implements MethodInterceptor {
 		long duration = end.getTime() - start.getTime();
 
 		if (dn == null) {
-			myLogger.debug("Finished method: " + method + " time: "
+			myLogger.debug("Finished method: " + method + " arguments: "
+					+ argList + " time: "
 					+ end.getTime() + " duration: " + duration);
 		} else {
-			myLogger.debug("Finished method: " + method + " user: " + dn
+			myLogger.debug("Finished method: " + method + " arguments: "
+					+ argList + " user: " + dn
 					+ " time: " + end.getTime() + " duration: " + duration);
 		}
 
