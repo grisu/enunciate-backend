@@ -22,12 +22,14 @@ public class AuditAdvice implements MethodInterceptor {
 		String method = methodInvocation.getMethod().getName();
 		String dn = null;
 		Object[] argOs = methodInvocation.getArguments();
-		String[] args = new String[argOs.length];
-		for (int i = 0; i < args.length; i++) {
-			args[i] = (argOs[i]).toString();
+		String argList = "NO_ARGS";
+		if ((argOs != null) && (argOs.length > 0)) {
+			String[] args = new String[argOs.length];
+			for (int i = 0; i < args.length; i++) {
+				args[i] = (argOs[i]).toString();
+			}
+			argList = StringUtils.join(args, ";");
 		}
-
-		String argList = StringUtils.join(args, ";");
 
 		final SecurityContext securityContext = SecurityContextHolder
 				.getContext();
