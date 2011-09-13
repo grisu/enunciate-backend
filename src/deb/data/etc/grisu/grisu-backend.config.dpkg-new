@@ -88,4 +88,6 @@
 [Debug]
 # when enabling this, all job descriptions for jobs that are submitted are saved in a debug directory (.grisu/debug), default: false
 enabled = false
+# this option switches off the Grisu behaviour where Grisu doesn't check a job status anymore once was reported finished (either successful or not)
+# disableFinishedJobStatusCaching = false
 
