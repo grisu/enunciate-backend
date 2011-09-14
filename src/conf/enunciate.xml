@@ -24,9 +24,10 @@
 
 	<modules>
 		<csharp disabled="true"></csharp>
-		<jaxws-ri disabled="true" />
+		<jaxws-ri disabled="true"/>
+
 		<xfire disabled="true" />
-		<cxf disabled="false" />
+		<cxf disabled="false" enableJaxrs="false"/>
 		<jersey disabled="true" />
 		
 		<java-client disabled="false" jarName="grisu-client-jaxws.jar">

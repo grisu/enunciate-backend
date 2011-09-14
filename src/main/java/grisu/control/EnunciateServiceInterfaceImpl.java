@@ -115,8 +115,12 @@ implements ServiceInterface {
 	}
 
 	public long getCredentialEndTime() {
-
-		return getSpringUserDetails().getCredentialEndTime();
+		GrisuUserDetails gud = getSpringUserDetails();
+		if (gud == null) {
+			return -1L;
+		} else {
+			return getSpringUserDetails().getCredentialEndTime();
+		}
 	}
 
 	@Override
