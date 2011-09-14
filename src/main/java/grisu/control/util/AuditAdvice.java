@@ -26,10 +26,14 @@ public class AuditAdvice implements MethodInterceptor {
 		if ((argOs != null) && (argOs.length > 0)) {
 			String[] args = new String[argOs.length];
 			for (int i = 0; i < args.length; i++) {
-				if (argOs[i] == null) {
-					args[i] = "null";
-				} else {
-					args[i] = (argOs[i]).toString();
+				try {
+					if (argOs[i] == null) {
+						args[i] = "null";
+					} else {
+						args[i] = (argOs[i]).toString();
+					}
+				} catch (Exception e) {
+					args[i] = "Error serializing object";
 				}
 			}
 			argList = StringUtils.join(args, ";");
