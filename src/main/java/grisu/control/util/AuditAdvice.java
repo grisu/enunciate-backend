@@ -68,7 +68,7 @@ public class AuditAdvice implements MethodInterceptor {
 					+ " open method calls: " + number);
 		}
 
-		Object result = methodInvocation.proceed();
+		Object result = null;
 		try {
 			result = methodInvocation.proceed();
 		} catch (Throwable t) {
