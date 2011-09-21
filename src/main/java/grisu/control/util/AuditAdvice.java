@@ -68,10 +68,22 @@ public class AuditAdvice implements MethodInterceptor {
 					+ " open method calls: " + number);
 		}
 
-
 		Object result = methodInvocation.proceed();
+		try {
+			result = methodInvocation.proceed();
+		} catch (Throwable t) {
+			number = numberOfOpenMethodCalls.decrementAndGet();
+			Date end = new Date();
+			long duration = end.getTime() - start.getTime();
+			myLogger.debug("Method call: " + method + " failed: "
+					+ t.getLocalizedMessage());
+			myLogger.debug("Finished method: " + method + " arguments: "
+					+ argList + " time: " + end.getTime() + " duration: "
+					+ duration + " open method calls: " + number);
+			throw t;
+		}
 
-		number = numberOfOpenMethodCalls.incrementAndGet();
+		number = numberOfOpenMethodCalls.decrementAndGet();
 
 		Date end = new Date();
 
