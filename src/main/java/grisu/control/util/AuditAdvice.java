@@ -3,6 +3,7 @@ package grisu.control.util;
 import grisu.control.GrisuUserDetails;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -13,6 +14,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuditAdvice implements MethodInterceptor {
+
+	public static AtomicInteger numberOfOpenMethodCalls = new AtomicInteger(0);
 
 	static final Logger myLogger = Logger
 			.getLogger(AuditAdvice.class.getName());
@@ -53,18 +56,22 @@ public class AuditAdvice implements MethodInterceptor {
 		}
 
 		Date start = new Date();
+		int number = numberOfOpenMethodCalls.incrementAndGet();
 
 		if (dn == null) {
 			myLogger.debug("Entering method: " + method + " arguments: "
-					+ argList + " time: "
-					+ start.getTime());
+					+ argList + " time: " + start.getTime()
+					+ " open method calls: " + number);
 		} else {
 			myLogger.debug("Entering method: " + method + " arguments: "
-					+ argList + " user: " + dn
-					+ " time: " + start.getTime());
+					+ argList + " user: " + dn + " time: " + start.getTime()
+					+ " open method calls: " + number);
 		}
 
+
 		Object result = methodInvocation.proceed();
+
+		number = numberOfOpenMethodCalls.incrementAndGet();
 
 		Date end = new Date();
 
@@ -72,12 +79,13 @@ public class AuditAdvice implements MethodInterceptor {
 
 		if (dn == null) {
 			myLogger.debug("Finished method: " + method + " arguments: "
-					+ argList + " time: "
-					+ end.getTime() + " duration: " + duration);
+					+ argList + " time: " + end.getTime() + " duration: "
+					+ duration + " open method calls: " + number);
 		} else {
 			myLogger.debug("Finished method: " + method + " arguments: "
-					+ argList + " user: " + dn
-					+ " time: " + end.getTime() + " duration: " + duration);
+					+ argList + " user: " + dn + " time: " + end.getTime()
+					+ " duration: " + duration + " open method calls: "
+					+ number);
 		}
 
 		return result;
