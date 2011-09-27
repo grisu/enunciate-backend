@@ -26,7 +26,7 @@ public class AuditAdvice implements MethodInterceptor {
 		String dn = null;
 		Object[] argOs = methodInvocation.getArguments();
 		String argList = "NO_ARGS";
-		if ((argOs != null) && (argOs.length > 0)) {
+		if ((argOs != null) && (argOs.length > 0) && !"login".equals(method)) {
 			String[] args = new String[argOs.length];
 			for (int i = 0; i < args.length; i++) {
 				try {
