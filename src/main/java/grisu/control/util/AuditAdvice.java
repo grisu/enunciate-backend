@@ -89,14 +89,21 @@ public class AuditAdvice implements MethodInterceptor {
 
 		long duration = end.getTime() - start.getTime();
 
+		String resultString = "n/a";
+		if (result instanceof String) {
+			resultString = (String) result;
+		}
+
 		if (dn == null) {
 			myLogger.debug("Finished method: " + method + " arguments: "
 					+ argList + " time: " + end.getTime() + " duration: "
-					+ duration + " open method calls: " + number);
+					+ duration + " result: " + resultString
+					+ " open method calls: " + number);
 		} else {
 			myLogger.debug("Finished method: " + method + " arguments: "
 					+ argList + " user: " + dn + " time: " + end.getTime()
-					+ " duration: " + duration + " open method calls: "
+					+ " duration: " + duration + " result: " + resultString
+					+ " open method calls: "
 					+ number);
 		}
 
