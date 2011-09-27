@@ -92,6 +92,12 @@ public class AuditAdvice implements MethodInterceptor {
 		String resultString = "n/a";
 		if (result instanceof String) {
 			resultString = (String) result;
+		} else if (result instanceof Integer) {
+			resultString = ((Integer) result).toString();
+		} else if (result instanceof Boolean) {
+			resultString = ((Boolean) result).toString();
+		} else if (result instanceof Long) {
+			resultString = ((Long) result).toString();
 		}
 
 		if (dn == null) {
