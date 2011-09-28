@@ -29,7 +29,7 @@
 	</properties>
 
 	<scm>
-		<connection>scm:git:git://github.com/grisu/enunciate-backend.git</connection>
+		<connection>scm:git:git@github.com:grisu/enunciate-backend.git</connection>
 		<developerConnection>scm:git:git@github.com:grisu/enunciate-backend.git</developerConnection>
 		<url>https://github.com/grisu/enunciate-backend/tree/master</url>
 	</scm>
