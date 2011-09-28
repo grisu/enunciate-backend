@@ -10,3 +10,4 @@ nbactions.xml
 nb-configuration.xml
 rebel.xml
 grisu-server.config
+.externalToolBuilders
