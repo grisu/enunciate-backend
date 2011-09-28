@@ -7,15 +7,19 @@ import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.settings.MyProxyServerParams;
 import grisu.settings.ServerPropertiesManager;
 
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.globus.myproxy.CredentialInfo;
 import org.globus.myproxy.MyProxy;
 import org.ietf.jgss.GSSCredential;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.google.common.collect.Sets;
 
 public class GrisuUserDetails implements UserDetails {
 
@@ -59,10 +63,12 @@ public class GrisuUserDetails implements UserDetails {
 
 	}
 
-	public GrantedAuthority[] getAuthorities() {
+	public Set<GrantedAuthority> getAuthorities() {
 
 		if (success) {
-			return new GrantedAuthorityImpl[] { new GrantedAuthorityImpl("User") };
+			Set<GrantedAuthority> result = Sets.newHashSet();
+			result.add(new GrantedAuthorityImpl("User"));
+			return result;
 		} else {
 			return null;
 		}

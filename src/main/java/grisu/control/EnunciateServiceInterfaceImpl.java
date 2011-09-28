@@ -25,9 +25,9 @@ import javax.xml.ws.soap.MTOM;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * This abstract class implements most of the methods of the
@@ -115,8 +115,12 @@ implements ServiceInterface {
 	}
 
 	public long getCredentialEndTime() {
-
-		return getSpringUserDetails().getCredentialEndTime();
+		GrisuUserDetails gud = getSpringUserDetails();
+		if (gud == null) {
+			return -1L;
+		} else {
+			return getSpringUserDetails().getCredentialEndTime();
+		}
 	}
 
 	@Override
@@ -203,7 +207,9 @@ implements ServiceInterface {
 	public void login(String username, String password) {
 
 		this.username = username;
-		this.password = password.toCharArray();
+		if (StringUtils.isNotBlank(password)) {
+			this.password = password.toCharArray();
+		}
 
 		getCredential();
 

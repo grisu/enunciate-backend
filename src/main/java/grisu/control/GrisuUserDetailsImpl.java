@@ -2,9 +2,9 @@ package grisu.control;
 
 import org.globus.common.CoGProperties;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
-import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class GrisuUserDetailsImpl implements UserDetailsService {
 
@@ -18,7 +18,7 @@ public class GrisuUserDetailsImpl implements UserDetailsService {
 	}
 
 	public UserDetails loadUserByUsername(String arg0)
-	throws UsernameNotFoundException, DataAccessException {
+			throws UsernameNotFoundException, DataAccessException {
 
 		// myLogger.debug("Authenticating....");
 		return new GrisuUserDetails(arg0);
