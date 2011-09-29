@@ -35,8 +35,8 @@
 		
 		<spring-app>
 			<springImport uri="classpath:/spring-security.xml" />
-<!-- 			<springImport file="custom_spring.xml"/> -->
-<!-- 			<globalServiceInterceptor beanName="auditAdvice"/> -->
+			<springImport file="custom_spring.xml"/>
+			<globalServiceInterceptor beanName="auditAdvice"/>
 		</spring-app>
 
 		<docs splashPackage="grisu.control" title="Grisu API"
