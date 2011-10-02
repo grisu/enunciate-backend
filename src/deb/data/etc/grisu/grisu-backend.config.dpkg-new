@@ -71,6 +71,8 @@
 # mountPointLookupThreads = 8
 # when Grisu queries archived jobs, it needs to read the grisu dot file which contains job properties. this setting controls how many lookups are made per filesystem, default: 8
 # archivedJobsLookupThreadsPerFilesystem = 8
+# when a user kills multiple jobs, this settings determines how many of them are killed in parallel, default: 8
+# jobsToBeKilled = 8
 
 # Since the grid is not always very stable, it turned out that retrying an action that failed
 # straight away often works. Here are some settings for that.
