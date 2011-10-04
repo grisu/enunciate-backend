@@ -396,7 +396,7 @@
 					<plugin>
 						<artifactId>jdeb</artifactId>
 						<groupId>org.vafer</groupId>
-						<version>0.9-beta4-SNAPSHOT</version>
+						<version>0.9-nz</version>
 						<executions>
 							<execution>
 								<phase>package</phase>
