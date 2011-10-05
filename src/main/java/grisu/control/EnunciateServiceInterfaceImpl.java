@@ -70,7 +70,6 @@ implements ServiceInterface {
 
 	private static String hostname = null;
 
-	@Override
 	protected synchronized ProxyCredential getCredential() {
 
 		final GrisuUserDetails gud = getSpringUserDetails();
@@ -84,7 +83,6 @@ implements ServiceInterface {
 
 	}
 
-	@Override
 	protected final ProxyCredential getCredential(String fqan,
 			int lifetimeInSeconds) {
 
