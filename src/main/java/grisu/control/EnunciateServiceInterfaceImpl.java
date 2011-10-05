@@ -93,14 +93,19 @@ implements ServiceInterface {
 
 		ProxyCredential temp;
 		try {
+			myLogger.debug("Getting delegated proxy from MyProxy...");
 			temp = new ProxyCredential(MyProxy_light.getDelegation(
 					myProxyServer, myProxyPort, username, password,
 					lifetimeInSeconds));
+			myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
+					+ temp.getDn());
 
 			if (StringUtils.isNotBlank(fqan)) {
 
 				final VO vo = VOManagement
 						.getVO(getUser().getFqans().get(fqan));
+				myLogger.debug(temp.getDn() + ":Creating voms proxy for fqan: "
+						+ fqan);
 				ProxyCredential credToUse = CertHelpers.getVOProxyCredential(
 						vo, fqan, temp);
 				return credToUse;
