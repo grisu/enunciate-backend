@@ -2,6 +2,7 @@ package grisu.control;
 
 import grisu.backend.model.ProxyCredential;
 import grisu.backend.model.User;
+import grisu.backend.utils.CertHelpers;
 import grisu.control.exceptions.NoValidCredentialException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.settings.MyProxyServerParams;
@@ -46,9 +47,12 @@ public class GrisuUserDetails implements UserDetails {
 		final MyProxy myproxy = new MyProxy(myProxyServer, port);
 		GSSCredential proxy = null;
 		try {
+			myLogger.debug("Getting delegated proxy from MyProxy...");
 			proxy = myproxy.get(username, password, lifetime);
-
 			final int remaining = proxy.getRemainingLifetime();
+			myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
+					+ CertHelpers.getDnInProperFormat(proxy)
+					+ " remaining liftime: " + remaining);
 
 			if (remaining <= 0) {
 				throw new RuntimeException("Proxy not valid anymore.");
