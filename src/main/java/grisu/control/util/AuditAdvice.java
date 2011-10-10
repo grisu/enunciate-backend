@@ -107,7 +107,7 @@ public class AuditAdvice implements MethodInterceptor {
 			resultString = ((Long) result).toString();
 		}
 
-		resultString.replace("\n", " ");
+		result = resultString.replace("\n", " ");
 
 		if (dn == null) {
 			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
