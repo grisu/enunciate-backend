@@ -41,6 +41,7 @@ public class AuditAdvice implements MethodInterceptor {
 				}
 			}
 			argList = StringUtils.join(args, ";");
+			argList = argList.replace("\n", " ");
 		}
 
 		final SecurityContext securityContext = SecurityContextHolder
