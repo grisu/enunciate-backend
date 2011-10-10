@@ -3,6 +3,7 @@ package grisu.control.util;
 import grisu.control.GrisuUserDetails;
 
 import java.util.Date;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -55,15 +56,19 @@ public class AuditAdvice implements MethodInterceptor {
 			}
 		}
 
+		String tid = UUID.randomUUID().toString();
+
 		Date start = new Date();
 		int number = numberOfOpenMethodCalls.incrementAndGet();
 
 		if (dn == null) {
-			myLogger.debug("Entering method: " + method + " arguments: "
+			myLogger.debug("[tid: " + tid + "]: Entering method: " + method
+					+ " arguments: "
 					+ argList + " time: " + start.getTime()
 					+ " open method calls: " + number);
 		} else {
-			myLogger.debug("Entering method: " + method + " arguments: "
+			myLogger.debug("[tid: " + tid + "]: Entering method: " + method
+					+ " arguments: "
 					+ argList + " user: " + dn + " time: " + start.getTime()
 					+ " open method calls: " + number);
 		}
@@ -75,9 +80,11 @@ public class AuditAdvice implements MethodInterceptor {
 			number = numberOfOpenMethodCalls.decrementAndGet();
 			Date end = new Date();
 			long duration = end.getTime() - start.getTime();
-			myLogger.debug("Method call: " + method + " failed: "
+			myLogger.debug("[tid: " + tid + "]: Method call: " + method
+					+ " failed: "
 					+ t.getLocalizedMessage());
-			myLogger.debug("Finished method: " + method + " arguments: "
+			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
+					+ " arguments: "
 					+ argList + " time: " + end.getTime() + " duration: "
 					+ duration + " open method calls: " + number);
 			throw t;
@@ -101,12 +108,14 @@ public class AuditAdvice implements MethodInterceptor {
 		}
 
 		if (dn == null) {
-			myLogger.debug("Finished method: " + method + " arguments: "
+			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
+					+ " arguments: "
 					+ argList + " time: " + end.getTime() + " duration: "
 					+ duration + " result: " + resultString
 					+ " open method calls: " + number);
 		} else {
-			myLogger.debug("Finished method: " + method + " arguments: "
+			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
+					+ " arguments: "
 					+ argList + " user: " + dn + " time: " + end.getTime()
 					+ " duration: " + duration + " result: " + resultString
 					+ " open method calls: "
