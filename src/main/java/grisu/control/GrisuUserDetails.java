@@ -35,6 +35,7 @@ public class GrisuUserDetails implements UserDetails {
 	private User user = null;
 
 	public GrisuUserDetails(String username) {
+		myLogger.debug("Creating GrisuUserDetails object for " + username);
 		this.username = username;
 	}
 
