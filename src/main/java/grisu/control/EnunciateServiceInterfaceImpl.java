@@ -11,7 +11,6 @@ import grisu.settings.MyProxyServerParams;
 import grisu.settings.ServiceTemplateManagement;
 import grith.jgrith.myProxy.MyProxy_light;
 import grith.jgrith.voms.VO;
-import grith.jgrith.voms.VOManagement.VOManagement;
 
 import java.io.File;
 import java.io.IOException;
@@ -100,8 +99,7 @@ implements ServiceInterface {
 
 			if (StringUtils.isNotBlank(fqan)) {
 
-				final VO vo = VOManagement
-						.getVO(getUser().getFqans().get(fqan));
+				final VO vo = getUser().getFqans().get(fqan);
 				myLogger.debug(temp.getDn() + ":Creating voms proxy for fqan: "
 						+ fqan);
 				ProxyCredential credToUse = CertHelpers.getVOProxyCredential(
