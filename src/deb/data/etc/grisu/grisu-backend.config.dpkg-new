@@ -19,6 +19,8 @@
 # fileListingTimeOut = 20
 # whether to cache filesystem home folders (speeds up login after first login), default: true
 # fsCache = true
+# whether to close filesystems in the background (default: false), this was introduced because jglobus behaviour was not consistent and sometimes produced lock
+# closeFilesystemsInBackground = false
 
 # The database configuration.
 
@@ -71,6 +73,8 @@
 # mountPointLookupThreads = 8
 # when Grisu queries archived jobs, it needs to read the grisu dot file which contains job properties. this setting controls how many lookups are made per filesystem, default: 8
 # archivedJobsLookupThreadsPerFilesystem = 8
+# when a user kills multiple jobs, this settings determines how many of them are killed in parallel, default: 8
+# jobsToBeKilled = 8
 
 # Since the grid is not always very stable, it turned out that retrying an action that failed
 # straight away often works. Here are some settings for that.
@@ -78,6 +82,8 @@
 [RetrySettings]
 # when a file transfer fails, how many times should Grisu retry, default: 3
 # fileTransfers = 3
+# when a file delete fails, how many times should Grisu retry, default: 6
+# fileDeletes = 6
 # the time in seconds to wait until Grisu tries to re-transfer a file, default: 1
 # fileTransferWaitTime = 1
 # when a job submission fails, how many times should Grisu retry, default: 5

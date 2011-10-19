@@ -11,7 +11,6 @@ import grisu.settings.MyProxyServerParams;
 import grisu.settings.ServiceTemplateManagement;
 import grith.jgrith.myProxy.MyProxy_light;
 import grith.jgrith.voms.VO;
-import grith.jgrith.voms.VOManagement.VOManagement;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +24,9 @@ import javax.xml.ws.soap.MTOM;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * This abstract class implements most of the methods of the
@@ -70,7 +69,6 @@ implements ServiceInterface {
 
 	private static String hostname = null;
 
-	@Override
 	protected synchronized ProxyCredential getCredential() {
 
 		final GrisuUserDetails gud = getSpringUserDetails();
@@ -84,7 +82,6 @@ implements ServiceInterface {
 
 	}
 
-	@Override
 	protected final ProxyCredential getCredential(String fqan,
 			int lifetimeInSeconds) {
 
@@ -93,14 +90,18 @@ implements ServiceInterface {
 
 		ProxyCredential temp;
 		try {
+			myLogger.debug("Getting delegated proxy from MyProxy...");
 			temp = new ProxyCredential(MyProxy_light.getDelegation(
 					myProxyServer, myProxyPort, username, password,
 					lifetimeInSeconds));
+			myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
+					+ temp.getDn());
 
 			if (StringUtils.isNotBlank(fqan)) {
 
-				final VO vo = VOManagement
-						.getVO(getUser().getFqans().get(fqan));
+				final VO vo = getUser().getFqans().get(fqan);
+				myLogger.debug(temp.getDn() + ":Creating voms proxy for fqan: "
+						+ fqan);
 				ProxyCredential credToUse = CertHelpers.getVOProxyCredential(
 						vo, fqan, temp);
 				return credToUse;
@@ -115,8 +116,12 @@ implements ServiceInterface {
 	}
 
 	public long getCredentialEndTime() {
-
-		return getSpringUserDetails().getCredentialEndTime();
+		GrisuUserDetails gud = getSpringUserDetails();
+		if (gud == null) {
+			return -1L;
+		} else {
+			return getSpringUserDetails().getCredentialEndTime();
+		}
 	}
 
 	@Override
@@ -203,7 +208,9 @@ implements ServiceInterface {
 	public void login(String username, String password) {
 
 		this.username = username;
-		this.password = password.toCharArray();
+		if (StringUtils.isNotBlank(password)) {
+			this.password = password.toCharArray();
+		}
 
 		getCredential();
 

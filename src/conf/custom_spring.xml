@@ -1,0 +1,6 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+  <bean id="auditAdvice" class="grisu.control.util.AuditAdvice"/>
+
+</beans>
