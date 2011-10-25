@@ -10,10 +10,11 @@ import grisu.settings.ServerPropertiesManager;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.globus.myproxy.CredentialInfo;
 import org.globus.myproxy.MyProxy;
 import org.ietf.jgss.GSSCredential;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,8 +25,8 @@ import com.google.common.collect.Sets;
 
 public class GrisuUserDetails implements UserDetails {
 
-	static final Logger myLogger = Logger.getLogger(GrisuUserDetails.class
-			.getName());
+	static final Logger myLogger = LoggerFactory
+			.getLogger(GrisuUserDetails.class.getName());
 
 	private final String username;
 	private UsernamePasswordAuthenticationToken authentication;
@@ -61,8 +62,9 @@ public class GrisuUserDetails implements UserDetails {
 
 			return new ProxyCredential(proxy);
 		} catch (final Exception e) {
-			myLogger.error("Could not create myproxy credential: "
-					+ e.getLocalizedMessage(), e);
+			myLogger.error(
+					"Could not create myproxy credential: "
+							+ e.getLocalizedMessage(), e);
 			throw new NoValidCredentialException(e.getLocalizedMessage());
 		}
 
@@ -71,7 +73,7 @@ public class GrisuUserDetails implements UserDetails {
 	public Set<GrantedAuthority> getAuthorities() {
 
 		if (success) {
-			Set<GrantedAuthority> result = Sets.newHashSet();
+			final Set<GrantedAuthority> result = Sets.newHashSet();
 			result.add(new GrantedAuthorityImpl("User"));
 			return result;
 		} else {
@@ -96,7 +98,7 @@ public class GrisuUserDetails implements UserDetails {
 			info = myproxy.info(getProxyCredential().getGssCredential(), user,
 					password);
 		} catch (final Exception e) {
-			myLogger.error(e);
+			myLogger.error(e.getLocalizedMessage(), e);
 			return -1;
 		}
 
@@ -133,19 +135,19 @@ public class GrisuUserDetails implements UserDetails {
 					return proxy;
 				}
 			} catch (final Exception e) {
-				myLogger.error(e);
+				myLogger.error(e.getLocalizedMessage(), e);
 			}
 			// myLogger.debug("Old proxy not good enough. Creating new one...");
 		}
 
 		ProxyCredential proxyTemp = null;
 		try {
-			proxyTemp = createProxyCredential(authentication
-					.getPrincipal().toString(), authentication.getCredentials()
-					.toString(), MyProxyServerParams.DEFAULT_MYPROXY_SERVER,
+			proxyTemp = createProxyCredential(authentication.getPrincipal()
+					.toString(), authentication.getCredentials().toString(),
+					MyProxyServerParams.DEFAULT_MYPROXY_SERVER,
 					MyProxyServerParams.DEFAULT_MYPROXY_PORT,
 					ServerPropertiesManager.getMyProxyLifetime());
-		} catch (NoValidCredentialException e) {
+		} catch (final NoValidCredentialException e) {
 			throw new AuthenticationException(e.getLocalizedMessage(), e) {
 			};
 		}

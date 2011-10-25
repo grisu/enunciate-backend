@@ -23,7 +23,8 @@ import javax.xml.ws.soap.MTOM;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,7 +62,7 @@ implements ServiceInterface {
 		.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 	}
 
-	static final Logger myLogger = Logger
+	static final Logger myLogger = LoggerFactory
 			.getLogger(EnunciateServiceInterfaceImpl.class.getName());
 
 	private String username;
@@ -85,7 +86,7 @@ implements ServiceInterface {
 	protected final ProxyCredential getCredential(String fqan,
 			int lifetimeInSeconds) {
 
-		String myProxyServer = MyProxyServerParams.getMyProxyServer();
+		final String myProxyServer = MyProxyServerParams.getMyProxyServer();
 		final int myProxyPort = MyProxyServerParams.getMyProxyPort();
 
 		ProxyCredential temp;
@@ -102,21 +103,21 @@ implements ServiceInterface {
 				final VO vo = getUser().getFqans().get(fqan);
 				myLogger.debug(temp.getDn() + ":Creating voms proxy for fqan: "
 						+ fqan);
-				ProxyCredential credToUse = CertHelpers.getVOProxyCredential(
-						vo, fqan, temp);
+				final ProxyCredential credToUse = CertHelpers
+						.getVOProxyCredential(vo, fqan, temp);
 				return credToUse;
 			} else {
 				return temp;
 			}
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 
 	}
 
 	public long getCredentialEndTime() {
-		GrisuUserDetails gud = getSpringUserDetails();
+		final GrisuUserDetails gud = getSpringUserDetails();
 		if (gud == null) {
 			return -1L;
 		} else {
@@ -137,7 +138,7 @@ implements ServiceInterface {
 						hostname = "Unavailable";
 					}
 				} catch (final UnknownHostException e) {
-					myLogger.debug(e);
+					myLogger.debug(e.getLocalizedMessage(), e);
 					hostname = "Unavailable";
 				}
 			}

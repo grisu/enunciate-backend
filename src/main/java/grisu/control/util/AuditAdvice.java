@@ -9,7 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,17 +19,17 @@ public class AuditAdvice implements MethodInterceptor {
 
 	public static AtomicInteger numberOfOpenMethodCalls = new AtomicInteger(0);
 
-	static final Logger myLogger = Logger
-			.getLogger(AuditAdvice.class.getName());
+	static final Logger myLogger = LoggerFactory.getLogger(AuditAdvice.class
+			.getName());
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 
-		String method = methodInvocation.getMethod().getName();
+		final String method = methodInvocation.getMethod().getName();
 		String dn = null;
-		Object[] argOs = methodInvocation.getArguments();
+		final Object[] argOs = methodInvocation.getArguments();
 		String argList = "NO_ARGS";
 		if ((argOs != null) && (argOs.length > 0) && !"login".equals(method)) {
-			String[] args = new String[argOs.length];
+			final String[] args = new String[argOs.length];
 			for (int i = 0; i < args.length; i++) {
 				try {
 					if (argOs[i] == null) {
@@ -36,7 +37,7 @@ public class AuditAdvice implements MethodInterceptor {
 					} else {
 						args[i] = (argOs[i]).toString();
 					}
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					args[i] = "Error serializing object";
 				}
 			}
@@ -52,50 +53,47 @@ public class AuditAdvice implements MethodInterceptor {
 		if (authentication != null) {
 			final Object principal = authentication.getPrincipal();
 			if (principal instanceof GrisuUserDetails) {
-				GrisuUserDetails gud = (GrisuUserDetails) principal;
+				final GrisuUserDetails gud = (GrisuUserDetails) principal;
 				dn = gud.getProxyCredential().getDn();
 			}
 		}
 
-		String tid = UUID.randomUUID().toString();
+		final String tid = UUID.randomUUID().toString();
 
-		Date start = new Date();
+		final Date start = new Date();
 		int number = numberOfOpenMethodCalls.incrementAndGet();
 
 		if (dn == null) {
 			myLogger.debug("[tid: " + tid + "]: Entering method: " + method
-					+ " arguments: "
-					+ argList + " time: " + start.getTime()
+					+ " arguments: " + argList + " time: " + start.getTime()
 					+ " open method calls: " + number);
 		} else {
 			myLogger.debug("[tid: " + tid + "]: Entering method: " + method
-					+ " arguments: "
-					+ argList + " user: " + dn + " time: " + start.getTime()
-					+ " open method calls: " + number);
+					+ " arguments: " + argList + " user: " + dn + " time: "
+					+ start.getTime() + " open method calls: " + number);
 		}
 
 		Object result = null;
 		try {
 			result = methodInvocation.proceed();
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			number = numberOfOpenMethodCalls.decrementAndGet();
-			Date end = new Date();
-			long duration = end.getTime() - start.getTime();
+			final Date end = new Date();
+			final long duration = end.getTime() - start.getTime();
 			myLogger.debug("[tid: " + tid + "]: Method call: " + method
-					+ " failed: "
-					+ t.getLocalizedMessage());
+					+ " failed: " + t.getLocalizedMessage());
 			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
-					+ " arguments: "
-					+ argList + " time: " + end.getTime() + " duration: "
-					+ duration + " open method calls: " + number);
+					+ " arguments: " + argList + " time: " + end.getTime()
+					+ " duration: " + duration + " open method calls: "
+					+ number);
 			throw t;
 		}
 
 		number = numberOfOpenMethodCalls.decrementAndGet();
 
-		Date end = new Date();
+		final Date end = new Date();
 
-		long duration = end.getTime() - start.getTime();
+		final long duration = end.getTime() - start.getTime();
 
 		String resultString = "n/a";
 		if (result instanceof String) {
@@ -112,17 +110,14 @@ public class AuditAdvice implements MethodInterceptor {
 
 		if (dn == null) {
 			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
-					+ " arguments: "
-					+ argList + " time: " + end.getTime() + " duration: "
-					+ duration + " result: " + resultString
+					+ " arguments: " + argList + " time: " + end.getTime()
+					+ " duration: " + duration + " result: " + resultString
 					+ " open method calls: " + number);
 		} else {
 			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
-					+ " arguments: "
-					+ argList + " user: " + dn + " time: " + end.getTime()
-					+ " duration: " + duration + " result: " + resultString
-					+ " open method calls: "
-					+ number);
+					+ " arguments: " + argList + " user: " + dn + " time: "
+					+ end.getTime() + " duration: " + duration + " result: "
+					+ resultString + " open method calls: " + number);
 		}
 
 		return result;
