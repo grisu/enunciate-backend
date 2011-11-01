@@ -479,7 +479,7 @@
 											</mapper>
 										</data>
 										<data>
-											<src>${project.basedir}/src/deb/data/grisu-log4j.xml</src>
+											<src>${project.basedir}/src/deb/data/logback.xml</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>

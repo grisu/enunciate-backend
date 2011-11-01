@@ -1,0 +1,34 @@
+<configuration>
+
+ <logger name="grisu" level="debug"/>
+
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logFile.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>/var/log/grisu/grisu.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+      <!-- keep 30 days' worth of history -->
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} - %msg%n</pattern>
+    </encoder>
+  </appender> 
+
+
+  <appender name="STDOUT"
+    class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root>
+    <level value="warn" />
+<!--     <appender-ref ref="FILE" /> -->
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
