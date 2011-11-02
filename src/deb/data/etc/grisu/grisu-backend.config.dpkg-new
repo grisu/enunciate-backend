@@ -21,6 +21,8 @@
 # fsCache = true
 # whether to close filesystems in the background (default: false), this was introduced because jglobus behaviour was not consistent and sometimes produced lock
 # closeFilesystemsInBackground = false
+# how long to wait in seconds for a job to be cleaned (file deletion can take quite a while via gridftp if there are a lot of files involved - default: 1800)
+# jobCleanThreshold = 1800
 
 # The database configuration.
 
