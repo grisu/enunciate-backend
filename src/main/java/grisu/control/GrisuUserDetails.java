@@ -5,7 +5,7 @@ import grisu.backend.model.User;
 import grisu.backend.utils.CertHelpers;
 import grisu.control.exceptions.NoValidCredentialException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
-import grisu.settings.MyProxyServerParams;
+import grisu.jcommons.utils.MyProxyServerParams;
 import grisu.settings.ServerPropertiesManager;
 
 import java.util.Set;
