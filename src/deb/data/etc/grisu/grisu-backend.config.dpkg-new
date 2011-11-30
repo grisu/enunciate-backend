@@ -1,6 +1,8 @@
 # General settings
 
 [General]
+# comma-seperated list of which VOs to support (in addition to the ones that are placed manually in either /etc/vomses or $HOME/.glite/vomses) -- vomses files need to be present in jgrith vomses.zip file in order for that to work. default: nz
+# supportedVOs = nz
 # the directory which Grisu uses to put all jobdirectories into, default: active-jobs
 # jobDirName = active-jobs
 # the directory which Grisu uses to put all archived jobdirectories under, default: archived-jobs
