@@ -210,7 +210,7 @@ public class GrisuUserDetails implements UserDetails {
 			UsernamePasswordAuthenticationToken authentication) {
 		Object cred = this.authentication.getCredentials();
 
-		if (!cred.equals(authentication.getCredentials())) {
+		if ((cred != null) && !cred.equals(authentication.getCredentials())) {
 			this.proxy = null;
 		}
 
