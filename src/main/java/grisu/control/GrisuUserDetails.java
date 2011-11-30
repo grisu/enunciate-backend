@@ -208,10 +208,12 @@ public class GrisuUserDetails implements UserDetails {
 
 	public void setAuthentication(
 			UsernamePasswordAuthenticationToken authentication) {
-		Object cred = this.authentication.getCredentials();
+		if (this.authentication != null) {
+			Object cred = this.authentication.getCredentials();
 
-		if ((cred != null) && !cred.equals(authentication.getCredentials())) {
-			this.proxy = null;
+			if ((cred != null) && !cred.equals(authentication.getCredentials())) {
+				this.proxy = null;
+			}
 		}
 
 		this.authentication = authentication;
