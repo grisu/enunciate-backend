@@ -1,18 +1,17 @@
 package grisu.control;
 
-import grisu.backend.model.ProxyCredential;
 import grisu.backend.model.User;
-import grisu.backend.utils.CertHelpers;
 import grisu.control.exceptions.NoValidCredentialException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.jcommons.utils.MyProxyServerParams;
 import grisu.settings.ServerPropertiesManager;
+import grith.jgrith.Credential;
+import grith.jgrith.utils.CertHelpers;
 
 import java.util.Set;
 
 import org.globus.myproxy.CredentialInfo;
 import org.globus.myproxy.MyProxy;
-import org.ietf.jgss.GSSCredential;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +30,7 @@ public class GrisuUserDetails implements UserDetails {
 	private final String username;
 	private UsernamePasswordAuthenticationToken authentication;
 	private final boolean success = true;
-	private ProxyCredential proxy = null;
+	private Credential proxy = null;
 
 	private User user = null;
 
@@ -40,27 +39,30 @@ public class GrisuUserDetails implements UserDetails {
 		this.username = username;
 	}
 
-	private synchronized ProxyCredential createProxyCredential(String username,
+	private synchronized Credential createProxyCredential(String username,
 			String password, String myProxyServer, int port, int lifetime) {
 
 		// System.out.println("Username: "+username);
 		// System.out.println("Password: "+password);
 
-		final MyProxy myproxy = new MyProxy(myProxyServer, port);
-		GSSCredential proxy = null;
+		// final MyProxy myproxy = new MyProxy(myProxyServer, port);
 		try {
 			myLogger.debug("Getting delegated proxy from MyProxy...");
-			proxy = myproxy.get(username, password, lifetime);
-			final int remaining = proxy.getRemainingLifetime();
+			Credential cred = new Credential(username, password.toCharArray(),
+					myProxyServer, port, lifetime);
+
+			// proxy = myproxy.get(username, password, lifetime);
+			final int remaining = cred.getRemainingLifetime();
 			myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
-					+ CertHelpers.getDnInProperFormat(proxy)
+					+ CertHelpers.getDnInProperFormat(cred.getCredential())
 					+ " remaining liftime: " + remaining);
 
 			if (remaining <= 0) {
 				throw new RuntimeException("Proxy not valid anymore.");
 			}
 
-			return new ProxyCredential(proxy);
+			return cred;
+			// return new Credential(proxy);
 		} catch (final Exception e) {
 			myLogger.error(
 					"Could not create myproxy credential: "
@@ -70,48 +72,7 @@ public class GrisuUserDetails implements UserDetails {
 
 	}
 
-	public Set<GrantedAuthority> getAuthorities() {
-
-		if (success) {
-			final Set<GrantedAuthority> result = Sets.newHashSet();
-			result.add(new GrantedAuthorityImpl("User"));
-			return result;
-		} else {
-			return null;
-		}
-
-	}
-
-	public synchronized long getCredentialEndTime() {
-
-		if (authentication == null) {
-			return -1;
-		}
-
-		final MyProxy myproxy = new MyProxy(
-				MyProxyServerParams.getMyProxyServer(),
-				MyProxyServerParams.getMyProxyPort());
-		CredentialInfo info = null;
-		try {
-			final String user = authentication.getPrincipal().toString();
-			final String password = authentication.getCredentials().toString();
-			info = myproxy.info(getProxyCredential().getGssCredential(), user,
-					password);
-		} catch (final Exception e) {
-			myLogger.error(e.getLocalizedMessage(), e);
-			return -1;
-		}
-
-		return info.getEndTime();
-
-	}
-
-	public String getPassword() {
-
-		return "dummy";
-	}
-
-	public synchronized ProxyCredential getProxyCredential()
+	public synchronized Credential fetchCredential()
 			throws AuthenticationException {
 
 		// myLogger.debug("Getting proxy credential...");
@@ -126,7 +87,7 @@ public class GrisuUserDetails implements UserDetails {
 			// myLogger.debug("Old valid proxy found.");
 			long oldLifetime = -1;
 			try {
-				oldLifetime = proxy.getGssCredential().getRemainingLifetime();
+				oldLifetime = proxy.getCredential().getRemainingLifetime();
 				if (oldLifetime >= ServerPropertiesManager
 						.getMinProxyLifetimeBeforeGettingNewProxy()) {
 
@@ -140,7 +101,7 @@ public class GrisuUserDetails implements UserDetails {
 			// myLogger.debug("Old proxy not good enough. Creating new one...");
 		}
 
-		ProxyCredential proxyTemp = null;
+		Credential proxyTemp = null;
 		try {
 			proxyTemp = createProxyCredential(authentication.getPrincipal()
 					.toString(), authentication.getCredentials().toString(),
@@ -175,13 +136,54 @@ public class GrisuUserDetails implements UserDetails {
 
 	}
 
+	public Set<GrantedAuthority> getAuthorities() {
+
+		if (success) {
+			final Set<GrantedAuthority> result = Sets.newHashSet();
+			result.add(new GrantedAuthorityImpl("User"));
+			return result;
+		} else {
+			return null;
+		}
+
+	}
+
+	public synchronized long getCredentialEndTime() {
+
+		if (authentication == null) {
+			return -1;
+		}
+
+		final MyProxy myproxy = new MyProxy(
+				MyProxyServerParams.getMyProxyServer(),
+				MyProxyServerParams.getMyProxyPort());
+		CredentialInfo info = null;
+		try {
+			final String user = authentication.getPrincipal().toString();
+			final String password = authentication.getCredentials().toString();
+			info = myproxy.info(fetchCredential().getCredential(), user,
+					password);
+		} catch (final Exception e) {
+			myLogger.error(e.getLocalizedMessage(), e);
+			return -1;
+		}
+
+		return info.getEndTime();
+
+	}
+
+	public String getPassword() {
+
+		return "dummy";
+	}
+
 	public synchronized User getUser(AbstractServiceInterface si) {
 
 		if (user == null) {
-			user = User.createUser(getProxyCredential(), si);
+			user = User.createUser(fetchCredential(), si);
 		}
 
-		user.setCred(getProxyCredential());
+		user.setCredential(fetchCredential());
 		return user;
 
 	}
@@ -217,7 +219,7 @@ public class GrisuUserDetails implements UserDetails {
 		}
 
 		this.authentication = authentication;
-		getProxyCredential();
+		fetchCredential();
 	}
 
 }

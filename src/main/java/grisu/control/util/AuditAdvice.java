@@ -54,7 +54,7 @@ public class AuditAdvice implements MethodInterceptor {
 			final Object principal = authentication.getPrincipal();
 			if (principal instanceof GrisuUserDetails) {
 				final GrisuUserDetails gud = (GrisuUserDetails) principal;
-				dn = gud.getProxyCredential().getDn();
+				dn = gud.fetchCredential().getDn();
 			}
 		}
 

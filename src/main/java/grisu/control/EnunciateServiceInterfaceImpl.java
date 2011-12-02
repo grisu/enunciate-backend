@@ -1,16 +1,12 @@
 package grisu.control;
 
-import grisu.backend.model.ProxyCredential;
 import grisu.backend.model.User;
-import grisu.backend.utils.CertHelpers;
 import grisu.control.exceptions.NoSuchTemplateException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.control.serviceInterfaces.LocalServiceInterface;
-import grisu.jcommons.utils.MyProxyServerParams;
 import grisu.settings.Environment;
 import grisu.settings.ServiceTemplateManagement;
-import grith.jgrith.myProxy.MyProxy_light;
-import grith.jgrith.voms.VO;
+import grith.jgrith.Credential;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,12 +66,12 @@ implements ServiceInterface {
 
 	private static String hostname = null;
 
-	protected synchronized ProxyCredential getCredential() {
+	protected synchronized Credential getCredential() {
 
 		final GrisuUserDetails gud = getSpringUserDetails();
 		if (gud != null) {
 			// myLogger.debug("Found user: " + gud.getUsername());
-			return gud.getProxyCredential();
+			return gud.fetchCredential();
 		} else {
 			myLogger.error("Couldn't find user...");
 			return null;
@@ -83,38 +79,38 @@ implements ServiceInterface {
 
 	}
 
-	protected final ProxyCredential getCredential(String fqan,
-			int lifetimeInSeconds) {
-
-		final String myProxyServer = MyProxyServerParams.getMyProxyServer();
-		final int myProxyPort = MyProxyServerParams.getMyProxyPort();
-
-		ProxyCredential temp;
-		try {
-			myLogger.debug("Getting delegated proxy from MyProxy...");
-			temp = new ProxyCredential(MyProxy_light.getDelegation(
-					myProxyServer, myProxyPort, username, password,
-					lifetimeInSeconds));
-			myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
-					+ temp.getDn());
-
-			if (StringUtils.isNotBlank(fqan)) {
-
-				final VO vo = getUser().getFqans().get(fqan);
-				myLogger.debug(temp.getDn() + ":Creating voms proxy for fqan: "
-						+ fqan);
-				final ProxyCredential credToUse = CertHelpers
-						.getVOProxyCredential(vo, fqan, temp);
-				return credToUse;
-			} else {
-				return temp;
-			}
-
-		} catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-
-	}
+	// protected final ProxyCredential getCredential(String fqan,
+	// int lifetimeInSeconds) {
+	//
+	// final String myProxyServer = MyProxyServerParams.getMyProxyServer();
+	// final int myProxyPort = MyProxyServerParams.getMyProxyPort();
+	//
+	// ProxyCredential temp;
+	// try {
+	// myLogger.debug("Getting delegated proxy from MyProxy...");
+	// temp = new ProxyCredential(MyProxy_light.getDelegation(
+	// myProxyServer, myProxyPort, username, password,
+	// lifetimeInSeconds));
+	// myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
+	// + temp.getDn());
+	//
+	// if (StringUtils.isNotBlank(fqan)) {
+	//
+	// final VO vo = getUser().getFqans().get(fqan);
+	// myLogger.debug(temp.getDn() + ":Creating voms proxy for fqan: "
+	// + fqan);
+	// final ProxyCredential credToUse = CertHelpers
+	// .getVOProxyCredential(vo, fqan, temp);
+	// return credToUse;
+	// } else {
+	// return temp;
+	// }
+	//
+	// } catch (final Exception e) {
+	// throw new RuntimeException(e);
+	// }
+	//
+	// }
 
 	public long getCredentialEndTime() {
 		final GrisuUserDetails gud = getSpringUserDetails();
