@@ -6,8 +6,10 @@ import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.jcommons.utils.MyProxyServerParams;
 import grisu.settings.ServerPropertiesManager;
 import grith.jgrith.Credential;
+import grith.jgrith.MyProxyCredential;
 import grith.jgrith.utils.CertHelpers;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.globus.myproxy.CredentialInfo;
@@ -32,6 +34,8 @@ public class GrisuUserDetails implements UserDetails {
 	private final boolean success = true;
 	private Credential proxy = null;
 
+	private Date lastProxyRetrieve = null;
+
 	private User user = null;
 
 	public GrisuUserDetails(String username) {
@@ -48,7 +52,8 @@ public class GrisuUserDetails implements UserDetails {
 		// final MyProxy myproxy = new MyProxy(myProxyServer, port);
 		try {
 			myLogger.debug("Getting delegated proxy from MyProxy...");
-			Credential cred = new Credential(username, password.toCharArray(),
+			Credential cred = new MyProxyCredential(username,
+					password.toCharArray(),
 					myProxyServer, port, lifetime);
 
 			// proxy = myproxy.get(username, password, lifetime);
@@ -95,6 +100,21 @@ public class GrisuUserDetails implements UserDetails {
 					// myLogger.debug("Old valid proxy still good enough. Using it.");
 					return proxy;
 				}
+
+				// only get the proxy every xx minutes if valid but not within
+				// remaining liftime threshold anymore
+				if (lastProxyRetrieve != null) {
+					long lastTime = lastProxyRetrieve.getTime();
+					long now = new Date().getTime();
+
+					long diff = ServerPropertiesManager
+							.getWaitTimeBetweenProxyRetrievals();
+
+					if ((lastTime + diff) >= now) {
+						return proxy;
+					}
+				}
+
 			} catch (final Exception e) {
 				myLogger.error(e.getLocalizedMessage(), e);
 			}
@@ -108,22 +128,13 @@ public class GrisuUserDetails implements UserDetails {
 					MyProxyServerParams.DEFAULT_MYPROXY_SERVER,
 					MyProxyServerParams.DEFAULT_MYPROXY_PORT,
 					ServerPropertiesManager.getMyProxyLifetime());
+			lastProxyRetrieve = new Date();
 		} catch (final NoValidCredentialException e) {
 			throw new AuthenticationException(e.getLocalizedMessage(), e) {
 			};
 		}
 
 		if ((proxyTemp == null) || !proxyTemp.isValid()) {
-
-			// if ( proxyTemp == null ) {
-			// System.out.println("PROXYTEMP IS NULL");
-			// } else {
-			// if ( proxyTemp.getGssCredential() == null ) {
-			// System.out.println("GSSCREDENTIAL IS NULL");
-			// } else {
-			// System.out.println("GSSCREDENTIAL NO LIFETIME");
-			// }
-			// }
 
 			throw new AuthenticationException(
 					"Could not get valid myproxy credential.") {

@@ -338,6 +338,25 @@
 										<ignore />
 									</action>
 								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.enunciate
+										</groupId>
+										<artifactId>
+											maven-enunciate-cxf-plugin
+										</artifactId>
+										<versionRange>
+											[1.24,)
+										</versionRange>
+										<goals>
+											<goal>assemble</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>

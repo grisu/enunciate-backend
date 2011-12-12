@@ -13,6 +13,8 @@
 # minProxyLifetime = 600
 # the lifetime of a proxy that gets delegated from MyProxy (in seconds), default: 3600
 # proxyLifetime = 3600
+# the wait time inbetween two proxy requests once the proxy is not within the proxy min lifetime anymore in seconds (default: 300)
+proxyRetrievalWaitTime = 300
 # the wait time in seconds before a job status gets checked again on a remote endpoint (before that, the last status is returned). this helps making grisu faster, although you sometimes get out of date job statuses, default: 8
 # statusCheckWaitTime = 8
 # the timeout for filesystem connections in milliseconds, default: 4000
