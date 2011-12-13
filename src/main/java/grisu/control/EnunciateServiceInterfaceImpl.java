@@ -6,7 +6,7 @@ import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.control.serviceInterfaces.LocalServiceInterface;
 import grisu.settings.Environment;
 import grisu.settings.ServiceTemplateManagement;
-import grith.jgrith.Credential;
+import grith.jgrith.credential.Credential;
 
 import java.io.File;
 import java.io.IOException;
