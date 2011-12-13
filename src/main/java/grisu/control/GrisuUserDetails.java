@@ -108,7 +108,7 @@ public class GrisuUserDetails implements UserDetails {
 					long now = new Date().getTime();
 
 					long diff = ServerPropertiesManager
-							.getWaitTimeBetweenProxyRetrievals();
+							.getWaitTimeBetweenProxyRetrievals() * 1000;
 
 					if ((lastTime + diff) >= now) {
 						return proxy;
