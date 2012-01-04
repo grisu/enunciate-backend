@@ -123,7 +123,6 @@ implements ServiceInterface {
 
 	@Override
 	public String getInterfaceInfo(String key) {
-
 		if ("HOSTNAME".equalsIgnoreCase(key)) {
 			if (hostname == null) {
 				try {
@@ -131,20 +130,24 @@ implements ServiceInterface {
 					final byte[] ipAddr = addr.getAddress();
 					hostname = addr.getHostName();
 					if (StringUtils.isBlank(hostname)) {
-						hostname = "Unavailable";
+						hostname = "";
+					} else {
+						hostname = hostname + " / ";
 					}
+					hostname = hostname + addr.getHostAddress();
 				} catch (final UnknownHostException e) {
-					myLogger.debug(e.getLocalizedMessage(), e);
 					hostname = "Unavailable";
 				}
 			}
+			return hostname;
 		} else if ("VERSION".equalsIgnoreCase(key)) {
 			return Integer.toString(ServiceInterface.API_VERSION);
 		} else if ("NAME".equalsIgnoreCase(key)) {
-			return "Webservice (REST/SOAP) interface";
+			return "Local serviceinterface";
 		} else if ("BACKEND_VERSION".equalsIgnoreCase(key)) {
 			return BACKEND_VERSION;
 		}
+
 		return null;
 	}
 
