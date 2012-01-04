@@ -143,7 +143,7 @@ implements ServiceInterface {
 		} else if ("VERSION".equalsIgnoreCase(key)) {
 			return Integer.toString(ServiceInterface.API_VERSION);
 		} else if ("NAME".equalsIgnoreCase(key)) {
-			return "Local serviceinterface";
+			return "Webservice (REST/SOAP) interface";
 		} else if ("BACKEND_VERSION".equalsIgnoreCase(key)) {
 			return BACKEND_VERSION;
 		}
