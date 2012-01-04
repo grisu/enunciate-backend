@@ -10,8 +10,6 @@ import grith.jgrith.credential.Credential;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import javax.jws.WebService;
 import javax.ws.rs.Path;
@@ -63,8 +61,6 @@ implements ServiceInterface {
 
 	private String username;
 	private char[] password;
-
-	private static String hostname = null;
 
 	protected synchronized Credential getCredential() {
 
@@ -122,33 +118,9 @@ implements ServiceInterface {
 	}
 
 	@Override
-	public String getInterfaceInfo(String key) {
-		if ("HOSTNAME".equalsIgnoreCase(key)) {
-			if (hostname == null) {
-				try {
-					final InetAddress addr = InetAddress.getLocalHost();
-					final byte[] ipAddr = addr.getAddress();
-					hostname = addr.getHostName();
-					if (StringUtils.isBlank(hostname)) {
-						hostname = "";
-					} else {
-						hostname = hostname + " / ";
-					}
-					hostname = hostname + addr.getHostAddress();
-				} catch (final UnknownHostException e) {
-					hostname = "Unavailable";
-				}
-			}
-			return hostname;
-		} else if ("VERSION".equalsIgnoreCase(key)) {
-			return Integer.toString(ServiceInterface.API_VERSION);
-		} else if ("NAME".equalsIgnoreCase(key)) {
-			return "Webservice (REST/SOAP) interface";
-		} else if ("BACKEND_VERSION".equalsIgnoreCase(key)) {
-			return BACKEND_VERSION;
-		}
+	public String getInterfaceType() {
 
-		return null;
+		return "Webservice (REST/SOAP) interface";
 	}
 
 	private GrisuUserDetails getSpringUserDetails() {
