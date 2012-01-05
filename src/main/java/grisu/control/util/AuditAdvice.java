@@ -1,11 +1,17 @@
 package grisu.control.util;
 
 import grisu.control.GrisuUserDetails;
+import grisu.jcommons.utils.VariousStringHelpers;
 import grisu.model.dto.DtoStringList;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -17,7 +23,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.google.common.collect.Lists;
+
 public class AuditAdvice implements MethodInterceptor {
+
+	private final WebServiceContext wsContext = new org.apache.cxf.jaxws.context.WebServiceContextImpl();;
 
 	public static AtomicInteger numberOfOpenMethodCalls = new AtomicInteger(0);
 
@@ -47,6 +57,20 @@ public class AuditAdvice implements MethodInterceptor {
 			argList = argList.replace("\n", " ");
 		}
 
+		MessageContext mContext = wsContext.getMessageContext();
+
+		Map o = (Map) mContext.get(MessageContext.HTTP_REQUEST_HEADERS);
+
+		List session_id = (List) o.get("X-user-session");
+		List client = (List) o.get("X-grisu-client");
+
+		if ((session_id == null) | (session_id.size() == 0)) {
+			session_id = Lists.newArrayList("n/a");
+		}
+
+		if ((client == null) || (client.size() == 0)) {
+			client = Lists.newArrayList("n/a");
+		}
 
 		final SecurityContext securityContext = SecurityContextHolder
 				.getContext();
@@ -66,16 +90,19 @@ public class AuditAdvice implements MethodInterceptor {
 		final Date start = new Date();
 		int number = numberOfOpenMethodCalls.incrementAndGet();
 
+		String un = VariousStringHelpers.getCN(dn);
 		MDC.put("tid", tid);
-		if (dn == null) {
+		if (StringUtils.isBlank(un)) {
 			MDC.put("user", "n/a");
 		} else {
-			MDC.put("user", dn);
+			MDC.put("user", un);
 		}
 
 		myLogger.debug(
-				"Entering method: {} arguments: {} time: {} open method calls: {}",
-				new Object[] { method, argList, start.getTime(), number });
+				"Entering method:[{}] arguments:[{}] dn:[{}] client:[{}] client-session:[{}] time:[{}] open method calls:[{}]",
+				new Object[] { method, argList, dn, client.get(0),
+						session_id.get(0),
+						start.getTime(), number });
 
 
 		Object result = null;
