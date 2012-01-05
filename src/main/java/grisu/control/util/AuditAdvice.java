@@ -1,6 +1,7 @@
 package grisu.control.util;
 
 import grisu.control.GrisuUserDetails;
+import grisu.model.dto.DtoStringList;
 
 import java.util.Date;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,7 +35,7 @@ public class AuditAdvice implements MethodInterceptor {
 			for (int i = 0; i < args.length; i++) {
 				try {
 					if (argOs[i] == null) {
-						args[i] = "null";
+						args[i] = "null_arg";
 					} else {
 						args[i] = (argOs[i]).toString();
 					}
@@ -44,6 +46,7 @@ public class AuditAdvice implements MethodInterceptor {
 			argList = StringUtils.join(args, ";");
 			argList = argList.replace("\n", " ");
 		}
+
 
 		final SecurityContext securityContext = SecurityContextHolder
 				.getContext();
@@ -63,15 +66,17 @@ public class AuditAdvice implements MethodInterceptor {
 		final Date start = new Date();
 		int number = numberOfOpenMethodCalls.incrementAndGet();
 
+		MDC.put("tid", tid);
 		if (dn == null) {
-			myLogger.debug("[tid: " + tid + "]: Entering method: " + method
-					+ " arguments: " + argList + " time: " + start.getTime()
-					+ " open method calls: " + number);
+			MDC.put("user", "n/a");
 		} else {
-			myLogger.debug("[tid: " + tid + "]: Entering method: " + method
-					+ " arguments: " + argList + " user: " + dn + " time: "
-					+ start.getTime() + " open method calls: " + number);
+			MDC.put("user", dn);
 		}
+
+		myLogger.debug(
+				"Entering method: {} arguments: {} time: {} open method calls: {}",
+				new Object[] { method, argList, start.getTime(), number });
+
 
 		Object result = null;
 		try {
@@ -80,12 +85,12 @@ public class AuditAdvice implements MethodInterceptor {
 			number = numberOfOpenMethodCalls.decrementAndGet();
 			final Date end = new Date();
 			final long duration = end.getTime() - start.getTime();
-			myLogger.debug("[tid: " + tid + "]: Method call: " + method
-					+ " failed: " + t.getLocalizedMessage());
-			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
-					+ " arguments: " + argList + " time: " + end.getTime()
-					+ " duration: " + duration + " open method calls: "
-					+ number);
+			myLogger.debug("Failure. Exception class: {} - Message: {}", t
+					.getClass().getSimpleName(), t.getLocalizedMessage());
+			myLogger.debug(
+					"Finished method (failed): {} arguments: {} time: {} duration: {} open method calls: {}",
+					new Object[] { method, argList, end.getTime(), duration,
+							number });
 			throw t;
 		}
 
@@ -104,21 +109,20 @@ public class AuditAdvice implements MethodInterceptor {
 			resultString = ((Boolean) result).toString();
 		} else if (result instanceof Long) {
 			resultString = ((Long) result).toString();
+		} else if (result instanceof DtoStringList) {
+			resultString = StringUtils.join(((DtoStringList) result).asArray(),
+					";");
 		}
 
 		resultString = resultString.replace("\n", " ");
 
-		if (dn == null) {
-			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
-					+ " arguments: " + argList + " time: " + end.getTime()
-					+ " duration: " + duration + " result: " + resultString
-					+ " open method calls: " + number);
-		} else {
-			myLogger.debug("[tid: " + tid + "]: Finished method: " + method
-					+ " arguments: " + argList + " user: " + dn + " time: "
-					+ end.getTime() + " duration: " + duration + " result: "
-					+ resultString + " open method calls: " + number);
-		}
+		myLogger.debug(
+				"Finished method: {} arguments: {} time: {} duration: {} result: {} open method calls: {}",
+				new Object[] { method, argList, end.getTime(), duration,
+						resultString, number });
+
+		MDC.remove("tid");
+		MDC.remove("user");
 
 		return result;
 	}
