@@ -112,11 +112,11 @@ public class AuditAdvice implements MethodInterceptor {
 			number = numberOfOpenMethodCalls.decrementAndGet();
 			final Date end = new Date();
 			final long duration = end.getTime() - start.getTime();
-			myLogger.debug("Failure. Exception class: {} - Message: {}", t
-					.getClass().getSimpleName(), t.getLocalizedMessage());
 			myLogger.debug(
-					"Finished method (failed): {} arguments: {} time: {} duration: {} open method calls: {}",
-					new Object[] { method, argList, end.getTime(), duration,
+					"Finished method (failed): [{}] arguments: [{}] Exception: [{}] Message: [{}] time: [{}] duration: [{}] open method calls: [{}]",
+					new Object[] { method, argList,
+							t.getClass().getSimpleName(),
+							t.getLocalizedMessage(), end.getTime(), duration,
 							number });
 			throw t;
 		}
@@ -144,9 +144,9 @@ public class AuditAdvice implements MethodInterceptor {
 		resultString = resultString.replace("\n", " ");
 
 		myLogger.debug(
-				"Finished method: {} arguments: {} time: {} duration: {} result: {} open method calls: {}",
-				new Object[] { method, argList, end.getTime(), duration,
-						resultString, number });
+				"Finished method: [{}] arguments: [{}] result: [{}] time: [{}] duration: [{}] open method calls: [{}]",
+				new Object[] { method, argList, resultString, end.getTime(),
+						duration, number });
 
 		MDC.remove("tid");
 		MDC.remove("user");
