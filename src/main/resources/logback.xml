@@ -15,7 +15,7 @@
     </rollingPolicy>
 
     <encoder>
-      <pattern>%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level tid=%X{tid} user=%X{user} %-4relative %logger{0} - %msg%n</pattern>
+      <pattern>%-60(%d{HH:mm:ss.SSS} %-5level [%thread]) %logger{0} tid=[%X{tid}] user=[%X{user}] - %msg%n</pattern>
     </encoder>
   </appender> 
 
@@ -23,7 +23,7 @@
   <appender name="STDOUT"
     class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level tid=%X{tid} user=%X{user} %-4relative %logger{0} - %msg%n</pattern>
+      <pattern>%-60(%d{HH:mm:ss.SSS} %-5level [%thread]) %logger{0} tid=[%X{tid}] user=[%X{user}] - %msg%n</pattern>
     </encoder>
   </appender>
 

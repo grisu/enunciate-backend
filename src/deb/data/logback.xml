@@ -1,6 +1,7 @@
 <configuration>
 
  <logger name="grisu" level="debug"/>
+ <logger name="grith" level="debug"/>
 
 
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -14,7 +15,7 @@
     </rollingPolicy>
 
     <encoder>
-      <pattern>%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} - %msg%n</pattern>
+      <pattern>%-60(%d{HH:mm:ss.SSS} %-5level [%thread]) %logger{0} tid=[%X{tid}] user=[%X{user}] - %msg%n</pattern>
     </encoder>
   </appender> 
 
@@ -22,7 +23,7 @@
   <appender name="STDOUT"
     class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} - %msg%n</pattern>
+      <pattern>%-60(%d{HH:mm:ss.SSS} %-5level [%thread]) %logger{0} tid=[%X{tid}] user=[%X{user}] - %msg%n</pattern>
     </encoder>
   </appender>
 
@@ -32,3 +33,4 @@
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>
+
