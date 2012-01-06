@@ -2,12 +2,13 @@ package grisu.control.util;
 
 import grisu.control.GrisuUserDetails;
 import grisu.jcommons.utils.VariousStringHelpers;
+import grisu.jcommons.utils.tid.TidGenerator;
 import grisu.model.dto.DtoStringList;
+import grisu.settings.ServerPropertiesManager;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.ws.WebServiceContext;
@@ -33,6 +34,9 @@ public class AuditAdvice implements MethodInterceptor {
 
 	static final Logger myLogger = LoggerFactory.getLogger(AuditAdvice.class
 			.getName());
+
+	static final TidGenerator tidGenerator = ServerPropertiesManager
+			.getTidGenerator();
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 
@@ -85,9 +89,10 @@ public class AuditAdvice implements MethodInterceptor {
 			}
 		}
 
-		final String tid = UUID.randomUUID().toString();
-
 		final Date start = new Date();
+
+		final String tid = tidGenerator.getTid();
+
 		int number = numberOfOpenMethodCalls.incrementAndGet();
 
 		String un = VariousStringHelpers.getCN(dn);
