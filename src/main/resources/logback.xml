@@ -5,7 +5,7 @@
 
 
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>logFile.log</file>
+    <file>/var/log/grisu/grisu.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <!-- daily rollover -->
       <fileNamePattern>/var/log/grisu/grisu.log.%d{yyyy-MM-dd}.log</fileNamePattern>
