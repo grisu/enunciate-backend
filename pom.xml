@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
@@ -122,9 +123,9 @@
 		</dependency>
 
 		<dependency>
-		<groupId>org.codehaus.enunciate</groupId>
-		<artifactId>enunciate-spring3-app-rt</artifactId>
-		<version>${enunciate.version}</version>
+			<groupId>org.codehaus.enunciate</groupId>
+			<artifactId>enunciate-spring3-app-rt</artifactId>
+			<version>${enunciate.version}</version>
 		</dependency>
 
 
@@ -411,6 +412,56 @@
 				<plugins>
 
 					<plugin>
+						<groupId>com.goldin.plugins</groupId>
+						<artifactId>maven-copy-plugin</artifactId>
+						<version>0.2.3.5</version>
+						<executions>
+							<execution>
+								<id>create-archive</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy</goal>
+								</goals>
+								<configuration>
+									<resources>
+										<!-- ~~~~~~~~~~~~~~ -->
+										<!-- Copy directory -->
+										<!-- ~~~~~~~~~~~~~~ -->
+										<resource>
+											<targetPath>${project.build.outputDirectory}/deb/control</targetPath>
+											<directory>${project.basedir}/src/deb/control</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					
+					       <plugin>
+           <groupId>com.google.code.maven-replacer-plugin</groupId>
+           <artifactId>maven-replacer-plugin</artifactId>
+           <version>1.4.0</version>
+           <executions>
+               <execution>
+                   <phase>prepare-package</phase>
+                   <goals>
+                       <goal>replace</goal>
+                   </goals>                   
+               </execution>
+           </executions>
+           <configuration>
+               <file>${project.build.outputDirectory}/deb/control/control</file>
+               <replacements>
+                   <replacement>
+                       <token>XXX_VERSION_TOKEN_XXX</token>
+                       <value>${project.version}</value>
+                   </replacement>         
+               </replacements>
+           </configuration>
+       </plugin>
+					
+
+					<plugin>
 						<artifactId>jdeb</artifactId>
 						<groupId>org.vafer</groupId>
 						<version>0.9</version>
@@ -423,6 +474,7 @@
 								<configuration>
 									<changesIn>CHANGES.txt</changesIn>
 									<deb>[[buildDir]]/grisu-backend-ws.deb</deb>
+									<controlDir>${project.build.outputDirectory}/deb/control</controlDir>
 									<!-- <installDir>/opt/grisu</installDir> -->
 									<dataSet>
 										<data>
