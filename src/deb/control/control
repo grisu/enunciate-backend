@@ -1,5 +1,5 @@
 Package: grisu-backend-ws
-Version: XXX_VERSION_TOKEN_XXX
+Version: VERSION_TOKEN
 Section: misc
 Priority: optional
 Architecture: all

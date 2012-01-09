@@ -223,9 +223,10 @@
 			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>maven-replacer-plugin</artifactId>
-				<version>1.3.2</version>
+				<version>1.4.0</version>
 				<executions>
 					<execution>
+						<id>set-enunciate-version</id>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>replace</goal>
@@ -239,7 +240,8 @@
 					</includes>
 					<regex>false</regex>
 					<token>VERSION_TOKEN</token>
-					<value>${project.version}</value>
+					<value>
+						${project.version}</value>
 				</configuration>
 			</plugin>
 
@@ -412,54 +414,78 @@
 				<plugins>
 
 					<plugin>
-						<groupId>com.goldin.plugins</groupId>
-						<artifactId>maven-copy-plugin</artifactId>
-						<version>0.2.3.6</version>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.5</version>
 						<executions>
 							<execution>
-								<id>create-archive</id>
-								<phase>package</phase>
+								<id>copy-deb-control</id>
+								<!-- here the phase you need -->
+								<phase>prepare-package</phase>
 								<goals>
-									<goal>copy</goal>
+									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
+									<outputDirectory>${basedir}/target/deb/control</outputDirectory>
 									<resources>
-										<!-- ~~~~~~~~~~~~~~ -->
-										<!-- Copy directory -->
-										<!-- ~~~~~~~~~~~~~~ -->
 										<resource>
-											<targetPath>${project.build.outputDirectory}/deb/control</targetPath>
-											<directory>${project.basedir}/src/deb/control</directory>
+											<directory>${basedir}/src/deb/control</directory>
+											<filtering>false</filtering>
 										</resource>
 									</resources>
 								</configuration>
 							</execution>
 						</executions>
 					</plugin>
-					
-					       <plugin>
-           <groupId>com.google.code.maven-replacer-plugin</groupId>
-           <artifactId>maven-replacer-plugin</artifactId>
-           <version>1.4.0</version>
-           <executions>
-               <execution>
-                   <phase>prepare-package</phase>
-                   <goals>
-                       <goal>replace</goal>
-                   </goals>                   
-               </execution>
-           </executions>
-           <configuration>
-               <file>${project.build.outputDirectory}/deb/control/control</file>
-               <replacements>
-                   <replacement>
-                       <token>XXX_VERSION_TOKEN_XXX</token>
-                       <value>${project.version}</value>
-                   </replacement>         
-               </replacements>
-           </configuration>
-       </plugin>
-					
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>fix_permission</id>
+								<phase>prepare-package</phase>
+								<configuration>
+									<target>
+										<chmod file="target/deb/control/postinst" perm="755" />
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>maven-replacer-plugin</artifactId>
+						<version>1.4.0</version>
+						<executions>
+							<execution>
+								<id>fix_deb_version</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>replace</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<includes>
+								<include>target/classes/enunciate-backend.version</include>
+								<include>target/deb/control/control</include>
+							</includes>
+							<ignoreMissingFile>false</ignoreMissingFile>
+
+							<replacements>
+								<replacement>
+									<token>VERSION_TOKEN</token>
+									<value>${project.version}</value>
+								</replacement>
+							</replacements>
+						</configuration>
+					</plugin>
+
 
 					<plugin>
 						<artifactId>jdeb</artifactId>
@@ -468,13 +494,14 @@
 						<executions>
 							<execution>
 								<phase>package</phase>
+								<id>build-deb</id>
 								<goals>
 									<goal>jdeb</goal>
 								</goals>
 								<configuration>
 									<changesIn>CHANGES.txt</changesIn>
 									<deb>[[buildDir]]/grisu-backend-ws.deb</deb>
-									<controlDir>${project.build.outputDirectory}/deb/control</controlDir>
+									<controlDir>target/deb/control</controlDir>
 									<!-- <installDir>/opt/grisu</installDir> -->
 									<dataSet>
 										<data>
