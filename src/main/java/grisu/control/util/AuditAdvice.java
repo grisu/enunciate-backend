@@ -68,7 +68,7 @@ public class AuditAdvice implements MethodInterceptor {
 		List session_id = (List) o.get("X-user-session");
 		List client = (List) o.get("X-grisu-client");
 
-		if ((session_id == null) | (session_id.size() == 0)) {
+		if ((session_id == null) || (session_id.size() == 0)) {
 			session_id = Lists.newArrayList("n/a");
 		}
 

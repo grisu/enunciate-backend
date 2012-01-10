@@ -17,7 +17,7 @@
 	</organization>
 
 	<properties>
-		<enunciate.version>1.24</enunciate.version>
+		<enunciate.version>1.25</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
 		<grisu.dependency.version>0.4-SNAPSHOT</grisu.dependency.version>
@@ -500,7 +500,7 @@
 								</goals>
 								<configuration>
 									<changesIn>CHANGES.txt</changesIn>
-									<deb>[[buildDir]]/grisu-backend-ws.deb</deb>
+									<deb>[[buildDir]]/grisu-backend-ws-${project.version}.deb</deb>
 									<controlDir>target/deb/control</controlDir>
 									<!-- <installDir>/opt/grisu</installDir> -->
 									<dataSet>

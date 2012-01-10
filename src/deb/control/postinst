@@ -41,6 +41,12 @@ case "$1" in
 		if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then
 			rm -rf /var/lib/tomcat6/webapps/grisu-ws
 		fi
+		
+		# adjust permissions
+		if [ ! -d /var/lib/grisu/ ]; then
+			mkdir -p /var/lib/grisu/
+		fi
+		chown -R tomcat6:tomcat6 /var/lib/grisu 
 
 	 	# copy a few ca root certs in the proper directory to get started. Ideally those will be updated automatically using a package		
 		if [ -d /etc/grid-security/certificates ]; then
@@ -69,13 +75,13 @@ case "$1" in
 		# now, remove those jars from war file
 		# zip -d /var/lib/grisu/grisu-ws.war WEB-INF/lib/bcprov-jdk15-145.jar  WEB-INF/lib/cryptix-asn1-1.7.0.jar WEB-INF/lib/cryptix32-1.7.0.jar WEB-INF/lib/puretls-1.7.0.jar WEB-INF/lib/globus-dependencies-0.3.jar
 		
-		update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java
-		update-alternatives --set javac /usr/lib/jvm/java-6-sun/bin/javac
+		#update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java
+		#update-alternatives --set javac /usr/lib/jvm/java-6-sun/bin/javac
 		
 
-		if ! grep ^JAVA_HOME= /etc/default/tomcat6; then
-			echo 'JAVA_HOME=/usr/lib/jvm/java-6-sun/' >> /etc/default/tomcat6
-		fi
+		#if ! grep ^JAVA_HOME= /etc/default/tomcat6; then
+		#		echo 'JAVA_HOME=/usr/lib/jvm/java-6-sun/' >> /etc/default/tomcat6
+		#fi
 		
 		
 		/etc/init.d/tomcat6 start
