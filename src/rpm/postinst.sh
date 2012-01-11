@@ -1,0 +1,102 @@
+#!/bin/sh
+# postinst script for hudson
+#
+# see: dh_installdeb(1)
+
+set -e
+
+# summary of how this script can be called:
+#        * <postinst> `configure' <most-recently-configured-version>
+#        * <old-postinst> `abort-upgrade' <new version>
+#        * <conflictor's-postinst> `abort-remove' `in-favour' <package>
+#          <new-version>
+#        * <postinst> `abort-remove'
+#        * <deconfigured's-postinst> `abort-deconfigure' `in-favour'
+#          <failed-install-package> <version> `removing'
+#          <conflicting-package> <version>
+# for details, see http://www.debian.org/doc/debian-policy/ or
+# the debian-policy package
+
+
+case "$1" in
+    configure)
+    
+    	service tomcat6 stop	
+
+		# if templates_available directory already exist, don't extract the default templates (inclusive git repo info)
+		if [ -d /etc/grisu/templates_available ]; then
+			rm /etc/grisu/templates_available.tar.bz2
+		else
+			tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ >> /dev/null
+			rm /etc/grisu/templates_available.tar.bz2
+		fi
+		
+		if [ -f /etc/vomses/nz ]; then
+			rm /etc/vomses/nz.dpkg-new
+		else
+			mv /etc/vomses/nz.dpkg-new /etc/vomses/nz
+		fi
+
+		# remove deployed webapp from tomcat, just to be sure
+		if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then
+			rm -rf /var/lib/tomcat6/webapps/grisu-ws
+		fi
+		
+		# adjust permissions
+		if [ ! -d /var/lib/grisu/ ]; then
+			mkdir -p /var/lib/grisu/
+		fi
+		chown -R tomcat:tomcat /var/lib/grisu 
+
+	 	# copy a few ca root certs in the proper directory to get started. Ideally those will be updated automatically using a package		
+		if [ -d /etc/grid-security/certificates ]; then
+			rm /etc/grid-security/rootcerts.tar
+		else 
+			mkdir -p /etc/grid-security/certificates
+			tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates >> /dev/null
+			rm /etc/grid-security/rootcerts.tar
+		fi
+
+		# copy grisu-backend
+		if [ -f /etc/grisu/grisu-backend.config ]; then
+			rm /etc/grisu/grisu-backend.config.dpkg-new
+		else
+			mv /etc/grisu/grisu-backend.config.dpkg-new /etc/grisu/grisu-backend.config
+		fi		
+		
+		# create log dir
+		if [ ! -d /var/log/grisu ]; then
+			mkdir /var/log/grisu
+			chown -R tomcat:tomcat /var/log/grisu
+		fi
+		
+		# extract a few jars into tomcat6/shared so there will be no problem if another webapp uses them as well (only security related jars)
+		# unzip -uoj /var/lib/grisu/grisu-ws.war WEB-INF/lib/bcprov-jdk15-145.jar WEB-INF/lib/cryptix-asn1-1.7.0.jar WEB-INF/lib/cryptix32-1.7.0.jar WEB-INF/lib/puretls-1.7.0.jar WEB-INF/lib/globus-dependencies-0.3.jar  -d /var/lib/tomcat6/shared/
+		# now, remove those jars from war file
+		# zip -d /var/lib/grisu/grisu-ws.war WEB-INF/lib/bcprov-jdk15-145.jar  WEB-INF/lib/cryptix-asn1-1.7.0.jar WEB-INF/lib/cryptix32-1.7.0.jar WEB-INF/lib/puretls-1.7.0.jar WEB-INF/lib/globus-dependencies-0.3.jar
+		
+		#update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java
+		#update-alternatives --set javac /usr/lib/jvm/java-6-sun/bin/javac
+		
+
+		#if ! grep ^JAVA_HOME= /etc/default/tomcat6; then
+		#		echo 'JAVA_HOME=/usr/lib/jvm/java-6-sun/' >> /etc/default/tomcat6
+		#fi
+		
+		
+		service tomcat6 start
+	;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+		
+esac
+
+
+
+
