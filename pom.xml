@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.4-rc2-SNAPSHOT</version>
+	<version>0.4-rc2</version>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
 		GWT-RPC endpoints for a Grisu backend. It also automatically creates
@@ -188,7 +187,7 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
-			<version>0.4-rc2-SNAPSHOT</version>
+			<version>0.4-rc2</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
@@ -196,7 +195,7 @@
 		<dependency>
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
-			<version>0.4-rc2-SNAPSHOT</version>
+			<version>0.4-rc2</version>
 			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
@@ -743,7 +742,7 @@
 		if [ -d /etc/grisu/templates_available ]; then
 			rm /etc/grisu/templates_available.tar.bz2
 		else
-			tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ >> /dev/null
+			tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ &gt;&gt; /dev/null
 			rm /etc/grisu/templates_available.tar.bz2
 		fi
 		
@@ -769,7 +768,7 @@
 			rm /etc/grid-security/rootcerts.tar
 		else 
 			mkdir -p /etc/grid-security/certificates
-			tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates >> /dev/null
+			tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates &gt;&gt; /dev/null
 			rm /etc/grid-security/rootcerts.tar
 		fi
 
@@ -796,7 +795,7 @@
 		
 
 		#if ! grep ^JAVA_HOME= /etc/default/tomcat6; then
-		#		echo 'JAVA_HOME=/usr/lib/jvm/java-6-sun/' >> /etc/default/tomcat6
+		#		echo 'JAVA_HOME=/usr/lib/jvm/java-6-sun/' &gt;&gt; /etc/default/tomcat6
 		#fi
 		
 		
