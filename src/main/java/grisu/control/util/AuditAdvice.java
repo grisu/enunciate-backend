@@ -1,8 +1,6 @@
 package grisu.control.util;
 
 import grisu.control.GrisuUserDetails;
-import grisu.jcommons.utils.VariousStringHelpers;
-import grisu.jcommons.utils.tid.TidGenerator;
 import grisu.model.dto.DtoStringList;
 import grisu.settings.ServerPropertiesManager;
 
@@ -103,8 +101,8 @@ public class AuditAdvice implements MethodInterceptor {
 			MDC.put("user", un);
 		}
 
-		myLogger.debug(
-				"Entering method:[{}] arguments:[{}] dn:[{}] client:[{}] client-session:[{}] time:[{}] open method calls:[{}]",
+		myLogger.info(
+				"Entering method: method=[{}] arguments=[{}] dn=[{}] client=[{}] csid=[{}] time=[{}] open_calls=[{}]",
 				new Object[] { method, argList, dn, client.get(0),
 						session_id.get(0),
 						start.getTime(), number });
@@ -117,8 +115,8 @@ public class AuditAdvice implements MethodInterceptor {
 			number = numberOfOpenMethodCalls.decrementAndGet();
 			final Date end = new Date();
 			final long duration = end.getTime() - start.getTime();
-			myLogger.debug(
-					"Finished method (failed): [{}] arguments: [{}] Exception: [{}] Message: [{}] time: [{}] duration: [{}] open method calls: [{}]",
+			myLogger.info(
+					"Finishing method: method=[{}] [failed] arguments=[{}] Exception=[{}] Message=[{}] time=[{}] duration=[{}] open_calls=[{}]",
 					new Object[] { method, argList,
 							t.getClass().getSimpleName(),
 							t.getLocalizedMessage(), end.getTime(), duration,
@@ -148,8 +146,8 @@ public class AuditAdvice implements MethodInterceptor {
 
 		resultString = resultString.replace("\n", " ");
 
-		myLogger.debug(
-				"Finished method: [{}] arguments: [{}] result: [{}] time: [{}] duration: [{}] open method calls: [{}]",
+		myLogger.info(
+				"Finishing method: method=[{}] arguments=[{}] result=[{}] time=[{}] duration=[{}] open_calls=[{}]",
 				new Object[] { method, argList, resultString, end.getTime(),
 						duration, number });
 
