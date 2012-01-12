@@ -27,7 +27,7 @@
     </encoder>
   </appender>
   
-  <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+  <appender name="SYSLOG" class="grisu.control.util.SyslogAppender">
     <syslogHost>localhost</syslogHost>
     <facility>USER</facility>
     <suffixPattern>[%level] [%thread] [%logger{0}] tid=[%X{tid}] user=[%X{user}] - %msg%n</suffixPattern>
