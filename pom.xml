@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.4-rc5-SNAPSHOT</version>
+	<version>0.4-rc5</version>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
 		GWT-RPC endpoints for a Grisu backend. It also automatically creates
@@ -187,7 +187,7 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
-			<version>0.4-rc4-SNAPSHOT</version>
+			<version>0.4-rc3</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
@@ -195,7 +195,7 @@
 		<dependency>
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
-			<version>0.4-rc4-SNAPSHOT</version>
+			<version>0.4-rc3</version>
 			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
