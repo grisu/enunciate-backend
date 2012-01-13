@@ -187,16 +187,14 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
-			<version>0.4-rc4-SNAPSHOT</version>
+			<version>0.4-rc4</version>
 			<classifier>sources</classifier>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
-			<version>0.4-rc4-SNAPSHOT</version>
-			<scope>compile</scope>
+			<version>0.4-rc4</version>
 			<exclusions>
 				<exclusion>
 					<groupId>net.sf.ehcache</groupId>
