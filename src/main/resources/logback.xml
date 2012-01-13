@@ -4,20 +4,18 @@
  <logger name="grith" level="debug"/>
 
 
-  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+<!--  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>/var/log/grisu/grisu.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <!-- daily rollover -->
       <fileNamePattern>/var/log/grisu/grisu.log.%d{yyyy-MM-dd}.log</fileNamePattern>
 
-      <!-- keep 30 days' worth of history -->
       <maxHistory>10</maxHistory>
     </rollingPolicy>
 
     <encoder>
       <pattern>%-50(%d{HH:mm:ss.SSS} [%level] [%thread]) [%logger{0}] tid=[%X{tid}] user=[%X{user}] - %msg%n</pattern>
     </encoder>
-  </appender> 
+  </appender> --> 
 
 
   <appender name="STDOUT"
@@ -27,16 +25,13 @@
     </encoder>
   </appender>
   
-  <appender name="SYSLOG" class="grisu.control.util.SyslogAppender">
+<!-- <appender name="SYSLOG" class="grisu.control.util.SyslogAppender">
     <syslogHost>localhost</syslogHost>
     <facility>USER</facility>
     <suffixPattern>[%level] [%thread] [%logger{0}] tid=[%X{tid}] user=[%X{user}] - %msg%n</suffixPattern>
-  </appender>
+  </appender> -->
   
-    <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
-    <!-- in the absence of the class attribute, it is assumed that the
-         desired discriminator type is
-         ch.qos.logback.classic.sift.MDCBasedDiscriminator -->
+<!--  <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
     <discriminator>
       <key>user</key>
       <defaultValue>grisu</defaultValue>
@@ -50,7 +45,7 @@
         </layout>
       </appender>
     </sift>
-  </appender>
+  </appender> -->
   
   
 
