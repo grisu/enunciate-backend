@@ -186,14 +186,14 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
-			<version>0.4-rc4</version>
+			<version>0.4-rc5-SNAPSHOT</version>
 			<classifier>sources</classifier>
 		</dependency>
 
 		<dependency>
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
-			<version>0.4-rc4</version>
+			<version>0.4-rc5-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>net.sf.ehcache</groupId>
@@ -209,6 +209,11 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>me.moocar</groupId>
+			<artifactId>logback-gelf</artifactId>
+			<version>0.9.6</version>
+		</dependency>
 	</dependencies>
 
 
