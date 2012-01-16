@@ -60,6 +60,8 @@
         <additionalField>user:_user</additionalField>
         <additionalField>csid:_client_session_id</additionalField>
         <additionalField>cmdid:_command_id</additionalField>
+        <additionalField>client:_client</additionalField>
+        <additionalField>dn:_dn</additionalField>
     </appender> -->
 
 

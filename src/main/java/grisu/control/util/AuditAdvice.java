@@ -91,8 +91,10 @@ public class AuditAdvice implements MethodInterceptor {
 			if (principal instanceof GrisuUserDetails) {
 				final GrisuUserDetails gud = (GrisuUserDetails) principal;
 				dn = gud.fetchCredential().getDn();
+				MDC.put("dn", dn);
 			}
 		}
+
 
 		final Date start = new Date();
 
@@ -110,10 +112,11 @@ public class AuditAdvice implements MethodInterceptor {
 
 		MDC.put("csid", (String) session_id.get(0));
 		MDC.put("cmdid", (String) command_id.get(0));
+		MDC.put("client", (String) client.get(0));
 
 		myLogger.info(
-				"Entering method: method=[{}] arguments=[{}] dn=[{}] client=[{}] time=[{}] open_calls=[{}]",
-				new Object[] { method, argList, dn, client.get(0),
+				"Entering method: method=[{}] arguments=[{}] time=[{}] open_calls=[{}]",
+				new Object[] { method, argList,
 						start.getTime(), number });
 
 
