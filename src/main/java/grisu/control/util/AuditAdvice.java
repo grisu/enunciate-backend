@@ -65,8 +65,9 @@ public class AuditAdvice implements MethodInterceptor {
 
 		Map o = (Map) mContext.get(MessageContext.HTTP_REQUEST_HEADERS);
 
-		List session_id = (List) o.get("X-user-session");
+		List session_id = (List) o.get("X-client-session-id");
 		List client = (List) o.get("X-grisu-client");
+		List command_id = (List) o.get("X-command-id");
 
 		if ((session_id == null) || (session_id.size() == 0)) {
 			session_id = Lists.newArrayList("n/a");
@@ -74,6 +75,10 @@ public class AuditAdvice implements MethodInterceptor {
 
 		if ((client == null) || (client.size() == 0)) {
 			client = Lists.newArrayList("n/a");
+		}
+
+		if ((command_id == null) || (command_id.size() == 0)) {
+			command_id = Lists.newArrayList("n/a");
 		}
 
 		final SecurityContext securityContext = SecurityContextHolder
@@ -103,10 +108,12 @@ public class AuditAdvice implements MethodInterceptor {
 			MDC.put("user", un);
 		}
 
+		MDC.put("csid", (String) session_id.get(0));
+		MDC.put("cmdid", (String) command_id.get(0));
+
 		myLogger.info(
-				"Entering method: method=[{}] arguments=[{}] dn=[{}] client=[{}] csid=[{}] time=[{}] open_calls=[{}]",
+				"Entering method: method=[{}] arguments=[{}] dn=[{}] client=[{}] time=[{}] open_calls=[{}]",
 				new Object[] { method, argList, dn, client.get(0),
-						session_id.get(0),
 						start.getTime(), number });
 
 
