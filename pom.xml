@@ -176,20 +176,6 @@
 			<artifactId>grid-jcommons</artifactId>
 			<version>1.5.2</version>
 			<classifier>sources</classifier>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>logback-classic</artifactId>
-					<groupId>ch.qos.logback</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jcl-over-slf4j</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!-- <dependency> -->
 		<!-- <groupId>grisu</groupId> -->
