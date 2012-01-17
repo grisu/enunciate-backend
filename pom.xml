@@ -175,7 +175,7 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.5.2</version>
+			<version>1.5.3</version>
 			<classifier>sources</classifier>
 		</dependency>
 		<!-- <dependency> -->
@@ -187,7 +187,7 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
-			<version>0.4-rc7</version>
+			<version>0.4-rc8</version>
 			<classifier>sources</classifier>
 			<exclusions>
 				<exclusion>
@@ -208,7 +208,7 @@
 		<dependency>
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
-			<version>0.4-rc7</version>
+			<version>0.4-rc8</version>
 			<exclusions>
 				<exclusion>
 					<groupId>net.sf.ehcache</groupId>
