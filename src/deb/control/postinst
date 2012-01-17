@@ -21,7 +21,7 @@ set -e
 case "$1" in
     configure)
     
-        echo "Adding nesi debian repo key...
+        echo "Adding nesi debian repo key..."
 		/usr/bin/apt-key add /usr/share/keyrings/nesi-repo.key
     
     	/etc/init.d/tomcat6 stop	
