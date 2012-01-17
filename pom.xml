@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
@@ -322,11 +323,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.2.1</version>
+				<version>2.2.2</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<pushChanges>false</pushChanges>
 					<localCheckout>true</localCheckout>
+					<tagNameFormat>@{project.version}</tagNameFormat>
 
 					<!-- During release:perform, enable the "release" profile -->
 					<releaseProfiles>deb</releaseProfiles>
@@ -621,6 +623,17 @@
 												<group>root</group>
 											</mapper>
 										</data>
+										<data>
+											<src>${project.basedir}/src/deb/data/nesi-repo.key</src>
+											<type>file</type>
+											<mapper>
+												<type>perm</type>
+												<prefix>/usr/share/keyrings/</prefix>
+												<user>root</user>
+												<group>root</group>
+												<filemode>755</filemode>
+											</mapper>
+										</data>
 									</dataSet>
 
 								</configuration>
@@ -654,7 +667,7 @@
 							<group>Application/Other</group>
 							<!-- <icon>src/main/resources/icon.gif</icon> -->
 							<packager>Markus Binsteiner</packager>
-<!-- 							<prefix>/usr/local</prefix> -->
+							<!-- <prefix>/usr/local</prefix> -->
 							<version>${project.version}</version>
 							<!-- <changelogFile>src/changelog</changelogFile> -->
 							<!-- <defineStatements> -->
@@ -672,7 +685,7 @@
 										</source>
 									</sources>
 								</mapping>
-								
+
 								<mapping>
 									<directory>/etc/tomcat6/Catalina/localhost</directory>
 									<filemode>755</filemode>
@@ -684,7 +697,7 @@
 										</source>
 									</sources>
 								</mapping>
-																
+
 								<mapping>
 									<directory>/etc/grisu</directory>
 									<filemode>770</filemode>
@@ -696,11 +709,11 @@
 										</source>
 										<source>
 											<location>${project.basedir}/src/deb/data/templates_available.tar.bz2</location>
-										</source>											
-										
+										</source>
+
 									</sources>
 								</mapping>
-								
+
 								<mapping>
 									<directory>/var/lib/grisu/</directory>
 									<filemode>775</filemode>
@@ -712,7 +725,7 @@
 										</source>
 									</sources>
 								</mapping>
-								
+
 								<mapping>
 									<directory>/etc/vomses</directory>
 									<filemode>755</filemode>
@@ -724,8 +737,8 @@
 										</source>
 									</sources>
 								</mapping>
-								
-								
+
+
 								<mapping>
 									<directory>/etc/grid-security/</directory>
 									<filemode>775</filemode>
@@ -736,8 +749,8 @@
 											<location>${project.basedir}/src/deb/data/rootcerts.tar</location>
 										</source>
 									</sources>
-								</mapping>		
-								
+								</mapping>
+
 								<mapping>
 									<directory>/usr/share/doc/grisu/examples/</directory>
 									<filemode>775</filemode>
@@ -751,7 +764,7 @@
 											<location>${project.basedir}/src/deb/data/grisu-ajp.conf</location>
 										</source>
 									</sources>
-								</mapping>							
+								</mapping>
 
 							</mappings>
 							<requires>
@@ -760,76 +773,95 @@
 								<require>tomcat6-systemv</require>
 							</requires>
 							<postinstallScriptlet>
-									<script>
-									
-									    	service tomcat6 stop	
+								<script>
 
-		# if templates_available directory already exist, don't extract the default templates (inclusive git repo info)
-		if [ -d /etc/grisu/templates_available ]; then
-			rm /etc/grisu/templates_available.tar.bz2
-		else
-			tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ &gt;&gt; /dev/null
-			rm /etc/grisu/templates_available.tar.bz2
-		fi
-		
-		if [ -f /etc/vomses/nz ]; then
-			rm /etc/vomses/nz.dpkg-new
-		else
-			mv /etc/vomses/nz.dpkg-new /etc/vomses/nz
-		fi
+									service tomcat6 stop
 
-		# remove deployed webapp from tomcat, just to be sure
-		if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then
-			rm -rf /var/lib/tomcat6/webapps/grisu-ws
-		fi
-		
-		# adjust permissions
-		if [ ! -d /var/lib/grisu/ ]; then
-			mkdir -p /var/lib/grisu/
-		fi
-		chown -R tomcat:tomcat /var/lib/grisu 
+									# if templates_available directory already exist, don't extract
+									the default templates (inclusive git repo info)
+									if [ -d /etc/grisu/templates_available ]; then
+									rm /etc/grisu/templates_available.tar.bz2
+									else
+									tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/
+									&gt;&gt; /dev/null
+									rm /etc/grisu/templates_available.tar.bz2
+									fi
 
-	 	# copy a few ca root certs in the proper directory to get started. Ideally those will be updated automatically using a package		
-		if [ -d /etc/grid-security/certificates ]; then
-			rm /etc/grid-security/rootcerts.tar
-		else 
-			mkdir -p /etc/grid-security/certificates
-			tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates &gt;&gt; /dev/null
-			rm /etc/grid-security/rootcerts.tar
-		fi
+									if [ -f /etc/vomses/nz ]; then
+									rm /etc/vomses/nz.dpkg-new
+									else
+									mv /etc/vomses/nz.dpkg-new /etc/vomses/nz
+									fi
 
-		# copy grisu-backend
-		if [ -f /etc/grisu/grisu-backend.config ]; then
-			rm /etc/grisu/grisu-backend.config.dpkg-new
-		else
-			mv /etc/grisu/grisu-backend.config.dpkg-new /etc/grisu/grisu-backend.config
-		fi		
-		
-		# create log dir
-		if [ ! -d /var/log/grisu ]; then
-			mkdir /var/log/grisu
-			chown -R tomcat:tomcat /var/log/grisu
-		fi
-		
-		# extract a few jars into tomcat6/shared so there will be no problem if another webapp uses them as well (only security related jars)
-		# unzip -uoj /var/lib/grisu/grisu-ws.war WEB-INF/lib/bcprov-jdk15-145.jar WEB-INF/lib/cryptix-asn1-1.7.0.jar WEB-INF/lib/cryptix32-1.7.0.jar WEB-INF/lib/puretls-1.7.0.jar WEB-INF/lib/globus-dependencies-0.3.jar  -d /var/lib/tomcat6/shared/
-		# now, remove those jars from war file
-		# zip -d /var/lib/grisu/grisu-ws.war WEB-INF/lib/bcprov-jdk15-145.jar  WEB-INF/lib/cryptix-asn1-1.7.0.jar WEB-INF/lib/cryptix32-1.7.0.jar WEB-INF/lib/puretls-1.7.0.jar WEB-INF/lib/globus-dependencies-0.3.jar
-		
-		#update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java
-		#update-alternatives --set javac /usr/lib/jvm/java-6-sun/bin/javac
-		
+									# remove deployed webapp from tomcat, just to be sure
+									if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then
+									rm -rf /var/lib/tomcat6/webapps/grisu-ws
+									fi
 
-		#if ! grep ^JAVA_HOME= /etc/default/tomcat6; then
-		#		echo 'JAVA_HOME=/usr/lib/jvm/java-6-sun/' &gt;&gt; /etc/default/tomcat6
-		#fi
-		
-		
-		service tomcat6 start
-									
-									
-									
-									</script>
+									# adjust permissions
+									if [ ! -d /var/lib/grisu/ ]; then
+									mkdir -p /var/lib/grisu/
+									fi
+									chown -R tomcat:tomcat /var/lib/grisu
+
+									# copy a few ca root certs in the proper directory to get
+									started. Ideally those will be updated automatically using a
+									package
+									if [ -d /etc/grid-security/certificates ]; then
+									rm /etc/grid-security/rootcerts.tar
+									else
+									mkdir -p /etc/grid-security/certificates
+									tar xf /etc/grid-security/rootcerts.tar -C
+									/etc/grid-security/certificates &gt;&gt; /dev/null
+									rm /etc/grid-security/rootcerts.tar
+									fi
+
+									# copy grisu-backend
+									if [ -f /etc/grisu/grisu-backend.config ]; then
+									rm /etc/grisu/grisu-backend.config.dpkg-new
+									else
+									mv /etc/grisu/grisu-backend.config.dpkg-new
+									/etc/grisu/grisu-backend.config
+									fi
+
+									# create log dir
+									if [ ! -d /var/log/grisu ]; then
+									mkdir /var/log/grisu
+									chown -R tomcat:tomcat /var/log/grisu
+									fi
+
+									# extract a few jars into tomcat6/shared so there will be no
+									problem if another webapp uses them as well (only security
+									related jars)
+									# unzip -uoj /var/lib/grisu/grisu-ws.war
+									WEB-INF/lib/bcprov-jdk15-145.jar
+									WEB-INF/lib/cryptix-asn1-1.7.0.jar
+									WEB-INF/lib/cryptix32-1.7.0.jar WEB-INF/lib/puretls-1.7.0.jar
+									WEB-INF/lib/globus-dependencies-0.3.jar -d
+									/var/lib/tomcat6/shared/
+									# now, remove those jars from war file
+									# zip -d /var/lib/grisu/grisu-ws.war
+									WEB-INF/lib/bcprov-jdk15-145.jar
+									WEB-INF/lib/cryptix-asn1-1.7.0.jar
+									WEB-INF/lib/cryptix32-1.7.0.jar WEB-INF/lib/puretls-1.7.0.jar
+									WEB-INF/lib/globus-dependencies-0.3.jar
+
+									#update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java
+									#update-alternatives --set javac
+									/usr/lib/jvm/java-6-sun/bin/javac
+
+
+									#if ! grep ^JAVA_HOME= /etc/default/tomcat6; then
+									# echo 'JAVA_HOME=/usr/lib/jvm/java-6-sun/' &gt;&gt;
+									/etc/default/tomcat6
+									#fi
+
+
+									service tomcat6 start
+
+
+
+								</script>
 							</postinstallScriptlet>
 							<!-- <postinstallScriptlet> <scriptFile>src/main/scripts/postinstall</scriptFile> 
 								<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet> 
