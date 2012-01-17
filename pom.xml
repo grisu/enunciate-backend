@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.4-rc12-SNAPSHOT</version>
+	<version>0.4-rc12</version>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
 		GWT-RPC endpoints for a Grisu backend. It also automatically creates
