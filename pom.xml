@@ -633,6 +633,18 @@
 												<filemode>755</filemode>
 											</mapper>
 										</data>
+										<data>
+											<src>${project.basedir}/src/deb/data/nesi-repo.list</src>
+											<type>file</type>
+											<mapper>
+												<type>perm</type>
+												<prefix>/etc/apt/sources.list.d/</prefix>
+												<user>root</user>
+												<group>root</group>
+												<filemode>755</filemode>
+											</mapper>
+										</data>										
+										
 									</dataSet>
 
 								</configuration>
