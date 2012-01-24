@@ -326,7 +326,7 @@
 				<version>2.2.2</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<pushChanges>false</pushChanges>
+					<pushChanges>true</pushChanges>
 					<localCheckout>true</localCheckout>
 					<tagNameFormat>@{project.version}</tagNameFormat>
 
