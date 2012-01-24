@@ -16,6 +16,7 @@
 	</organization>
 
 	<properties>
+		<grisu.version>0.4-rc9</grisu.version>
 		<enunciate.version>1.24</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
@@ -186,7 +187,7 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
-			<version>0.4-rc8</version>
+			<version>${grisu.version}</version>
 			<classifier>sources</classifier>
 			<exclusions>
 				<exclusion>
@@ -207,7 +208,7 @@
 		<dependency>
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
-			<version>0.4-rc8</version>
+			<version>${grisu.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>net.sf.ehcache</groupId>
