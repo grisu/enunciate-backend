@@ -3,12 +3,6 @@
 	xsi:noNamespaceSchemaLocation="http://enunciate.codehaus.org/schemas/enunciate-1.24.xsd">
 	
 <!-- 	<deployment host="compute.services.bestgrid.org" context="api" /> -->
-	
-	<namespaces>
-		<namespace id="api" uri="http://api.grisu" />
-		<namespace id="dto" uri="http://dto.model.grisu" />
-		<namespace id="errors" uri="http://exceptions.control.grisu" />
-	</namespaces>
 
 
 	<api-import pattern="grisu.model.MountPoint" />
@@ -17,10 +11,18 @@
 	<api-import pattern="grisu.control.ServiceInterface" />
 	<api-import pattern="grisu.control.JobConstants" />
 
+	
+	<namespaces>
+		<namespace id="api" uri="http://api.grisu" />
+		<namespace id="dto" uri="http://dto.model.grisu" />
+		<namespace id="errors" uri="http://exceptions.control.grisu" />
+	</namespaces>
+
 	<webapp mergeWebXML="mergeWeb.xml">
 		<globalServletFilter name="securityFilter"
 			classname="org.springframework.web.filter.DelegatingFilterProxy" />
 	</webapp>
+
 
 	<modules>
 		<csharp disabled="true"></csharp>
@@ -48,4 +50,5 @@
 		</docs>
 
 	</modules>
+
 </enunciate>

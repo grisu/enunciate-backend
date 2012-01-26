@@ -512,7 +512,7 @@
 											</mapper>
 										</data>
 										<data>
-											<src>${project.basedir}/src/deb/data/nesi-repo.key.dpkg-new1</src>
+											<src>${project.basedir}/src/deb/data/nesi-repo.key.dpkg-new.ws</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
@@ -523,7 +523,7 @@
 											</mapper>
 										</data>
 										<data>
-											<src>${project.basedir}/src/deb/data/nesi-repo.list.dpkg-new1</src>
+											<src>${project.basedir}/src/deb/data/nesi-repo.list.dpkg-new.ws</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
