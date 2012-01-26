@@ -4,6 +4,7 @@ import grisu.backend.model.User;
 import grisu.control.exceptions.NoSuchTemplateException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.control.serviceInterfaces.LocalServiceInterface;
+import grisu.jcommons.utils.Version;
 import grisu.settings.Environment;
 import grisu.settings.ServiceTemplateManagement;
 import grith.jgrith.credential.Credential;
@@ -120,7 +121,12 @@ implements ServiceInterface {
 	@Override
 	public String getInterfaceType() {
 
-		return "Webservice (REST/SOAP) interface";
+		String version = Version.get("enunciate-backend");
+		if (StringUtils.isBlank(version)) {
+			return "Webservice (REST/SOAP) interface";
+		} else {
+			return "Webservice (REST/SOAP) interface (v" + version + ")";
+		}
 	}
 
 	private GrisuUserDetails getSpringUserDetails() {
