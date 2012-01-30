@@ -670,7 +670,7 @@
 							<requires>
 								<require>java-1.6.0-openjdk</require>
 								<require>tomcat6</require>
-								<require>tomcat6-systemv</require>
+<!-- 								<require>tomcat6-systemv</require> -->
 							</requires>
 							<postinstallScriptlet>
 								<script>
