@@ -23,7 +23,7 @@
 		<spring.security.version>3.0.2.RELEASE</spring.security.version>
 		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
 
-		<grisu.version>0.4-rc18-SNAPSHOT</grisu.version>
+		<grisu.version>0.4-rc18</grisu.version>
 	</properties>
 
 	<scm>

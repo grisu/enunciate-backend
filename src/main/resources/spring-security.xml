@@ -8,6 +8,9 @@
 	<http use-expressions="true">
 		<intercept-url pattern="/**wsdl" filters="none" />
 		<intercept-url pattern="/**html" filters="none" />
+		<intercept-url pattern="/**css" filters="none" />
+		<intercept-url pattern="/**js" filters="none" />
+		<intercept-url pattern="/**wadl" filters="none" />
 <!-- 		<intercept-url pattern="/info/**" filters="none" /> -->
 <!-- 		<intercept-url pattern="/user/**" access="isAuthenticated()" /> -->
 <!-- 		<intercept-url pattern="/job/**" access="isAuthenticated()" /> -->
