@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.4-rc22-SNAPSHOT</version>
+	<version>0.4-rc23-SNAPSHOT</version>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
 		GWT-RPC endpoints for a Grisu backend. It also automatically creates
@@ -683,7 +683,7 @@
 									if [ -d /etc/grisu/templates_available ]; then
 										rm /etc/grisu/templates_available.tar.bz2
 									else
-										tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ >> /dev/null
+										tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ &gt;&gt; /dev/null
 										rm /etc/grisu/templates_available.tar.bz2
 									fi
 
