@@ -511,28 +511,7 @@
 												<group>root</group>
 											</mapper>
 										</data>
-										<data>
-											<src>${project.basedir}/src/deb/data/nesi-repo.key.dpkg-new.ws</src>
-											<type>file</type>
-											<mapper>
-												<type>perm</type>
-												<prefix>/usr/share/keyrings/</prefix>
-												<user>root</user>
-												<group>root</group>
-												<filemode>755</filemode>
-											</mapper>
-										</data>
-										<data>
-											<src>${project.basedir}/src/deb/data/nesi-repo.list.dpkg-new.ws</src>
-											<type>file</type>
-											<mapper>
-												<type>perm</type>
-												<prefix>/etc/apt/sources.list.d/</prefix>
-												<user>root</user>
-												<group>root</group>
-												<filemode>755</filemode>
-											</mapper>
-										</data>										
+					
 										
 									</dataSet>
 
@@ -754,6 +733,6 @@
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
-		<version>0.7</version>
+		<version>0.9</version>
 	</parent>
 </project>
