@@ -12,14 +12,11 @@ public class MyProxyAuthenticationProvider extends DaoAuthenticationProvider {
 	static final Logger myLogger = LoggerFactory
 			.getLogger(MyProxyAuthenticationProvider.class.getName());
 
+
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication)
 					throws AuthenticationException {
-
-		// System.out.println("MyProxy: ");
-		// System.out.println("Username: "
-		// + authentication.getPrincipal().toString());
 
 		final GrisuUserDetails gud = (GrisuUserDetails) userDetails;
 		gud.setAuthentication(authentication);

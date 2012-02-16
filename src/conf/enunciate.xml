@@ -42,7 +42,7 @@
 		</spring-app>
 
 		<docs splashPackage="grisu.control" title="Grisu API"
-			copyright="Grisu open source project">
+			copyright="Grisu open source project" >
 			<download name="BasicJavaJob" file="javaJob.jsdl"
 				description="Sample jsdl file to submit a simple java job to a fixed submission location." />
 			<download name="License" file="LICENSE-2.0.txt"

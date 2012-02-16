@@ -10,13 +10,9 @@ import grith.jgrith.credential.MyProxyCredential;
 import grith.jgrith.utils.CertHelpers;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
-
+import org.apache.commons.lang.StringUtils;
 import org.globus.myproxy.CredentialInfo;
 import org.globus.myproxy.MyProxy;
 import org.slf4j.Logger;
@@ -27,15 +23,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
 
 public class GrisuUserDetails implements UserDetails {
 
 	static final Logger myLogger = LoggerFactory
 			.getLogger(GrisuUserDetails.class.getName());
-
-	private final WebServiceContext wsContext = new org.apache.cxf.jaxws.context.WebServiceContextImpl();
 
 
 	private final String username;
@@ -46,6 +40,9 @@ public class GrisuUserDetails implements UserDetails {
 	private Date lastProxyRetrieve = null;
 
 	private User user = null;
+
+	private final String myproxyHost = MyProxyServerParams.DEFAULT_MYPROXY_SERVER;
+	private final int myproxyPort = MyProxyServerParams.DEFAULT_MYPROXY_PORT;
 
 	public GrisuUserDetails(String username) {
 		myLogger.debug("Creating GrisuUserDetails object for " + username);
@@ -85,6 +82,7 @@ public class GrisuUserDetails implements UserDetails {
 		}
 
 	}
+
 
 	public synchronized Credential fetchCredential()
 			throws AuthenticationException {
@@ -132,28 +130,26 @@ public class GrisuUserDetails implements UserDetails {
 
 		Credential proxyTemp = null;
 
-		MessageContext mContext = wsContext.getMessageContext();
-		Map o = (Map) mContext.get(MessageContext.HTTP_REQUEST_HEADERS);
+		String username = authentication.getPrincipal().toString();
+		String password = authentication.getCredentials().toString();
 
-		List host = (List) o.get("X-login-host");
-		List port = (List) o.get("X-login-port");
+		String host = null;
 
-		if ((host == null) || (host.size() == 0)) {
-			host = Lists.newArrayList(MyProxyServerParams.DEFAULT_MYPROXY_SERVER);
+		int index = username.lastIndexOf('@');
+
+		if ((index > 0) && (index < username.length())) {
+			host = username.substring(index + 1);
+			username = username.substring(0, index);
 		}
 
-		if ((port == null) || (port.size() == 0)) {
-			port = Lists.newArrayList(Integer
-					.toString(MyProxyServerParams.DEFAULT_MYPROXY_PORT));
+		int port = MyProxyServerParams.DEFAULT_MYPROXY_PORT;
+		if (StringUtils.isBlank(host)) {
+			host = MyProxyServerParams.DEFAULT_MYPROXY_SERVER;
 		}
 
 		try {
-			proxyTemp = createProxyCredential(authentication.getPrincipal()
-					.toString(), authentication.getCredentials().toString(),
-					(String) (host.iterator().next()),
-					Integer.parseInt((String) (port
-							.iterator().next())),
-							ServerPropertiesManager.getMyProxyLifetime());
+			proxyTemp = createProxyCredential(username, password, host, port,
+					ServerPropertiesManager.getMyProxyLifetime());
 			lastProxyRetrieve = new Date();
 		} catch (final NoValidCredentialException e) {
 			throw new AuthenticationException(e.getLocalizedMessage(), e) {
@@ -258,5 +254,7 @@ public class GrisuUserDetails implements UserDetails {
 		this.authentication = authentication;
 		fetchCredential();
 	}
+
+
 
 }

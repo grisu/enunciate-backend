@@ -1,6 +1,7 @@
 package grisu.control.util;
 
 import grisu.control.GrisuUserDetails;
+import grisu.jcommons.utils.MyProxyServerParams;
 import grisu.jcommons.utils.VariousStringHelpers;
 import grisu.jcommons.utils.tid.TidGenerator;
 import grisu.model.dto.DtoStringList;
@@ -79,6 +80,21 @@ public class AuditAdvice implements MethodInterceptor {
 
 		if ((command_id == null) || (command_id.size() == 0)) {
 			command_id = Lists.newArrayList("n/a");
+		}
+
+		List host = (List) o.get("X-login-host");
+		List port = (List) o.get("X-login-port");
+
+		if ((host == null) || (host.size() == 0)) {
+			myLogger.debug("No custom myproxy server specified, using default.");
+			host = Lists
+					.newArrayList(MyProxyServerParams.DEFAULT_MYPROXY_SERVER);
+		}
+
+		if ((port == null) || (port.size() == 0)) {
+			myLogger.debug("No custom myproxy port specified, using default.");
+			port = Lists.newArrayList(Integer
+					.toString(MyProxyServerParams.DEFAULT_MYPROXY_PORT));
 		}
 
 		final SecurityContext securityContext = SecurityContextHolder
