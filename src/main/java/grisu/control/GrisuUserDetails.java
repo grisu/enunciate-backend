@@ -10,7 +10,12 @@ import grith.jgrith.credential.MyProxyCredential;
 import grith.jgrith.utils.CertHelpers;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
 
 import org.globus.myproxy.CredentialInfo;
 import org.globus.myproxy.MyProxy;
@@ -22,12 +27,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public class GrisuUserDetails implements UserDetails {
 
 	static final Logger myLogger = LoggerFactory
 			.getLogger(GrisuUserDetails.class.getName());
+
+	private final WebServiceContext wsContext = new org.apache.cxf.jaxws.context.WebServiceContextImpl();
+
 
 	private final String username;
 	private UsernamePasswordAuthenticationToken authentication;
@@ -122,12 +131,29 @@ public class GrisuUserDetails implements UserDetails {
 		}
 
 		Credential proxyTemp = null;
+
+		MessageContext mContext = wsContext.getMessageContext();
+		Map o = (Map) mContext.get(MessageContext.HTTP_REQUEST_HEADERS);
+
+		List host = (List) o.get("X-login-host");
+		List port = (List) o.get("X-login-port");
+
+		if ((host == null) || (host.size() == 0)) {
+			host = Lists.newArrayList(MyProxyServerParams.DEFAULT_MYPROXY_SERVER);
+		}
+
+		if ((port == null) || (port.size() == 0)) {
+			port = Lists.newArrayList(Integer
+					.toString(MyProxyServerParams.DEFAULT_MYPROXY_PORT));
+		}
+
 		try {
 			proxyTemp = createProxyCredential(authentication.getPrincipal()
 					.toString(), authentication.getCredentials().toString(),
-					MyProxyServerParams.DEFAULT_MYPROXY_SERVER,
-					MyProxyServerParams.DEFAULT_MYPROXY_PORT,
-					ServerPropertiesManager.getMyProxyLifetime());
+					(String) (host.iterator().next()),
+					Integer.parseInt((String) (port
+							.iterator().next())),
+							ServerPropertiesManager.getMyProxyLifetime());
 			lastProxyRetrieve = new Date();
 		} catch (final NoValidCredentialException e) {
 			throw new AuthenticationException(e.getLocalizedMessage(), e) {

@@ -62,6 +62,8 @@ implements ServiceInterface {
 
 	private String username;
 	private char[] password;
+	private String host;
+	private int port;
 
 	protected synchronized Credential getCredential() {
 
@@ -183,12 +185,15 @@ implements ServiceInterface {
 		return ServiceTemplateManagement.getAllAvailableApplications();
 	}
 
-	public void login(String username, String password) {
+	public void login(String username, String password, String host, int port) {
 
 		this.username = username;
 		if (StringUtils.isNotBlank(password)) {
 			this.password = password.toCharArray();
 		}
+
+		this.host = host;
+		this.port = port;
 
 		getCredential();
 
