@@ -3,7 +3,6 @@ package grisu.control;
 import grisu.backend.model.User;
 import grisu.control.exceptions.NoValidCredentialException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
-import grisu.jcommons.utils.MyProxyServerParams;
 import grisu.settings.ServerPropertiesManager;
 import grith.jgrith.credential.Credential;
 import grith.jgrith.credential.MyProxyCredential;
@@ -41,8 +40,8 @@ public class GrisuUserDetails implements UserDetails {
 
 	private User user = null;
 
-	private final String myproxyHost = MyProxyServerParams.DEFAULT_MYPROXY_SERVER;
-	private final int myproxyPort = MyProxyServerParams.DEFAULT_MYPROXY_PORT;
+	private final String myproxyHost = ServerPropertiesManager.getMyProxyHost();
+	private final int myproxyPort = ServerPropertiesManager.getMyProxyPort();
 
 	public GrisuUserDetails(String username) {
 		myLogger.debug("Creating GrisuUserDetails object for " + username);
@@ -142,9 +141,9 @@ public class GrisuUserDetails implements UserDetails {
 			username = username.substring(0, index);
 		}
 
-		int port = MyProxyServerParams.DEFAULT_MYPROXY_PORT;
+		int port = ServerPropertiesManager.getMyProxyPort();
 		if (StringUtils.isBlank(host)) {
-			host = MyProxyServerParams.DEFAULT_MYPROXY_SERVER;
+			host = ServerPropertiesManager.getMyProxyHost();
 		}
 
 		try {
@@ -188,8 +187,9 @@ public class GrisuUserDetails implements UserDetails {
 		}
 
 		final MyProxy myproxy = new MyProxy(
-				MyProxyServerParams.getMyProxyServer(),
-				MyProxyServerParams.getMyProxyPort());
+				ServerPropertiesManager.getMyProxyHost(),
+				ServerPropertiesManager.getMyProxyPort());
+
 		CredentialInfo info = null;
 		try {
 			final String user = authentication.getPrincipal().toString();
