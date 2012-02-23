@@ -72,14 +72,17 @@ public class AuditAdvice implements MethodInterceptor {
 		if ((session_id == null) || (session_id.size() == 0)) {
 			session_id = Lists.newArrayList("n/a");
 		}
+		MDC.put("csid", (String) session_id.get(0));
 
 		if ((client == null) || (client.size() == 0)) {
 			client = Lists.newArrayList("n/a");
 		}
+		MDC.put("client", (String) client.get(0));
 
 		if ((command_id == null) || (command_id.size() == 0)) {
 			command_id = Lists.newArrayList("n/a");
 		}
+		MDC.put("cmdid", (String) command_id.get(0));
 
 		final SecurityContext securityContext = SecurityContextHolder
 				.getContext();
@@ -99,20 +102,17 @@ public class AuditAdvice implements MethodInterceptor {
 		final Date start = new Date();
 
 		final String tid = tidGenerator.getTid();
-
+		MDC.put("tid", tid);
 		int number = numberOfOpenMethodCalls.incrementAndGet();
 
 		String un = VariousStringHelpers.getCN(dn);
-		MDC.put("tid", tid);
+
 		if (StringUtils.isBlank(un)) {
 			MDC.put("user", "n/a");
 		} else {
 			MDC.put("user", un);
 		}
 
-		MDC.put("csid", (String) session_id.get(0));
-		MDC.put("cmdid", (String) command_id.get(0));
-		MDC.put("client", (String) client.get(0));
 
 		myLogger.info(
 				"Entering method: method=[{}] arguments=[{}] time=[{}] open_calls=[{}]",

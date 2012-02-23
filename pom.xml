@@ -483,16 +483,6 @@
 											</mapper>
 										</data>
 										<data>
-											<src>${project.basedir}/src/deb/data/etc/vomses/nz.dpkg-new</src>
-											<type>file</type>
-											<mapper>
-												<type>perm</type>
-												<prefix>/etc/vomses</prefix>
-												<user>root</user>
-												<group>root</group>
-											</mapper>
-										</data>
-										<data>
 											<src>${project.basedir}/src/deb/data/rootcerts.tar</src>
 											<type>file</type>
 											<mapper>
@@ -616,18 +606,6 @@
 									</sources>
 								</mapping>
 
-								<mapping>
-									<directory>/etc/vomses</directory>
-									<filemode>755</filemode>
-									<username>root</username>
-									<groupname>root</groupname>
-									<sources>
-										<source>
-											<location>${project.basedir}/src/deb/data/etc/vomses/nz.dpkg-new</location>
-										</source>
-									</sources>
-								</mapping>
-
 
 								<mapping>
 									<directory>/etc/grid-security/</directory>
@@ -674,12 +652,6 @@
 									else
 										tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ &gt;&gt; /dev/null
 										rm /etc/grisu/templates_available.tar.bz2
-									fi
-
-									if [ -f /etc/vomses/nz ]; then
-										rm /etc/vomses/nz.dpkg-new
-									else
-										mv /etc/vomses/nz.dpkg-new /etc/vomses/nz
 									fi
 
 									# remove deployed webapp from tomcat, just to be sure
