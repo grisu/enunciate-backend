@@ -12,14 +12,7 @@
 		<intercept-url pattern="/**wadl" filters="none" />
 		<intercept-url pattern="/**js" filters="none" />
 		<intercept-url pattern="/apidocs/**" filters="none" />
-		<!-- <intercept-url pattern="/info/**" filters="none" /> -->
-		<!-- <intercept-url pattern="/user/**" access="isAuthenticated()" /> -->
-		<!-- <intercept-url pattern="/job/**" access="isAuthenticated()" /> -->
-		<!-- <intercept-url pattern="/jobs/**" access="isAuthenticated()" /> -->
-		<!-- <intercept-url pattern="/batchjob/**" access="isAuthenticated()" /> -->
-		<!-- <intercept-url pattern="/batchjobs/**" access="isAuthenticated()" 
-			/> -->
-		<!-- <intercept-url pattern="/files/**" access="isAuthenticated()" /> -->
+
 		<intercept-url pattern="/soap/**" access="isAuthenticated()" />
 		<http-basic />
 <!-- 		<custom-filter position="PRE_AUTH_FILTER" ref="siteminderFilter" /> -->
@@ -27,38 +20,18 @@
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="daoAuthenticationProvider">
-<!-- 		<authentication-provider ref="preauthAuthProvider"> -->
 		</authentication-provider>
 	</authentication-manager>
 
-<!-- 	<beans:bean id="siteminderFilter" -->
-<!-- 		class="grisu.control.GrisuPreAuthFilter"> -->
-<!-- 		<beans:property name="principalRequestHeader" value="javax.xml.ws.security.auth.username" /> -->
-<!-- 		<beans:property name="authenticationManager" ref="authenticationManager" /> -->
-<!-- 	</beans:bean> -->
-	
-<!-- 	<beans:bean id="http403EntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"> -->
-<!--     </beans:bean> -->
-	
-
-<!-- 	<beans:bean id="preauthAuthProvider" -->
-<!-- 		class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider"> -->
-<!-- 		<beans:property name="preAuthenticatedUserDetailsService"> -->
-<!-- 			<beans:bean id="userDetailsServiceWrapper" -->
-<!-- 				class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper"> -->
-<!-- 				<beans:property name="userDetailsService" ref="grisuUserDetailsService" /> -->
-<!-- 			</beans:bean> -->
-<!-- 		</beans:property> -->
-<!-- 	</beans:bean> -->
-
 
  	<beans:bean id="grisuUserDetailsService" class="grisu.control.GrisuUserDetailsImpl" />
-<beans:bean id="daoAuthenticationProvider" class="grisu.control.MyProxyAuthenticationProvider">
+	
+	<beans:bean id="daoAuthenticationProvider" class="grisu.control.MyProxyAuthenticationProvider">
 		<beans:property name="userDetailsService" ref="grisuUserDetailsService" />
 		<beans:property name="userCache" ref="userCache" />
 	</beans:bean>
 
-<beans:bean id="userCache"
+	<beans:bean id="userCache"
 		class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
 		<beans:property name="cache" ref="userCacheBackend" />
 	</beans:bean>
