@@ -209,6 +209,8 @@ implements ServiceInterface {
 
 	public String logout() {
 
+
+
 		myLogger.debug("Logging out user: " + getDN());
 
 		// HttpServletRequest req = HTTPRequestContext.get().getRequest();
