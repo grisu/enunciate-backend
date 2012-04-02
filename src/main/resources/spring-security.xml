@@ -44,7 +44,8 @@
 
 	<beans:bean id="cacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<beans:property name="configLocation" value="classpath:/grisu-ehcache.xml" />
+		<beans:property name="configLocation" value="classpath:grisu-ehcache.xml" />
+		<beans:property name="cacheManagerName" value="grisu" />
  	</beans:bean> 
 
 
