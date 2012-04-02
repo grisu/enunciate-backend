@@ -677,69 +677,45 @@
 							<postinstallScriptlet>
 								<script>
 
+
 									service tomcat6 stop
 
-									# if templates_available directory
-									already exist, don't extract
-									# the default templates (inclusive
-									git repo info)
+									# if templates_available directory already exist, don't extract
+									# the default templates (inclusive git repo info)
 									if [ -d /etc/grisu/templates_available ]; then
-									rm
-									/etc/grisu/templates_available.tar.bz2
+										rm /etc/grisu/templates_available.tar.bz2
 									else
-									tar xjvf
-									/etc/grisu/templates_available.tar.bz2 -C /etc/grisu/
-									&gt;&gt;
-									/dev/null
-									rm /etc/grisu/templates_available.tar.bz2
+										tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ &gt;&gt; /dev/null
+										rm /etc/grisu/templates_available.tar.bz2
 									fi
 
-									# remove
-									deployed
-									webapp from tomcat, just to be sure
-									if [ -d
-									/var/lib/tomcat6/webapps/grisu-ws ]; then
-									rm -rf
-									/var/lib/tomcat6/webapps/grisu-ws
+									# remove deployed webapp from tomcat, just to be sure
+									if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then
+										rm -rf /var/lib/tomcat6/webapps/grisu-ws
 									fi
 
 									# adjust permissions
-									if
-									[ ! -d
-									/var/lib/grisu/ ]; then
-									mkdir -p /var/lib/grisu/
+									if [ ! -d /var/lib/grisu/ ]; then
+										mkdir -p /var/lib/grisu/
 									fi
+									
+									chown -R tomcat:tomcat /var/lib/grisu
 
-									chown -R
-									tomcat:tomcat /var/lib/grisu
-
-									# copy a few ca root certs in
-									the
-									proper directory to get
-									# started. Ideally those will be
-									updated
-									automatically using a
+									# copy a few ca root certs in the proper directory to get
+									# started. Ideally those will be updated automatically using a
 									# package
-									if [ -d
-									/etc/grid-security/certificates ]; then
-									rm
-									/etc/grid-security/rootcerts.tar
+									if [ -d /etc/grid-security/certificates ]; then
+										rm /etc/grid-security/rootcerts.tar
 									else
-									mkdir -p
-									/etc/grid-security/certificates
-									tar xf
-									/etc/grid-security/rootcerts.tar -C
-									/etc/grid-security/certificates
-									rm
-									/etc/grid-security/rootcerts.tar
+										mkdir -p /etc/grid-security/certificates
+										tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates 
+										rm /etc/grid-security/rootcerts.tar
 									fi
 
 									# create log dir
-									if [ ! -d
-									/var/log/grisu ]; then
-									mkdir /var/log/grisu
-									chown -R
-									tomcat:tomcat /var/log/grisu
+									if [ ! -d /var/log/grisu ]; then
+										mkdir /var/log/grisu
+										chown -R tomcat:tomcat /var/log/grisu
 									fi
 
 
