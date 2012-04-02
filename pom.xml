@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
@@ -533,8 +534,8 @@
 												<group>root</group>
 											</mapper>
 										</data>
-					
-										
+
+
 									</dataSet>
 
 								</configuration>
@@ -659,56 +660,85 @@
 							<requires>
 								<require>java-1.6.0-openjdk</require>
 								<require>tomcat6</require>
-<!-- 								<require>tomcat6-systemv</require> -->
+								<!-- <require>tomcat6-systemv</require> -->
 							</requires>
 							<postinstallScriptlet>
 								<script>
 
 									service tomcat6 stop
 
-									# if templates_available directory already exist, don't extract
-									# the default templates (inclusive git repo info)
+									# if templates_available directory
+									already exist, don't extract
+									# the default templates (inclusive
+									git repo info)
 									if [ -d /etc/grisu/templates_available ]; then
-										rm /etc/grisu/templates_available.tar.bz2
+									rm
+									/etc/grisu/templates_available.tar.bz2
 									else
-										tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ &gt;&gt; /dev/null
-										rm /etc/grisu/templates_available.tar.bz2
+									tar xjvf
+									/etc/grisu/templates_available.tar.bz2 -C /etc/grisu/
+									&gt;&gt;
+									/dev/null
+									rm /etc/grisu/templates_available.tar.bz2
 									fi
 
-									# remove deployed webapp from tomcat, just to be sure
-									if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then
-										rm -rf /var/lib/tomcat6/webapps/grisu-ws
+									# remove
+									deployed
+									webapp from tomcat, just to be sure
+									if [ -d
+									/var/lib/tomcat6/webapps/grisu-ws ]; then
+									rm -rf
+									/var/lib/tomcat6/webapps/grisu-ws
 									fi
 
 									# adjust permissions
-									if [ ! -d /var/lib/grisu/ ]; then
-										mkdir -p /var/lib/grisu/
+									if
+									[ ! -d
+									/var/lib/grisu/ ]; then
+									mkdir -p /var/lib/grisu/
 									fi
-									
-									chown -R tomcat:tomcat /var/lib/grisu
 
-									# copy a few ca root certs in the proper directory to get
-									# started. Ideally those will be updated automatically using a
+									chown -R
+									tomcat:tomcat /var/lib/grisu
+
+									# copy a few ca root certs in
+									the
+									proper directory to get
+									# started. Ideally those will be
+									updated
+									automatically using a
 									# package
-									if [ -d /etc/grid-security/certificates ]; then
-										rm /etc/grid-security/rootcerts.tar
+									if [ -d
+									/etc/grid-security/certificates ]; then
+									rm
+									/etc/grid-security/rootcerts.tar
 									else
-										mkdir -p /etc/grid-security/certificates
-										tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates 
-										rm /etc/grid-security/rootcerts.tar
+									mkdir -p
+									/etc/grid-security/certificates
+									tar xf
+									/etc/grid-security/rootcerts.tar -C
+									/etc/grid-security/certificates
+									rm
+									/etc/grid-security/rootcerts.tar
 									fi
 
 									# copy grisu-backend
-									if [ -f /etc/grisu/grisu-backend.config ]; then
-										rm /etc/grisu/grisu-backend.config.dpkg-new
+									if [ -f
+									/etc/grisu/grisu-backend.config ]; then
+									rm
+									/etc/grisu/grisu-backend.config.dpkg-new
 									else
-										mv /etc/grisu/grisu-backend.config.dpkg-new /etc/grisu/grisu-backend.config
+									mv
+									/etc/grisu/grisu-backend.config.dpkg-new
+									/etc/grisu/grisu-backend.config
 									fi
 
 									# create log dir
-									if [ ! -d /var/log/grisu ]; then
-										mkdir /var/log/grisu
-										chown -R tomcat:tomcat /var/log/grisu
+									if [ ! -d
+									/var/log/grisu ]; then
+									mkdir /var/log/grisu
+									chown -R
+									tomcat:tomcat /var/log/grisu
 									fi
 
 
@@ -727,6 +757,33 @@
 				</plugins>
 			</build>
 
+
+		</profile>
+
+		<profile>
+			<id>exe-war</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.simplericity.jettyconsole</groupId>
+						<artifactId>jetty-console-maven-plugin</artifactId>
+						<version>1.42</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>createconsole</goal>
+								</goals>
+								<configuration>
+									<backgroundImage>${basedir}/src/main/resources/nesi.jpg</backgroundImage>
+								</configuration>
+							</execution>
+						</executions>
+
+					</plugin>
+
+				</plugins>
+
+			</build>
 
 		</profile>
 	</profiles>
