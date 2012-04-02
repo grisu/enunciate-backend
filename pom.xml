@@ -475,16 +475,6 @@
 										</data>
 
 										<data>
-											<src>${project.basedir}/src/deb/data/etc/grisu</src>
-											<type>directory</type>
-											<mapper>
-												<type>perm</type>
-												<prefix>/etc/grisu</prefix>
-												<user>tomcat6</user>
-												<group>tomcat6</group>
-											</mapper>
-										</data>
-										<data>
 											<src>${project.basedir}/src/deb/data/templates_available.tar.bz2</src>
 											<type>file</type>
 											<mapper>
@@ -534,7 +524,26 @@
 												<group>root</group>
 											</mapper>
 										</data>
-
+										<data>
+											<src>${project.basedir}/src/deb/data/testbed.groovy</src>
+											<type>file</type>
+											<mapper>
+												<type>perm</type>
+												<prefix>/usr/share/doc/grisu/examples</prefix>
+												<user>root</user>
+												<group>root</group>
+											</mapper>
+										</data>
+										<data>
+											<src>${project.basedir}/src/deb/data/grisu-backend.config</src>
+											<type>file</type>
+											<mapper>
+												<type>perm</type>
+												<prefix>/usr/share/doc/grisu/examples</prefix>
+												<user>root</user>
+												<group>root</group>
+											</mapper>
+										</data>
 
 									</dataSet>
 
@@ -607,9 +616,6 @@
 									<groupname>tomcat</groupname>
 									<sources>
 										<source>
-											<location>${project.basedir}/src/deb/data/etc/grisu/grisu-backend.config.dpkg-new</location>
-										</source>
-										<source>
 											<location>${project.basedir}/src/deb/data/templates_available.tar.bz2</location>
 										</source>
 
@@ -652,6 +658,12 @@
 										</source>
 										<source>
 											<location>${project.basedir}/src/deb/data/grisu-ajp.conf</location>
+										</source>
+										<source>
+											<location>${project.basedir}/src/deb/data/testbed.groovy</location>
+										</source>
+										<source>
+											<location>${project.basedir}/src/deb/data/grisu-backend.config</location>
 										</source>
 									</sources>
 								</mapping>
@@ -720,17 +732,6 @@
 									/etc/grid-security/certificates
 									rm
 									/etc/grid-security/rootcerts.tar
-									fi
-
-									# copy grisu-backend
-									if [ -f
-									/etc/grisu/grisu-backend.config ]; then
-									rm
-									/etc/grisu/grisu-backend.config.dpkg-new
-									else
-									mv
-									/etc/grisu/grisu-backend.config.dpkg-new
-									/etc/grisu/grisu-backend.config
 									fi
 
 									# create log dir

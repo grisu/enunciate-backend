@@ -52,12 +52,6 @@ case "$1" in
 			rm /etc/grid-security/rootcerts.tar
 		fi
 
-		# copy grisu-backend
-		if [ -f /etc/grisu/grisu-backend.config ]; then
-			rm /etc/grisu/grisu-backend.config.dpkg-new
-		else
-			mv /etc/grisu/grisu-backend.config.dpkg-new /etc/grisu/grisu-backend.config
-		fi		
 		
 		# create log dir
 		if [ ! -d /var/log/grisu ]; then
