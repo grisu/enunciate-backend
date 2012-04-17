@@ -1,0 +1,59 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<http use-expressions="true">
+		<intercept-url pattern="/**wsdl" filters="none" />
+		<intercept-url pattern="/**html" filters="none" />
+		<intercept-url pattern="/**css" filters="none" />
+		<intercept-url pattern="/**wadl" filters="none" />
+		<intercept-url pattern="/**js" filters="none" />
+<!-- 		<intercept-url pattern="/info/**" filters="none" /> -->
+<!-- 		<intercept-url pattern="/user/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/job/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/jobs/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/batchjob/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/batchjobs/**" access="isAuthenticated()" /> -->
+<!-- 		<intercept-url pattern="/files/**" access="isAuthenticated()" /> -->
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<http-basic />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider ref="daoAuthenticationProvider">
+		</authentication-provider>
+	</authentication-manager>
+
+
+	<beans:bean id="daoAuthenticationProvider" class="grisu.control.MyProxyAuthenticationProvider">
+<!-- 		<security:custom-authentication-provider /> -->
+		<beans:property name="userDetailsService" ref="grisuUserDetailsService" />
+		<beans:property name="userCache" ref="userCache" />
+	</beans:bean>
+	<beans:bean id="grisuUserDetailsService" class="grisu.control.GrisuUserDetailsImpl" />
+
+	<beans:bean id="userCache"
+		class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+		<beans:property name="cache" ref="userCacheBackend" />
+	</beans:bean>
+
+	<beans:bean id="userCacheBackend" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<beans:property name="cacheManager" ref="cacheManager" />
+		<beans:property name="cacheName" value="userCache" />
+	</beans:bean>
+
+	<beans:bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<beans:property name="configLocation" value="classpath:/grisu-ehcache.xml" />
+	</beans:bean>
+
+
+
+
+	<!--hook up the spring security filter chain -->
+	<beans:alias name="springSecurityFilterChain" alias="securityFilter" />
+
+</beans:beans>   

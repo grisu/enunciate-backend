@@ -1,9 +1,9 @@
 Package: grisu-backend-ws
-Version: 0.3.5
+Version: VERSION_TOKEN
 Section: misc
 Priority: optional
 Architecture: all
-Depends: sun-java6-jdk, tomcat6, bzip2, unzip, zip
-Recommends: apache2, git-core
+Depends: java-sdk, tomcat6, bzip2, unzip, zip
+Recommends: apache2, git
 Maintainer: Markus Binsteiner <m.binsteiner@auckland.ac.nz>
 Description: Grisu web service backend (SOAP/ReST)

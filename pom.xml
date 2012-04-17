@@ -3,8 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.3.6.1</version>
-	<packaging>war</packaging>
+	<version>0.4.4-SNAPSHOT</version>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
 		GWT-RPC endpoints for a Grisu backend. It also automatically creates
@@ -17,10 +16,14 @@
 	</organization>
 
 	<properties>
-		<enunciate.version>1.22</enunciate.version>
+		<enunciate.version>1.24</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
-		<grisu.dependency.version>0.3.6.1</grisu.dependency.version>
+		<spring.version>3.0.2.RELEASE</spring.version>
+		<spring.security.version>3.0.2.RELEASE</spring.security.version>
+		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
+
+		<grisu.version>0.4.3</grisu.version>
 	</properties>
 
 	<scm>
@@ -44,76 +47,15 @@
 				<checksumPolicy>fail</checksumPolicy>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>snapshots</id>
-			<url>http://code.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/
-			</url>
-			<releases>
-				<enabled>false</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</snapshots>
-		</repository>
 	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>bestgrid plugin</id>
-			<url>http://code.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>bestgrid plugin Snapshots</id>
-			<url>http://code.ceres.auckland.ac.nz/nexus/content/groups/public-snapshots/</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<distributionManagement>
-		<repository>
-			<name>BeSTGRID Releases Repository</name>
-			<id>bestgrid.release</id>
-			<url>http://code.ceres.auckland.ac.nz/nexus/content/repositories/releases
-			</url>
-		</repository>
-		<snapshotRepository>
-			<id>bestgrid.snapshot</id>
-			<name>BeSTGRID Snapshots Repository</name>
-			<url>http://code.ceres.auckland.ac.nz/nexus/content/repositories/snapshots
-			</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 
 	<dependencies>
 
 		<dependency>
-			<groupId>org.codehaus.enunciate</groupId>
-			<artifactId>enunciate-gwt-rt</artifactId>
-			<version>${enunciate.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-			<version>${gwt.version}</version>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 
 		<dependency>
@@ -129,62 +71,43 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core-tiger</artifactId>
-			<version>2.0.1</version>
-			<exclusions>
-
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-dao</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.codehaus.enunciate</groupId>
+			<artifactId>enunciate-spring3-app-rt</artifactId>
+			<version>${enunciate.version}</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
-			<version>2.0.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>${spring.security.version}</version>
 		</dependency>
+
+
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>2.5.4</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.5.4</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>javax.servlet</groupId> -->
+		<!-- <artifactId>servlet-api</artifactId> -->
+		<!-- <version>2.5</version> -->
+		<!-- <type>jar</type> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -201,9 +124,8 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.3.1</version>
+			<version>1.5.3</version>
 			<classifier>sources</classifier>
-			<scope>compile</scope>
 		</dependency>
 		<!-- <dependency> -->
 		<!-- <groupId>grisu</groupId> -->
@@ -214,16 +136,28 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
-			<version>${grisu.dependency.version}</version>
+			<version>${grisu.version}</version>
 			<classifier>sources</classifier>
-			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jcl-over-slf4j</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
-			<version>${grisu.dependency.version}</version>
-			<scope>compile</scope>
+			<version>${grisu.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>net.sf.ehcache</groupId>
@@ -239,34 +173,35 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>grisu</groupId> -->
-		<!-- <artifactId>grisu-client</artifactId> -->
-		<!-- <version>0.3-SNAPSHOT</version> -->
-		<!-- <scope>compile</scope> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>grisu</groupId> -->
-		<!-- <artifactId>grisu-client</artifactId> -->
-		<!-- <version>0.3-SNAPSHOT</version> -->
-		<!-- <classifier>sources</classifier> -->
-		<!-- <scope>compile</scope> -->
-		<!-- </dependency> -->
-
+		<dependency>
+			<groupId>me.moocar</groupId>
+			<artifactId>logback-gelf</artifactId>
+			<version>nz.0.9.7</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
+
 
 	<build>
 		<finalName>grisu-ws</finalName>
 		<plugins>
 
-			<!-- replace version in file -->
 			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>maven-replacer-plugin</artifactId>
-				<version>1.3.2</version>
+				<version>1.4.0</version>
 				<executions>
 					<execution>
-						<!-- the replace should happen before the app is packaged -->
+						<id>set-enunciate-version</id>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>replace</goal>
@@ -276,102 +211,46 @@
 
 				<configuration>
 					<includes>
-						<!-- replace the token in this file -->
 						<include>target/classes/enunciate-backend.version</include>
 					</includes>
 					<regex>false</regex>
-					<!-- the name of the token to replace -->
 					<token>VERSION_TOKEN</token>
-					<!-- replace it with the maven project version -->
-					<value>${project.version}</value>
+					<value>
+						${project.version}</value>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.codehaus.enunciate</groupId>
 				<artifactId>maven-enunciate-cxf-plugin</artifactId>
 				<version>${enunciate.version}</version>
+				<configuration>
+					<configFile>src/conf/enunciate.xml</configFile>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>assemble</goal>
 						</goals>
 					</execution>
-
-					<!-- <execution> -->
-					<!-- <id>install-and-deploy-jaxws</id> -->
-					<!-- <goals> -->
-					<!-- -->
-					<!-- the "install-artifact" goal does a local install of the artifact -->
-					<!-- -->
-					<!-- <goal>install-artifact</goal> -->
-					<!-- the "deploy-artifact" goal deploys the artifact -->
-					<!-- <goal>deploy-artifact</goal> -->
-					<!-- </goals> -->
-					<!-- <phase>install</phase> -->
-
-					<!-- <configuration> -->
-					<!-- -->
-					<!-- the "enunciateArtifactId" element is the only thing required. -->
-					<!-- other options reflect those of the maven deploy plugin, and -->
-					<!-- include options to set the groupId, artifactId, version, -->
-					<!-- classifier, pomFile etc. However, suitable defaults will be -->
-					<!-- supplied as necessary -->
-					<!-- -->
-					<!-- <enunciateArtifactId>jaxws.client.library</enunciateArtifactId> -->
-					<!-- <groupId>grisu</groupId> -->
-					<!-- <artifactId>grisu-client-jaxws</artifactId> -->
-					<!-- <version>${project.version}</version> -->
-					<!-- <packaging>jar</packaging> -->
-					<!-- <uniqueVersion>false</uniqueVersion> -->
-					<!-- <pomFile>client-jaxws.pom</pomFile> -->
-					<!-- </configuration> -->
-					<!-- </execution> -->
-
-					<!-- <execution> -->
-					<!-- <id>install-and-deploy-gwt</id> -->
-					<!-- <goals> -->
-
-
-					<!-- <goal>install-artifact</goal> -->
-					<!-- <goal>deploy-artifact</goal> -->
-					<!-- </goals> -->
-					<!-- <phase>install</phase> -->
-
-					<!-- <configuration> -->
-
-					<!-- <enunciateArtifactId>gwt.client.jar</enunciateArtifactId> -->
-					<!-- <groupId>grisu</groupId> -->
-					<!-- <artifactId>grisu-client-enunciate-gwt</artifactId> -->
-
-					<!-- <version>${project.version}</version> -->
-					<!-- <packaging>jar</packaging> -->
-
-					<!-- <uniqueVersion>false</uniqueVersion> -->
-					<!-- <pomFile>client-gwt.pom</pomFile> -->
-
-					<!-- </configuration> -->
-					<!-- </execution> -->
-
 				</executions>
-
-
-				<dependencies>
-					<dependency>
-						<groupId>org.codehaus.enunciate</groupId>
-						<artifactId>enunciate-gwt</artifactId>
-						<version>${enunciate.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.enunciate</groupId> -->
+			<!-- <artifactId>maven-enunciate-spring-plugin</artifactId> -->
+			<!-- <version>1.24</version> -->
+			<!-- <configuration> -->
+			<!-- <configFile>src/conf/enunciate.xml</configFile> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>assemble</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -379,60 +258,65 @@
 				<version>7.0.1.v20091125</version>
 			</plugin>
 
-
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.1</version>
-				<configuration>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<pushChanges>false</pushChanges>
-					<localCheckout>true</localCheckout>
-
-					<!-- During release:perform, enable the "release" profile -->
-					<releaseProfiles>deb</releaseProfiles>
-
-				</configuration>
-			</plugin>
-
-
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.enunciate
+										</groupId>
+										<artifactId>
+											maven-enunciate-spring-plugin
+										</artifactId>
+										<versionRange>
+											[1.24,)
+										</versionRange>
+										<goals>
+											<goal>assemble</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.enunciate
+										</groupId>
+										<artifactId>
+											maven-enunciate-cxf-plugin
+										</artifactId>
+										<versionRange>
+											[1.24,)
+										</versionRange>
+										<goals>
+											<goal>assemble</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<profiles>
-		<profile>
-			<id>sign</id>
-			<!-- <activation> -->
-			<!-- <property> -->
-			<!-- <name>BUILD_NUMBER</name> -->
-			<!-- </property> -->
-			<!-- </activation> -->
-
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jarsigner-plugin</artifactId>
-						<version>1.2</version>
-						<executions>
-							<execution>
-								<id>sign</id>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<alias>grisu</alias>
-							<storepass>FxAKs3p6</storepass>
-							<keypass>FxAKs3p6</keypass>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-
-		</profile>
 
 		<profile>
 			<id>deb</id>
@@ -446,18 +330,94 @@
 				<plugins>
 
 					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+							<execution>
+								<id>copy-deb-control</id>
+								<!-- here the phase you need -->
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/deb/control</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/src/deb/control</directory>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>fix_permission</id>
+								<phase>prepare-package</phase>
+								<configuration>
+									<target>
+										<chmod file="target/deb/control/postinst" perm="755" />
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>maven-replacer-plugin</artifactId>
+						<version>1.4.0</version>
+						<executions>
+							<execution>
+								<id>fix_deb_version</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>replace</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<includes>
+								<include>target/classes/enunciate-backend.version</include>
+								<include>target/deb/control/control</include>
+							</includes>
+							<ignoreMissingFile>false</ignoreMissingFile>
+
+							<replacements>
+								<replacement>
+									<token>VERSION_TOKEN</token>
+									<value>${project.version}</value>
+								</replacement>
+							</replacements>
+						</configuration>
+					</plugin>
+
+
+					<plugin>
 						<artifactId>jdeb</artifactId>
 						<groupId>org.vafer</groupId>
-						<version>0.9-beta4-SNAPSHOT</version>
+						<version>0.9</version>
 						<executions>
 							<execution>
 								<phase>package</phase>
+								<id>build-deb</id>
 								<goals>
 									<goal>jdeb</goal>
 								</goals>
 								<configuration>
 									<changesIn>CHANGES.txt</changesIn>
-									<deb>[[buildDir]]/grisu-backend-ws.deb</deb>
+									<deb>[[buildDir]]/grisu-backend-ws-${project.version}.deb</deb>
+									<controlDir>target/deb/control</controlDir>
 									<!-- <installDir>/opt/grisu</installDir> -->
 									<dataSet>
 										<data>
@@ -493,6 +453,16 @@
 											</mapper>
 										</data>
 										<data>
+											<src>${project.basedir}/src/deb/data/templates_available.tar.bz2</src>
+											<type>file</type>
+											<mapper>
+												<type>perm</type>
+												<prefix>/etc/grisu</prefix>
+												<user>tomcat6</user>
+												<group>tomcat6</group>
+											</mapper>
+										</data>
+										<data>
 											<src>${project.basedir}/src/deb/data/globus</src>
 											<type>directory</type>
 											<mapper>
@@ -513,16 +483,6 @@
 											</mapper>
 										</data>
 										<data>
-											<src>${project.basedir}/src/deb/data/templates_available.tar.bz2</src>
-											<type>file</type>
-											<mapper>
-												<type>perm</type>
-												<prefix>/etc/grisu</prefix>
-												<user>tomcat6</user>
-												<group>tomcat6</group>
-											</mapper>
-										</data>
-										<data>
 											<src>${project.basedir}/src/deb/data/rootcerts.tar</src>
 											<type>file</type>
 											<mapper>
@@ -533,7 +493,7 @@
 											</mapper>
 										</data>
 										<data>
-											<src>${project.basedir}/src/deb/data/grisu-log4j.xml</src>
+											<src>${project.basedir}/src/main/resources/logback.xml</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
@@ -552,6 +512,8 @@
 												<group>root</group>
 											</mapper>
 										</data>
+					
+										
 									</dataSet>
 
 								</configuration>
@@ -562,7 +524,216 @@
 			</build>
 
 		</profile>
+
+
+		<profile>
+			<id>rpm</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>rpm-maven-plugin</artifactId>
+						<version>2.1-alpha-1</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>attached-rpm</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<copyright>2011, University of Auckland</copyright>
+							<distribution>Grisu</distribution>
+							<group>Application/Other</group>
+							<!-- <icon>src/main/resources/icon.gif</icon> -->
+							<packager>Markus Binsteiner</packager>
+							<!-- <prefix>/usr/local</prefix> -->
+							<version>${project.version}</version>
+							<!-- <changelogFile>src/changelog</changelogFile> -->
+							<!-- <defineStatements> -->
+							<!-- <defineStatement>_unpackaged_files_terminate_build 0</defineStatement> -->
+							<!-- </defineStatements> -->
+							<mappings>
+								<mapping>
+									<directory>/var/lib/grisu</directory>
+									<filemode>755</filemode>
+									<username>tomcat</username>
+									<groupname>tomcat</groupname>
+									<sources>
+										<source>
+											<location>${project.build.directory}/${project.build.finalName}.war</location>
+										</source>
+									</sources>
+								</mapping>
+
+								<mapping>
+									<directory>/etc/tomcat6/Catalina/localhost</directory>
+									<filemode>755</filemode>
+									<username>tomcat</username>
+									<groupname>tomcat</groupname>
+									<sources>
+										<source>
+											<location>${project.basedir}/src/deb/data/grisu-ws.xml</location>
+										</source>
+									</sources>
+								</mapping>
+
+								<mapping>
+									<directory>/etc/grisu</directory>
+									<filemode>770</filemode>
+									<username>tomcat</username>
+									<groupname>tomcat</groupname>
+									<sources>
+										<source>
+											<location>${project.basedir}/src/deb/data/etc/grisu/grisu-backend.config.dpkg-new</location>
+										</source>
+										<source>
+											<location>${project.basedir}/src/deb/data/templates_available.tar.bz2</location>
+										</source>
+
+									</sources>
+								</mapping>
+
+								<mapping>
+									<directory>/var/lib/grisu/</directory>
+									<filemode>775</filemode>
+									<username>tomcat</username>
+									<groupname>tomcat</groupname>
+									<sources>
+										<source>
+											<location>${project.basedir}/src/deb/data/globus</location>
+										</source>
+									</sources>
+								</mapping>
+
+								<mapping>
+									<directory>/etc/vomses</directory>
+									<filemode>755</filemode>
+									<username>root</username>
+									<groupname>root</groupname>
+									<sources>
+										<source>
+											<location>${project.basedir}/src/deb/data/etc/vomses/nz.dpkg-new</location>
+										</source>
+									</sources>
+								</mapping>
+
+
+								<mapping>
+									<directory>/etc/grid-security/</directory>
+									<filemode>775</filemode>
+									<username>root</username>
+									<groupname>root</groupname>
+									<sources>
+										<source>
+											<location>${project.basedir}/src/deb/data/rootcerts.tar</location>
+										</source>
+									</sources>
+								</mapping>
+
+								<mapping>
+									<directory>/usr/share/doc/grisu/examples/</directory>
+									<filemode>775</filemode>
+									<username>root</username>
+									<groupname>root</groupname>
+									<sources>
+										<source>
+											<location>${project.basedir}/src/main/resources/logback.xml</location>
+										</source>
+										<source>
+											<location>${project.basedir}/src/deb/data/grisu-ajp.conf</location>
+										</source>
+									</sources>
+								</mapping>
+
+							</mappings>
+							<requires>
+								<require>java-1.6.0-openjdk</require>
+								<require>tomcat6</require>
+<!-- 								<require>tomcat6-systemv</require> -->
+							</requires>
+							<postinstallScriptlet>
+								<script>
+
+									service tomcat6 stop
+
+									# if templates_available directory already exist, don't extract
+									# the default templates (inclusive git repo info)
+									if [ -d /etc/grisu/templates_available ]; then
+										rm /etc/grisu/templates_available.tar.bz2
+									else
+										tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ &gt;&gt; /dev/null
+										rm /etc/grisu/templates_available.tar.bz2
+									fi
+
+									if [ -f /etc/vomses/nz ]; then
+										rm /etc/vomses/nz.dpkg-new
+									else
+										mv /etc/vomses/nz.dpkg-new /etc/vomses/nz
+									fi
+
+									# remove deployed webapp from tomcat, just to be sure
+									if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then
+										rm -rf /var/lib/tomcat6/webapps/grisu-ws
+									fi
+
+									# adjust permissions
+									if [ ! -d /var/lib/grisu/ ]; then
+										mkdir -p /var/lib/grisu/
+									fi
+									
+									chown -R tomcat:tomcat /var/lib/grisu
+
+									# copy a few ca root certs in the proper directory to get
+									# started. Ideally those will be updated automatically using a
+									# package
+									if [ -d /etc/grid-security/certificates ]; then
+										rm /etc/grid-security/rootcerts.tar
+									else
+										mkdir -p /etc/grid-security/certificates
+										tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates 
+										rm /etc/grid-security/rootcerts.tar
+									fi
+
+									# copy grisu-backend
+									if [ -f /etc/grisu/grisu-backend.config ]; then
+										rm /etc/grisu/grisu-backend.config.dpkg-new
+									else
+										mv /etc/grisu/grisu-backend.config.dpkg-new /etc/grisu/grisu-backend.config
+									fi
+
+									# create log dir
+									if [ ! -d /var/log/grisu ]; then
+										mkdir /var/log/grisu
+										chown -R tomcat:tomcat /var/log/grisu
+									fi
+
+
+									service tomcat6 start
+
+
+
+								</script>
+							</postinstallScriptlet>
+							<!-- <postinstallScriptlet> <scriptFile>src/main/scripts/postinstall</scriptFile> 
+								<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet> 
+								<scriptFile>src/main/scripts/preremove</scriptFile> <fileEncoding>utf-8</fileEncoding> 
+								</preremoveScriptlet> -->
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+
+
+		</profile>
 	</profiles>
 
 
+
+	<packaging>war</packaging>
+	<parent>
+		<groupId>nz.org.nesi</groupId>
+		<artifactId>nesi</artifactId>
+		<version>0.9</version>
+	</parent>
 </project>

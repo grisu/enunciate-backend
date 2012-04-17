@@ -1,6 +1,8 @@
 # General settings
 
 [General]
+# comma-seperated list of which VOs to support (in addition to the ones that are placed manually in either /etc/vomses or $HOME/.glite/vomses) -- vomses files need to be present in jgrith vomses.zip file in order for that to work. default: nz
+# supportedVOs = nz
 # the directory which Grisu uses to put all jobdirectories into, default: active-jobs
 # jobDirName = active-jobs
 # the directory which Grisu uses to put all archived jobdirectories under, default: archived-jobs
@@ -11,6 +13,8 @@
 # minProxyLifetime = 600
 # the lifetime of a proxy that gets delegated from MyProxy (in seconds), default: 3600
 # proxyLifetime = 3600
+# the wait time inbetween two proxy requests once the proxy is not within the proxy min lifetime anymore in seconds (default: 300)
+proxyRetrievalWaitTime = 300
 # the wait time in seconds before a job status gets checked again on a remote endpoint (before that, the last status is returned). this helps making grisu faster, although you sometimes get out of date job statuses, default: 8
 # statusCheckWaitTime = 8
 # the timeout for filesystem connections in milliseconds, default: 4000
@@ -19,6 +23,10 @@
 # fileListingTimeOut = 20
 # whether to cache filesystem home folders (speeds up login after first login), default: true
 # fsCache = true
+# whether to close filesystems in the background (default: false), this was introduced because jglobus behaviour was not consistent and sometimes produced lock
+# closeFilesystemsInBackground = false
+# how long to wait in seconds for a job to be cleaned (file deletion can take quite a while via gridftp if there are a lot of files involved - default: 1800)
+# jobCleanThreshold = 1800
 
 # The database configuration.
 
@@ -71,6 +79,8 @@
 # mountPointLookupThreads = 8
 # when Grisu queries archived jobs, it needs to read the grisu dot file which contains job properties. this setting controls how many lookups are made per filesystem, default: 8
 # archivedJobsLookupThreadsPerFilesystem = 8
+# when a user kills multiple jobs, this settings determines how many of them are killed in parallel, default: 8
+# jobsToBeKilled = 8
 
 # Since the grid is not always very stable, it turned out that retrying an action that failed
 # straight away often works. Here are some settings for that.
@@ -78,6 +88,8 @@
 [RetrySettings]
 # when a file transfer fails, how many times should Grisu retry, default: 3
 # fileTransfers = 3
+# when a file delete fails, how many times should Grisu retry, default: 6
+# fileDeletes = 6
 # the time in seconds to wait until Grisu tries to re-transfer a file, default: 1
 # fileTransferWaitTime = 1
 # when a job submission fails, how many times should Grisu retry, default: 5

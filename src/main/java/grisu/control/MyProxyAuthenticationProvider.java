@@ -1,20 +1,21 @@
 package grisu.control;
 
-import org.apache.log4j.Logger;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-import org.springframework.security.providers.dao.DaoAuthenticationProvider;
-import org.springframework.security.userdetails.UserDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class MyProxyAuthenticationProvider extends DaoAuthenticationProvider {
 
-	static final Logger myLogger = Logger
+	static final Logger myLogger = LoggerFactory
 			.getLogger(MyProxyAuthenticationProvider.class.getName());
 
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication)
-			throws AuthenticationException {
+					throws AuthenticationException {
 
 		// System.out.println("MyProxy: ");
 		// System.out.println("Username: "
