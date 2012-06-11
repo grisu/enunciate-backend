@@ -52,8 +52,8 @@
 
 
 	<dependencies>
-	
-	
+
+
 
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -129,12 +129,12 @@
 			<artifactId>grid-jcommons</artifactId>
 			<version>1.5.11</version>
 			<classifier>sources</classifier>
-			<exclusions>
-				<exclusion>
-					<artifactId>logback-classic</artifactId>
-					<groupId>ch.qos.logback</groupId>
-				</exclusion>
-			</exclusions>
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>logback-classic</artifactId> -->
+<!-- 					<groupId>ch.qos.logback</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
 		</dependency>
 		<!-- <dependency> -->
 		<!-- <groupId>grisu</groupId> -->
@@ -147,20 +147,20 @@
 			<artifactId>grisu-commons</artifactId>
 			<version>${grisu.version}</version>
 			<classifier>sources</classifier>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>logback-classic</artifactId>
-					<groupId>ch.qos.logback</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jcl-over-slf4j</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>slf4j-api</artifactId> -->
+<!-- 					<groupId>org.slf4j</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>logback-classic</artifactId> -->
+<!-- 					<groupId>ch.qos.logback</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>jcl-over-slf4j</artifactId> -->
+<!-- 					<groupId>org.slf4j</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
 		</dependency>
 
 		<dependency>
@@ -172,10 +172,10 @@
 					<groupId>net.sf.ehcache</groupId>
 					<artifactId>ehcache</artifactId>
 				</exclusion>
-				<exclusion>
-					<artifactId>logback-classic</artifactId>
-					<groupId>ch.qos.logback</groupId>
-				</exclusion>
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>logback-classic</artifactId> -->
+<!-- 					<groupId>ch.qos.logback</groupId> -->
+<!-- 				</exclusion> -->
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -306,7 +306,7 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -711,7 +711,7 @@
 									if [ ! -d /var/lib/grisu/ ]; then
 										mkdir -p /var/lib/grisu/
 									fi
-									
+
 									chown -R tomcat:tomcat /var/lib/grisu
 
 									# copy a few ca root certs in the proper directory to get
@@ -721,7 +721,7 @@
 										rm /etc/grid-security/rootcerts.tar
 									else
 										mkdir -p /etc/grid-security/certificates
-										tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates 
+										tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates
 										rm /etc/grid-security/rootcerts.tar
 									fi
 
@@ -738,9 +738,9 @@
 
 								</script>
 							</postinstallScriptlet>
-							<!-- <postinstallScriptlet> <scriptFile>src/main/scripts/postinstall</scriptFile> 
-								<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet> 
-								<scriptFile>src/main/scripts/preremove</scriptFile> <fileEncoding>utf-8</fileEncoding> 
+							<!-- <postinstallScriptlet> <scriptFile>src/main/scripts/postinstall</scriptFile>
+								<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet>
+								<scriptFile>src/main/scripts/preremove</scriptFile> <fileEncoding>utf-8</fileEncoding>
 								</preremoveScriptlet> -->
 						</configuration>
 					</plugin>
