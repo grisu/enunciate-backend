@@ -129,6 +129,12 @@
 			<artifactId>grid-jcommons</artifactId>
 			<version>1.5.11</version>
 			<classifier>sources</classifier>
+			<exclusions>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- <dependency> -->
 		<!-- <groupId>grisu</groupId> -->
@@ -165,6 +171,10 @@
 				<exclusion>
 					<groupId>net.sf.ehcache</groupId>
 					<artifactId>ehcache</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
