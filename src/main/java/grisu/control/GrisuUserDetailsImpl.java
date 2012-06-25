@@ -12,6 +12,7 @@ public class GrisuUserDetailsImpl implements UserDetailsService {
 	// Logger.getLogger(GrisuUserDetailsImpl.class
 	// .getName());
 
+
 	static {
 		CoGProperties.getDefault().setProperty(
 				CoGProperties.ENFORCE_SIGNING_POLICY, "false");
@@ -19,6 +20,7 @@ public class GrisuUserDetailsImpl implements UserDetailsService {
 
 	public UserDetails loadUserByUsername(String arg0)
 			throws UsernameNotFoundException, DataAccessException {
+
 
 		// myLogger.debug("Authenticating....");
 		return new GrisuUserDetails(arg0);
