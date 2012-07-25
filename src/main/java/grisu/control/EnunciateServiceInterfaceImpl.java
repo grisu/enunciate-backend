@@ -4,6 +4,7 @@ import grisu.backend.model.User;
 import grisu.control.exceptions.NoSuchTemplateException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.control.serviceInterfaces.LocalServiceInterface;
+import grisu.jcommons.configuration.CommonGridProperties;
 import grisu.jcommons.utils.Version;
 import grisu.settings.Environment;
 import grisu.settings.ServiceTemplateManagement;
@@ -52,6 +53,11 @@ public class EnunciateServiceInterfaceImpl extends AbstractServiceInterface
 implements ServiceInterface {
 
 	static {
+
+		CommonGridProperties.getDefault().setGridProperty(
+				CommonGridProperties.Property.MYPROXY_HOST,
+				"myproxy.nesi.org.nz");
+
 		// System.out.println("INHERITABLETHREAD");
 		SecurityContextHolder
 		.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
