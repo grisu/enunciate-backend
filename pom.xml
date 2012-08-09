@@ -23,7 +23,7 @@
 		<spring.security.version>3.0.2.RELEASE</spring.security.version>
 		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
 
-		<grisu.version>0.4.10</grisu.version>
+		<grisu.version>0.4.11</grisu.version>
 	</properties>
 
 	<scm>
@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>grisu</groupId>
 			<artifactId>grid-jcommons</artifactId>
-			<version>1.5.3</version>
+			<version>1.5.11</version>
 			<classifier>sources</classifier>
 		</dependency>
 		<!-- <dependency> -->
@@ -191,7 +191,7 @@
 		<dependency>
 			<groupId>grith</groupId>
 			<artifactId>jgrith</artifactId>
-			<version>0.6.3</version>
+			<version>0.6.4</version>
 		</dependency>
 	</dependencies>
 
