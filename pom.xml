@@ -222,6 +222,20 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>7.0.1.v20091125</version>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.2.2</version>
+				<inherited>false</inherited>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<pushChanges>true</pushChanges>
+					<localCheckout>true</localCheckout>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+					<releaseProfiles>deb,rpm,exe-war</releaseProfiles>
+				</configuration>
+			</plugin>			
 
 		</plugins>
 		<pluginManagement>
