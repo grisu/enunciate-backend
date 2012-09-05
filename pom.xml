@@ -24,7 +24,6 @@
 		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
 
 		<cxf.version>2.5.2</cxf.version>
-		<grisu.version>0.5-rc2</grisu.version>
 	</properties>
 
 	<scm>
@@ -167,7 +166,7 @@
 		<dependency>
 			<groupId>grith</groupId>
 			<artifactId>jgrith</artifactId>
-			<version>0.7</version>
+			<version>0.7.1</version>
 		</dependency>
 	</dependencies>
 
@@ -718,6 +717,6 @@
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
-		<version>0.19</version>
+		<version>0.20</version>
 	</parent>
 </project>
