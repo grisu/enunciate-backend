@@ -3,12 +3,6 @@
 	xsi:noNamespaceSchemaLocation="http://enunciate.codehaus.org/schemas/enunciate-1.24.xsd">
 	
 <!-- 	<deployment host="compute.services.bestgrid.org" context="api" /> -->
-	
-	<namespaces>
-		<namespace id="api" uri="http://api.grisu" />
-		<namespace id="dto" uri="http://dto.model.grisu" />
-		<namespace id="errors" uri="http://exceptions.control.grisu" />
-	</namespaces>
 
 
 	<api-import pattern="grisu.model.MountPoint" />
@@ -17,20 +11,30 @@
 	<api-import pattern="grisu.control.ServiceInterface" />
 	<api-import pattern="grisu.control.JobConstants" />
 
+	
+	<namespaces>
+		<namespace id="api" uri="http://api.grisu" />
+		<namespace id="dto" uri="http://dto.model.grisu" />
+		<namespace id="errors" uri="http://exceptions.control.grisu" />
+	</namespaces>
+
 	<webapp mergeWebXML="mergeWeb.xml">
 		<globalServletFilter name="securityFilter"
 			classname="org.springframework.web.filter.DelegatingFilterProxy" />
 	</webapp>
 
+
 	<modules>
+		<c disabled="true" />
 		<csharp disabled="true"></csharp>
 		<jaxws-ri disabled="true"/>
+		<obj-c disabled="true"></obj-c>
 
 		<xfire disabled="true" />
 		<cxf disabled="false" enableJaxrs="false"/>
 		<jersey disabled="true" />
 		
-		<java-client disabled="false" jarName="grisu-client-jaxws.jar">
+		<java-client disabled="true" jarName="grisu-client-jaxws.jar">
 		</java-client>
 		
 		<spring-app>
@@ -40,7 +44,7 @@
 		</spring-app>
 
 		<docs splashPackage="grisu.control" title="Grisu API"
-			copyright="Grisu open source project">
+			copyright="Grisu open source project" >
 			<download name="BasicJavaJob" file="javaJob.jsdl"
 				description="Sample jsdl file to submit a simple java job to a fixed submission location." />
 			<download name="License" file="LICENSE-2.0.txt"
@@ -48,4 +52,5 @@
 		</docs>
 
 	</modules>
+
 </enunciate>

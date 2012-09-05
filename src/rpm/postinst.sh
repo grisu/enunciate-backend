@@ -21,8 +21,7 @@ set -e
 case "$1" in
     configure)
     
-
-    	/etc/init.d/tomcat6 stop	
+    	service tomcat6 stop	
 
 		# if templates_available directory already exist, don't extract the default templates (inclusive git repo info)
 		if [ -d /etc/grisu/templates_available ]; then
@@ -30,6 +29,12 @@ case "$1" in
 		else
 			tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ >> /dev/null
 			rm /etc/grisu/templates_available.tar.bz2
+		fi
+		
+		if [ -f /etc/vomses/nz ]; then
+			rm /etc/vomses/nz.dpkg-new
+		else
+			mv /etc/vomses/nz.dpkg-new /etc/vomses/nz
 		fi
 
 		# remove deployed webapp from tomcat, just to be sure
@@ -41,7 +46,7 @@ case "$1" in
 		if [ ! -d /var/lib/grisu/ ]; then
 			mkdir -p /var/lib/grisu/
 		fi
-		chown -R tomcat6:tomcat6 /var/lib/grisu 
+		chown -R tomcat:tomcat /var/lib/grisu 
 
 	 	# copy a few ca root certs in the proper directory to get started. Ideally those will be updated automatically using a package		
 		if [ -d /etc/grid-security/certificates ]; then
@@ -52,11 +57,17 @@ case "$1" in
 			rm /etc/grid-security/rootcerts.tar
 		fi
 
+		# copy grisu-backend
+		if [ -f /etc/grisu/grisu-backend.config ]; then
+			rm /etc/grisu/grisu-backend.config.dpkg-new
+		else
+			mv /etc/grisu/grisu-backend.config.dpkg-new /etc/grisu/grisu-backend.config
+		fi		
 		
 		# create log dir
 		if [ ! -d /var/log/grisu ]; then
 			mkdir /var/log/grisu
-			chown -R tomcat6:tomcat6 /var/log/grisu
+			chown -R tomcat:tomcat /var/log/grisu
 		fi
 		
 		# extract a few jars into tomcat6/shared so there will be no problem if another webapp uses them as well (only security related jars)
@@ -73,7 +84,7 @@ case "$1" in
 		#fi
 		
 		
-		/etc/init.d/tomcat6 start
+		service tomcat6 start
 	;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

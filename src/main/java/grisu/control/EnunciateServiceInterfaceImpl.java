@@ -1,21 +1,16 @@
 package grisu.control;
 
-import grisu.backend.model.ProxyCredential;
 import grisu.backend.model.User;
-import grisu.backend.utils.CertHelpers;
 import grisu.control.exceptions.NoSuchTemplateException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.control.serviceInterfaces.LocalServiceInterface;
+import grisu.jcommons.utils.Version;
 import grisu.settings.Environment;
-import grisu.settings.MyProxyServerParams;
 import grisu.settings.ServiceTemplateManagement;
-import grith.jgrith.myProxy.MyProxy_light;
-import grith.jgrith.voms.VO;
+import grith.jgrith.credential.Credential;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import javax.jws.WebService;
 import javax.ws.rs.Path;
@@ -23,7 +18,8 @@ import javax.xml.ws.soap.MTOM;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,20 +57,20 @@ implements ServiceInterface {
 		.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 	}
 
-	static final Logger myLogger = Logger
+	static final Logger myLogger = LoggerFactory
 			.getLogger(EnunciateServiceInterfaceImpl.class.getName());
 
 	private String username;
 	private char[] password;
+	private String host;
+	private int port;
 
-	private static String hostname = null;
-
-	protected synchronized ProxyCredential getCredential() {
+	protected synchronized Credential getCredential() {
 
 		final GrisuUserDetails gud = getSpringUserDetails();
 		if (gud != null) {
 			// myLogger.debug("Found user: " + gud.getUsername());
-			return gud.getProxyCredential();
+			return gud.fetchCredential();
 		} else {
 			myLogger.error("Couldn't find user...");
 			return null;
@@ -82,41 +78,41 @@ implements ServiceInterface {
 
 	}
 
-	protected final ProxyCredential getCredential(String fqan,
-			int lifetimeInSeconds) {
-
-		String myProxyServer = MyProxyServerParams.getMyProxyServer();
-		final int myProxyPort = MyProxyServerParams.getMyProxyPort();
-
-		ProxyCredential temp;
-		try {
-			myLogger.debug("Getting delegated proxy from MyProxy...");
-			temp = new ProxyCredential(MyProxy_light.getDelegation(
-					myProxyServer, myProxyPort, username, password,
-					lifetimeInSeconds));
-			myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
-					+ temp.getDn());
-
-			if (StringUtils.isNotBlank(fqan)) {
-
-				final VO vo = getUser().getFqans().get(fqan);
-				myLogger.debug(temp.getDn() + ":Creating voms proxy for fqan: "
-						+ fqan);
-				ProxyCredential credToUse = CertHelpers.getVOProxyCredential(
-						vo, fqan, temp);
-				return credToUse;
-			} else {
-				return temp;
-			}
-
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-	}
+	// protected final ProxyCredential getCredential(String fqan,
+	// int lifetimeInSeconds) {
+	//
+	// final String myProxyServer = MyProxyServerParams.getMyProxyServer();
+	// final int myProxyPort = MyProxyServerParams.getMyProxyPort();
+	//
+	// ProxyCredential temp;
+	// try {
+	// myLogger.debug("Getting delegated proxy from MyProxy...");
+	// temp = new ProxyCredential(MyProxy_light.getDelegation(
+	// myProxyServer, myProxyPort, username, password,
+	// lifetimeInSeconds));
+	// myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
+	// + temp.getDn());
+	//
+	// if (StringUtils.isNotBlank(fqan)) {
+	//
+	// final VO vo = getUser().getFqans().get(fqan);
+	// myLogger.debug(temp.getDn() + ":Creating voms proxy for fqan: "
+	// + fqan);
+	// final ProxyCredential credToUse = CertHelpers
+	// .getVOProxyCredential(vo, fqan, temp);
+	// return credToUse;
+	// } else {
+	// return temp;
+	// }
+	//
+	// } catch (final Exception e) {
+	// throw new RuntimeException(e);
+	// }
+	//
+	// }
 
 	public long getCredentialEndTime() {
-		GrisuUserDetails gud = getSpringUserDetails();
+		final GrisuUserDetails gud = getSpringUserDetails();
 		if (gud == null) {
 			return -1L;
 		} else {
@@ -125,30 +121,14 @@ implements ServiceInterface {
 	}
 
 	@Override
-	public String getInterfaceInfo(String key) {
+	public String getInterfaceType() {
 
-		if ("HOSTNAME".equalsIgnoreCase(key)) {
-			if (hostname == null) {
-				try {
-					final InetAddress addr = InetAddress.getLocalHost();
-					final byte[] ipAddr = addr.getAddress();
-					hostname = addr.getHostName();
-					if (StringUtils.isBlank(hostname)) {
-						hostname = "Unavailable";
-					}
-				} catch (final UnknownHostException e) {
-					myLogger.debug(e);
-					hostname = "Unavailable";
-				}
-			}
-		} else if ("VERSION".equalsIgnoreCase(key)) {
-			return Integer.toString(ServiceInterface.API_VERSION);
-		} else if ("NAME".equalsIgnoreCase(key)) {
+		String version = Version.get("enunciate-backend");
+		if (StringUtils.isBlank(version)) {
 			return "Webservice (REST/SOAP) interface";
-		} else if ("BACKEND_VERSION".equalsIgnoreCase(key)) {
-			return BACKEND_VERSION;
+		} else {
+			return "Webservice (REST/SOAP) interface (v" + version + ")";
 		}
-		return null;
 	}
 
 	private GrisuUserDetails getSpringUserDetails() {
@@ -205,12 +185,15 @@ implements ServiceInterface {
 		return ServiceTemplateManagement.getAllAvailableApplications();
 	}
 
-	public void login(String username, String password) {
+	public void login(String username, String password, String host, int port) {
 
 		this.username = username;
 		if (StringUtils.isNotBlank(password)) {
 			this.password = password.toCharArray();
 		}
+
+		this.host = host;
+		this.port = port;
 
 		getCredential();
 
@@ -225,6 +208,8 @@ implements ServiceInterface {
 	}
 
 	public String logout() {
+
+
 
 		myLogger.debug("Logging out user: " + getDN());
 
