@@ -6,7 +6,6 @@ import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.settings.ServerPropertiesManager;
 import grith.jgrith.cred.AbstractCred;
 import grith.jgrith.cred.MyProxyCred;
-import grith.jgrith.credential.MyProxyCredential;
 import grith.jgrith.utils.CertHelpers;
 
 import java.util.Date;
