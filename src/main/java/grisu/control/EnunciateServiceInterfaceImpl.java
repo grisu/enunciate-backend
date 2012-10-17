@@ -7,7 +7,7 @@ import grisu.control.serviceInterfaces.LocalServiceInterface;
 import grisu.jcommons.utils.Version;
 import grisu.settings.Environment;
 import grisu.settings.ServiceTemplateManagement;
-import grith.jgrith.credential.Credential;
+import grith.jgrith.cred.AbstractCred;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +65,7 @@ implements ServiceInterface {
 	private String host;
 	private int port;
 
-	protected synchronized Credential getCredential() {
+	protected synchronized AbstractCred getCredential() {
 
 		final GrisuUserDetails gud = getSpringUserDetails();
 		if (gud != null) {
