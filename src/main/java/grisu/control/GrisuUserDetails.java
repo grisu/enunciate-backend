@@ -59,6 +59,7 @@ public class GrisuUserDetails implements UserDetails {
 		try {
 			myLogger.debug("Getting delegated proxy from MyProxy...");
 			AbstractCred cred = new MyProxyCred(username, password.toCharArray(), myProxyServer, port, lifetime);
+			cred.setSaveDetails(false);
 			cred.init();
 			// proxy = myproxy.get(username, password, lifetime);
 			final int remaining = cred.getRemainingLifetime();
