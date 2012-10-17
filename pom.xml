@@ -24,7 +24,7 @@
 		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
 
 		<cxf.version>2.5.2</cxf.version>
-		<grisu.version>0.5.4</grisu.version>
+		<grisu.version>0.5.8-SNAPSHOT</grisu.version>
 	</properties>
 
 	<scm>
@@ -167,7 +167,7 @@
 		<dependency>
 			<groupId>grith</groupId>
 			<artifactId>jgrith</artifactId>
-			<version>0.7.1</version>
+			<version>0.8-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
