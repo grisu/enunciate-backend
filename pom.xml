@@ -24,7 +24,7 @@
 		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
 
 		<cxf.version>2.5.2</cxf.version>
-		<grisu.version>0.5.10-SNAPSHOT</grisu.version>
+		<grisu.version>0.5.10</grisu.version>
 	</properties>
 
 	<scm>
