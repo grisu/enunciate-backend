@@ -24,7 +24,7 @@
 		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
 
 		<cxf.version>2.5.2</cxf.version>
-		<grisu.version>0.5.10</grisu.version>
+		<grisu.version>0.5.11-SNAPSHOT</grisu.version>
 	</properties>
 
 	<scm>
@@ -719,6 +719,6 @@
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
-		<version>0.20</version>
+		<version>0.23</version>
 	</parent>
 </project>
