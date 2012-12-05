@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
@@ -16,14 +17,13 @@
 	</organization>
 
 	<properties>
-		<enunciate.version>1.24</enunciate.version>
+		<enunciate.version>1.26.1</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
-		<spring.version>3.0.2.RELEASE</spring.version>
-		<spring.security.version>3.0.2.RELEASE</spring.security.version>
-		<spring.security.oauth.version>3.16.SS3</spring.security.oauth.version>
+		<spring.version>3.0.8.RELEASE</spring.version>
+		<spring.security.version>3.1.3.RELEASE</spring.security.version>
 
-		<cxf.version>2.5.2</cxf.version>
+		<cxf.version>2.7.0</cxf.version>
 		<grisu.version>0.5.11-SNAPSHOT</grisu.version>
 	</properties>
 
@@ -31,8 +31,8 @@
 		<connection>scm:git:git://github.com/grisu/enunciate-backend.git</connection>
 		<developerConnection>scm:git:git@github.com:grisu/enunciate-backend.git</developerConnection>
 		<url>https://github.com/grisu/enunciate-backend/tree/master</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<repositories>
 		<repository>
@@ -56,6 +56,8 @@
 
 
 
+
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -71,6 +73,10 @@
 					<artifactId>asm</artifactId>
 					<groupId>asm</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
@@ -78,6 +84,12 @@
 			<groupId>org.codehaus.enunciate</groupId>
 			<artifactId>enunciate-spring3-app-rt</artifactId>
 			<version>${enunciate.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -85,11 +97,23 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring.security.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -97,12 +121,24 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>${spring.security.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring.security.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -170,6 +206,21 @@
 			<artifactId>jgrith</artifactId>
 			<version>0.8.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>3.1.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>3.1.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>3.1.3.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 
@@ -211,6 +262,7 @@
 				</configuration>
 				<executions>
 					<execution>
+<!-- 						<phase>compile</phase> -->
 						<goals>
 							<goal>assemble</goal>
 						</goals>
@@ -221,14 +273,13 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>7.0.1.v20091125</version>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.3.2</version>
-<!-- 				<inherited>false</inherited> -->
+				<!-- <inherited>false</inherited> -->
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<pushChanges>true</pushChanges>
@@ -236,12 +287,12 @@
 					<tagNameFormat>@{project.version}</tagNameFormat>
 					<releaseProfiles>deb,rpm,exe-war</releaseProfiles>
 				</configuration>
-			</plugin>			
+			</plugin>
 
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -256,7 +307,7 @@
 											org.codehaus.enunciate
 										</groupId>
 										<artifactId>
-											maven-enunciate-spring-plugin
+											maven-enunciate-spring3-plugin
 										</artifactId>
 										<versionRange>
 											[1.24,)
@@ -628,42 +679,53 @@
 
 									service tomcat6 stop
 
-									# if templates_available directory already exist, don't extract
-									# the default templates (inclusive git repo info)
+									# if templates_available directory
+									already exist, don't extract
+									# the default templates (inclusive
+									git repo info)
 									if [ -d /etc/grisu/templates_available ]; then
-										rm /etc/grisu/templates_available.tar.bz2
+									rm /etc/grisu/templates_available.tar.bz2
 									else
-										tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/ &gt;&gt; /dev/null
-										rm /etc/grisu/templates_available.tar.bz2
+									tar xjvf /etc/grisu/templates_available.tar.bz2 -C /etc/grisu/
+									&gt;&gt; /dev/null
+									rm /etc/grisu/templates_available.tar.bz2
 									fi
 
-									# remove deployed webapp from tomcat, just to be sure
-									if [ -d /var/lib/tomcat6/webapps/grisu-ws ]; then
-										rm -rf /var/lib/tomcat6/webapps/grisu-ws
+									# remove deployed
+									webapp from tomcat, just to be sure
+									if [ -d
+									/var/lib/tomcat6/webapps/grisu-ws ]; then
+									rm -rf /var/lib/tomcat6/webapps/grisu-ws
 									fi
 
 									# adjust permissions
-									if [ ! -d /var/lib/grisu/ ]; then
-										mkdir -p /var/lib/grisu/
+									if
+									[ ! -d /var/lib/grisu/ ]; then
+									mkdir -p /var/lib/grisu/
 									fi
 
 									chown -R tomcat:tomcat /var/lib/grisu
 
-									# copy a few ca root certs in the proper directory to get
-									# started. Ideally those will be updated automatically using a
-									# package
+									#
+									copy a few ca root certs in the proper directory to get
+									#
+									started. Ideally those will be updated automatically using a
+									#
+									package
 									if [ -d /etc/grid-security/certificates ]; then
-										rm /etc/grid-security/rootcerts.tar
+									rm /etc/grid-security/rootcerts.tar
 									else
-										mkdir -p /etc/grid-security/certificates
-										tar xf /etc/grid-security/rootcerts.tar -C /etc/grid-security/certificates
-										rm /etc/grid-security/rootcerts.tar
+									mkdir -p /etc/grid-security/certificates
+									tar xf /etc/grid-security/rootcerts.tar -C
+									/etc/grid-security/certificates
+									rm /etc/grid-security/rootcerts.tar
 									fi
 
 									# create log dir
-									if [ ! -d /var/log/grisu ]; then
-										mkdir /var/log/grisu
-										chown -R tomcat:tomcat /var/log/grisu
+									if [ ! -d
+									/var/log/grisu ]; then
+									mkdir /var/log/grisu
+									chown -R tomcat:tomcat /var/log/grisu
 									fi
 
 
@@ -673,9 +735,9 @@
 
 								</script>
 							</postinstallScriptlet>
-							<!-- <postinstallScriptlet> <scriptFile>src/main/scripts/postinstall</scriptFile>
-								<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet>
-								<scriptFile>src/main/scripts/preremove</scriptFile> <fileEncoding>utf-8</fileEncoding>
+							<!-- <postinstallScriptlet> <scriptFile>src/main/scripts/postinstall</scriptFile> 
+								<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet> 
+								<scriptFile>src/main/scripts/preremove</scriptFile> <fileEncoding>utf-8</fileEncoding> 
 								</preremoveScriptlet> -->
 						</configuration>
 					</plugin>
