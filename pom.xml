@@ -89,6 +89,18 @@
 					<artifactId>*</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>jaxb-impl</artifactId>
+					<groupId>com.sun.xml.bind</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jaxws-api</artifactId>
+					<groupId>javax.xml.ws</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jaxws-rt</artifactId>
+					<groupId>com.sun.xml.ws</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
@@ -152,6 +164,12 @@
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
 			<version>${grisu.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jaxws-api</artifactId>
+					<groupId>javax.xml.ws</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -184,11 +202,23 @@
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-core</artifactId>
 			<version>${cxf.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jaxb-impl</artifactId>
+					<groupId>com.sun.xml.bind</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
 			<version>${cxf.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jaxb-impl</artifactId>
+					<groupId>com.sun.xml.bind</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
@@ -205,6 +235,12 @@
 			<groupId>grith</groupId>
 			<artifactId>jgrith</artifactId>
 			<version>0.8.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jaxws-api</artifactId>
+					<groupId>javax.xml.ws</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
