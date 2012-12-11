@@ -17,7 +17,7 @@
 	</organization>
 
 	<properties>
-		<enunciate.version>1.26.1</enunciate.version>
+		<enunciate.version>1.26.2</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
 		<spring.version>3.0.8.RELEASE</spring.version>
