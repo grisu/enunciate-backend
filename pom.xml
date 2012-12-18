@@ -234,7 +234,7 @@
 		<dependency>
 			<groupId>grith</groupId>
 			<artifactId>jgrith</artifactId>
-			<version>0.8.2</version>
+			<version>0.9-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>jaxws-api</artifactId>
