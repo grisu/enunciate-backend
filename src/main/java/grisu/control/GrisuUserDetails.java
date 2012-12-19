@@ -180,14 +180,16 @@ public class GrisuUserDetails implements UserDetails {
 
 				
 				if ( ! AbstractServiceInterface.admin.isAdmin(impersonateDN) ) {
-					throw new AuthenticationException(
-							"Could not change identity to '"+impersonateDN+"', user not admin: "+proxyTemp.getDN()){};
+					String msg = "Could not change identity to '"+impersonateDN+"', user not admin: "+proxyTemp.getDN();
+					myLogger.info(msg);
+					throw new AuthenticationException(msg){};
 				}
 				
 				Element e = AbstractServiceInterface.eternalCache().get(impersonateDN);
 				if ( e == null || e.getObjectValue() == null ) {
-					throw new AuthenticationException(
-							"Could not find authentication token for: "+impersonateDN){};
+					String msg = "Could not find authentication token for: "+impersonateDN;
+					myLogger.info(msg);
+					throw new AuthenticationException(msg){};
 				}
 				this.proxy = (AbstractCred) e.getObjectValue();
 				myLogger.info("Impersonation successful.");
