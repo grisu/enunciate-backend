@@ -11,6 +11,8 @@ import grith.jgrith.utils.CertHelpers;
 import java.util.Date;
 import java.util.Set;
 
+import net.sf.ehcache.Element;
+
 import org.apache.commons.lang.StringUtils;
 import org.globus.myproxy.CredentialInfo;
 import org.globus.myproxy.MyProxy;
@@ -29,6 +31,8 @@ public class GrisuUserDetails implements UserDetails {
 
 	static final Logger myLogger = LoggerFactory
 			.getLogger(GrisuUserDetails.class.getName());
+	
+	static final String IMPERSONATE_STRING = "=impersonate=";
 
 
 	private final String username;
@@ -139,6 +143,13 @@ public class GrisuUserDetails implements UserDetails {
 			host = username.substring(index + 1);
 			username = username.substring(0, index);
 		}
+		
+		String impersonateDN = null;
+		if ( username.contains("=impersonate=") ) {
+			int i = username.indexOf(IMPERSONATE_STRING);
+			impersonateDN = username.substring(i+IMPERSONATE_STRING.length());
+			username = username.substring(0, i);
+		}
 
 		int port = ServerPropertiesManager.getMyProxyPort();
 		if (StringUtils.isBlank(host)) {
@@ -148,6 +159,8 @@ public class GrisuUserDetails implements UserDetails {
 		try {
 			proxyTemp = createProxyCredential(username, password, host, port,
 					ServerPropertiesManager.getMyProxyLifetime());
+			Element element = new Element(proxyTemp.getDN(), proxyTemp);
+			AbstractServiceInterface.eternalCache().put(element);
 			lastProxyRetrieve = new Date();
 		} catch (final NoValidCredentialException e) {
 			throw new AuthenticationException(e.getLocalizedMessage(), e) {
@@ -161,7 +174,26 @@ public class GrisuUserDetails implements UserDetails {
 			};
 		} else {
 			// myLogger.info("Authentication successful.");
-			this.proxy = proxyTemp;
+			if ( StringUtils.isNotBlank(impersonateDN) ) {
+				
+				myLogger.info("Impersonation attempt from "+proxyTemp.getDN()+": requested user = "+impersonateDN);
+
+				
+				if ( ! AbstractServiceInterface.admin.isAdmin(impersonateDN) ) {
+					throw new AuthenticationException(
+							"Could not change identity to '"+impersonateDN+"', user not admin: "+proxyTemp.getDN()){};
+				}
+				
+				Element e = AbstractServiceInterface.eternalCache().get(impersonateDN);
+				if ( e == null || e.getObjectValue() == null ) {
+					throw new AuthenticationException(
+							"Could not find authentication token for: "+impersonateDN){};
+				}
+				this.proxy = (AbstractCred) e.getObjectValue();
+				myLogger.info("Impersonation successful.");
+			} else {
+				this.proxy = proxyTemp;
+			}
 			return this.proxy;
 		}
 
