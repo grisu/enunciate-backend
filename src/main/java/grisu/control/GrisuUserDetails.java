@@ -177,19 +177,44 @@ public class GrisuUserDetails implements UserDetails {
 			if ( StringUtils.isNotBlank(impersonateDN) ) {
 				
 				myLogger.info("Impersonation attempt from "+proxyTemp.getDN()+": requested user = "+impersonateDN);
-
 				
-				if ( ! AbstractServiceInterface.admin.isAdmin(impersonateDN) ) {
+				if ( ! AbstractServiceInterface.admin.isAdmin(proxyTemp.getDN()) ) {
 					String msg = "Could not change identity to '"+impersonateDN+"', user not admin: "+proxyTemp.getDN();
 					myLogger.info(msg);
 					throw new AuthenticationException(msg){};
 				}
 				
+				
+				
 				Element e = AbstractServiceInterface.eternalCache().get(impersonateDN);
 				if ( e == null || e.getObjectValue() == null ) {
-					String msg = "Could not find authentication token for: "+impersonateDN;
-					myLogger.info(msg);
-					throw new AuthenticationException(msg){};
+					
+					// ok, let's see whether part of the string matches, and if it is a unique result, we'll use that
+					Set<String> dns = Sets.newTreeSet();
+					for (Object key : AbstractServiceInterface.eternalCache().getKeys() ) {
+						String key_dn = (String)key;
+						if ( key_dn.toLowerCase().contains(impersonateDN) ) {
+							dns.add(key_dn);
+						}
+					}
+					
+					if ( dns.size() == 0 ) {
+						String msg = "Could not find authentication token for: "+impersonateDN;
+						myLogger.info(msg);
+						throw new AuthenticationException(msg){};						
+					} else if ( dns.size() > 1 ) {
+						String msg = "Found multiple matches for impersonation token '"+impersonateDN+"': "+StringUtils.join(dns, ",");
+						myLogger.info(msg);
+						throw new AuthenticationException("msg"){};
+					} else {
+						e = AbstractServiceInterface.eternalCache().get(dns.iterator().next());
+						if ( e == null || e.getObjectValue() == null ) {
+							String msg = "Could not find authentication token for: "+dns.iterator().next();
+							myLogger.info(msg);
+							throw new AuthenticationException(msg){};						
+						}
+					}
+
 				}
 				this.proxy = (AbstractCred) e.getObjectValue();
 				myLogger.info("Impersonation successful.");
