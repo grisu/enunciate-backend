@@ -61,9 +61,8 @@ public class GrisuUserDetails implements UserDetails {
 		// final MyProxy myproxy = new MyProxy(myProxyServer, port);
 		try {
 			myLogger.debug("Getting delegated proxy from MyProxy...");
-			AbstractCred cred = new MyProxyCred(username, password.toCharArray(), myProxyServer, port, false);
-			cred.setProxyLifetimeInSeconds(lifetime);
-			cred.init();
+			AbstractCred cred = new MyProxyCred(username, password.toCharArray(), myProxyServer, port, lifetime, false, false);
+//			cred.init();
 			// proxy = myproxy.get(username, password, lifetime);
 			final int remaining = cred.getRemainingLifetime();
 			myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
@@ -217,9 +216,10 @@ public class GrisuUserDetails implements UserDetails {
 
 				}
 				this.proxy = (AbstractCred) e.getObjectValue();
-				myLogger.info("Impersonation successful.");
+				myLogger.info("Impersonation successful. Using dn: "+this.proxy.getDN());
 			} else {
 				this.proxy = proxyTemp;
+				myLogger.info("Proxy creation successful. Using dn: "+this.proxy.getDN());
 			}
 			return this.proxy;
 		}
