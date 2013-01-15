@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import javax.ws.rs.Path;
 import javax.xml.ws.soap.MTOM;
 

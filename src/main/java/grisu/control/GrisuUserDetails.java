@@ -6,11 +6,12 @@ import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.settings.ServerPropertiesManager;
 import grith.jgrith.cred.AbstractCred;
 import grith.jgrith.cred.MyProxyCred;
-import grith.jgrith.credential.MyProxyCredential;
 import grith.jgrith.utils.CertHelpers;
 
 import java.util.Date;
 import java.util.Set;
+
+import net.sf.ehcache.Element;
 
 import org.apache.commons.lang.StringUtils;
 import org.globus.myproxy.CredentialInfo;
@@ -30,6 +31,8 @@ public class GrisuUserDetails implements UserDetails {
 
 	static final Logger myLogger = LoggerFactory
 			.getLogger(GrisuUserDetails.class.getName());
+	
+	static final String IMPERSONATE_STRING = "=impersonate=";
 
 
 	private final String username;
@@ -58,8 +61,8 @@ public class GrisuUserDetails implements UserDetails {
 		// final MyProxy myproxy = new MyProxy(myProxyServer, port);
 		try {
 			myLogger.debug("Getting delegated proxy from MyProxy...");
-			AbstractCred cred = new MyProxyCred(username, password.toCharArray(), myProxyServer, port, lifetime);
-			cred.init();
+			AbstractCred cred = new MyProxyCred(username, password.toCharArray(), myProxyServer, port, lifetime, false, false);
+//			cred.init();
 			// proxy = myproxy.get(username, password, lifetime);
 			final int remaining = cred.getRemainingLifetime();
 			myLogger.debug("Finished getting delegated proxy from MyProxy. DN: "
@@ -139,6 +142,13 @@ public class GrisuUserDetails implements UserDetails {
 			host = username.substring(index + 1);
 			username = username.substring(0, index);
 		}
+		
+		String impersonateDN = null;
+		if ( username.contains("=impersonate=") ) {
+			int i = username.indexOf(IMPERSONATE_STRING);
+			impersonateDN = username.substring(i+IMPERSONATE_STRING.length());
+			username = username.substring(0, i);
+		}
 
 		int port = ServerPropertiesManager.getMyProxyPort();
 		if (StringUtils.isBlank(host)) {
@@ -148,6 +158,8 @@ public class GrisuUserDetails implements UserDetails {
 		try {
 			proxyTemp = createProxyCredential(username, password, host, port,
 					ServerPropertiesManager.getMyProxyLifetime());
+			Element element = new Element(proxyTemp.getDN(), proxyTemp);
+			AbstractServiceInterface.eternalCache().put(element);
 			lastProxyRetrieve = new Date();
 		} catch (final NoValidCredentialException e) {
 			throw new AuthenticationException(e.getLocalizedMessage(), e) {
@@ -161,7 +173,54 @@ public class GrisuUserDetails implements UserDetails {
 			};
 		} else {
 			// myLogger.info("Authentication successful.");
-			this.proxy = proxyTemp;
+			if ( StringUtils.isNotBlank(impersonateDN) ) {
+				
+				myLogger.info("Impersonation attempt from "+proxyTemp.getDN()+": requested user = "+impersonateDN);
+				
+				if ( ! AbstractServiceInterface.admin.isAdmin(proxyTemp.getDN()) ) {
+					String msg = "Could not change identity to '"+impersonateDN+"', user not admin: "+proxyTemp.getDN();
+					myLogger.info(msg);
+					throw new AuthenticationException(msg){};
+				}
+				
+				
+				
+				Element e = AbstractServiceInterface.eternalCache().get(impersonateDN);
+				if ( e == null || e.getObjectValue() == null ) {
+					
+					// ok, let's see whether part of the string matches, and if it is a unique result, we'll use that
+					Set<String> dns = Sets.newTreeSet();
+					for (Object key : AbstractServiceInterface.eternalCache().getKeys() ) {
+						String key_dn = (String)key;
+						if ( key_dn.toLowerCase().contains(impersonateDN) ) {
+							dns.add(key_dn);
+						}
+					}
+					
+					if ( dns.size() == 0 ) {
+						String msg = "Could not find authentication token for: "+impersonateDN;
+						myLogger.info(msg);
+						throw new AuthenticationException(msg){};						
+					} else if ( dns.size() > 1 ) {
+						String msg = "Found multiple matches for impersonation token '"+impersonateDN+"': "+StringUtils.join(dns, ",");
+						myLogger.info(msg);
+						throw new AuthenticationException("msg"){};
+					} else {
+						e = AbstractServiceInterface.eternalCache().get(dns.iterator().next());
+						if ( e == null || e.getObjectValue() == null ) {
+							String msg = "Could not find authentication token for: "+dns.iterator().next();
+							myLogger.info(msg);
+							throw new AuthenticationException(msg){};						
+						}
+					}
+
+				}
+				this.proxy = (AbstractCred) e.getObjectValue();
+				myLogger.info("Impersonation successful. Using dn: "+this.proxy.getDN());
+			} else {
+				this.proxy = proxyTemp;
+				myLogger.info("Proxy creation successful. Using dn: "+this.proxy.getDN());
+			}
 			return this.proxy;
 		}
 
