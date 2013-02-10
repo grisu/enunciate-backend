@@ -148,6 +148,10 @@ public class GrisuUserDetails implements UserDetails {
 			int i = username.indexOf(IMPERSONATE_STRING);
 			impersonateDN = username.substring(i+IMPERSONATE_STRING.length());
 			username = username.substring(0, i);
+			
+			if (!User.isRemoteAccessAllowed(impersonateDN)) {
+				throw new AuthenticationException("User does not allow remote support: "+impersonateDN) {};
+			}
 		}
 
 		int port = ServerPropertiesManager.getMyProxyPort();
