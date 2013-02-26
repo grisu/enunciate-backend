@@ -149,7 +149,9 @@ public class GrisuUserDetails implements UserDetails {
 			impersonateDN = username.substring(i+IMPERSONATE_STRING.length());
 			username = username.substring(0, i);
 			
-			if (!User.isRemoteAccessAllowed(impersonateDN)) {
+			boolean globalAllow = ServerPropertiesManager.allowRemoteAccessForEveryone();
+			boolean userAllow = User.isRemoteAccessAllowed(impersonateDN);
+			if (!globalAllow && !userAllow) {
 				throw new AuthenticationException("User does not allow remote support: "+impersonateDN) {};
 			}
 		}
