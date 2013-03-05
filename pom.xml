@@ -614,6 +614,7 @@
 							<packager>Markus Binsteiner</packager>
 							<!-- <prefix>/usr/local</prefix> -->
 							<version>${project.version}</version>
+							<name>grisu-backend-ws</name>
 							<!-- <changelogFile>src/changelog</changelogFile> -->
 							<!-- <defineStatements> -->
 							<!-- <defineStatement>_unpackaged_files_terminate_build 0</defineStatement> -->
@@ -778,7 +779,7 @@
 					<plugin>
 						<groupId>org.simplericity.jettyconsole</groupId>
 						<artifactId>jetty-console-maven-plugin</artifactId>
-						<version>1.42</version>
+						<version>1.50</version>
 						<executions>
 							<execution>
 								<goals>
