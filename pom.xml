@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.6-SNAPSHOT</version>
+	<version>0.6</version>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
 		GWT-RPC endpoints for a Grisu backend. It also automatically creates
@@ -30,7 +30,7 @@
 		<connection>scm:git:git://github.com/grisu/enunciate-backend.git</connection>
 		<developerConnection>scm:git:git@github.com:grisu/enunciate-backend.git</developerConnection>
 		<url>https://github.com/grisu/enunciate-backend/tree/master</url>
-		<tag>HEAD</tag>
+		<tag>0.6</tag>
 	</scm>
 
 	<repositories>
