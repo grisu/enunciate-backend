@@ -17,6 +17,8 @@ import javax.xml.ws.handler.MessageContext;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang.StringUtils;
+import org.perf4j.StopWatch;
+import org.perf4j.slf4j.Slf4JStopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -100,6 +102,8 @@ public class AuditAdvice implements MethodInterceptor {
 
 
 		final Date start = new Date();
+		StopWatch stopwatch = new Slf4JStopWatch(myLogger);
+		stopwatch.start();
 
 		final String tid = tidGenerator.getTid();
 		MDC.put("tid", tid);
@@ -138,9 +142,6 @@ public class AuditAdvice implements MethodInterceptor {
 
 		number = numberOfOpenMethodCalls.decrementAndGet();
 
-		final Date end = new Date();
-
-		final long duration = end.getTime() - start.getTime();
 
 		String resultString = "n/a";
 		if (result instanceof String) {
@@ -157,11 +158,12 @@ public class AuditAdvice implements MethodInterceptor {
 		}
 
 		resultString = resultString.replace("\n", " ");
+		
+		stopwatch.stop("Method."+method, "Finished executing method.");
 
 		myLogger.info(
-				"Finishing method: method=[{}] arguments=[{}] result=[{}] time=[{}] duration=[{}] open_calls=[{}]",
-				new Object[] { method, argList, resultString, end.getTime(),
-						duration, number });
+				"Finishing method: method=[{}] arguments=[{}] result=[{}] open_calls=[{}]",
+				new Object[] { method, argList, resultString, number });
 
 		MDC.remove("tid");
 		MDC.remove("user");
