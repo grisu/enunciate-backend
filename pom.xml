@@ -235,10 +235,14 @@
 			<artifactId>jgrith</artifactId>
 			<version>0.16</version>
 			<exclusions>
-				<exclusion>
-					<artifactId>jaxws-api</artifactId>
-					<groupId>javax.xml.ws</groupId>
-				</exclusion>
+                <exclusion>
+                    <artifactId>jaxws-api</artifactId>
+                    <groupId>javax.xml.ws</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>grid-jcommons</artifactId>
+                    <groupId>grisu</groupId>
+                </exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
