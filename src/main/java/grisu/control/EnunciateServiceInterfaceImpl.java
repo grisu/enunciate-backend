@@ -151,23 +151,6 @@ implements ServiceInterface {
 		}
 	}
 
-	public String getTemplate(String name) throws NoSuchTemplateException {
-
-		final File file = new File(
-				Environment.getAvailableTemplatesDirectory(), name
-				+ ".template");
-
-		String temp;
-		try {
-			temp = FileUtils.readFileToString(file);
-		} catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		return temp;
-
-	}
-
 	@Override
 	protected synchronized User getUser() {
 
