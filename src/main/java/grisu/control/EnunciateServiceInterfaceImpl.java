@@ -1,29 +1,21 @@
 package grisu.control;
 
 import grisu.backend.model.User;
-import grisu.control.exceptions.NoSuchTemplateException;
 import grisu.control.serviceInterfaces.AbstractServiceInterface;
 import grisu.control.serviceInterfaces.LocalServiceInterface;
 import grisu.jcommons.utils.Version;
-import grisu.settings.Environment;
 import grisu.settings.ServiceTemplateManagement;
 import grith.jgrith.cred.AbstractCred;
-
-import java.io.File;
-import java.io.IOException;
-
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.ws.rs.Path;
-import javax.xml.ws.soap.MTOM;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import javax.jws.WebService;
+import javax.ws.rs.Path;
+import javax.xml.ws.soap.MTOM;
 
 /**
  * This abstract class implements most of the methods of the
