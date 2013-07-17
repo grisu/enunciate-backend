@@ -16,7 +16,7 @@
 	</organization>
 
 	<properties>
-		<enunciate.version>1.26.2</enunciate.version>
+		<enunciate.version>1.27</enunciate.version>
 		<!-- <gwt.version>2.0.4</gwt.version> -->
 		<gwt.version>2.1.0</gwt.version>
 		<spring.version>3.0.8.RELEASE</spring.version>
@@ -308,6 +308,7 @@
 						</goals>
 					</execution>
 				</executions>
+
 			</plugin>
 
 			<plugin>
@@ -332,7 +333,7 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -718,7 +719,7 @@
 								<script>
 
 									service tomcat6 stop
-									
+
 									# if templates_available directory already exist, don't extract
 									# the default templates (inclusive git repo info)
 									if [ -d /etc/grisu/templates_available ]; then
@@ -765,9 +766,9 @@
 
 								</script>
 							</postinstallScriptlet>
-							<!-- <postinstallScriptlet> <scriptFile>src/main/scripts/postinstall</scriptFile> 
-								<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet> 
-								<scriptFile>src/main/scripts/preremove</scriptFile> <fileEncoding>utf-8</fileEncoding> 
+							<!-- <postinstallScriptlet> <scriptFile>src/main/scripts/postinstall</scriptFile>
+								<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet>
+								<scriptFile>src/main/scripts/preremove</scriptFile> <fileEncoding>utf-8</fileEncoding>
 								</preremoveScriptlet> -->
 						</configuration>
 					</plugin>
