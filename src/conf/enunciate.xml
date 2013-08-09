@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <enunciate label="Grisu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://enunciate.codehaus.org/schemas/enunciate-1.24.xsd">
-	
+
 <!-- 	<deployment host="compute.services.bestgrid.org" context="api" /> -->
 
 
@@ -11,7 +11,7 @@
 	<api-import pattern="grisu.control.ServiceInterface" />
 	<api-import pattern="grisu.control.JobConstants" />
 
-	
+
 	<namespaces>
 		<namespace id="api" uri="http://api.grisu" />
 		<namespace id="dto" uri="http://dto.model.grisu" />
@@ -33,10 +33,10 @@
 		<xfire disabled="true" />
 		<cxf disabled="false" enableJaxrs="false"/>
 		<jersey disabled="true" />
-		
+
 		<java-client disabled="true" jarName="grisu-client-jaxws.jar">
 		</java-client>
-		
+
 		<spring-app>
 			<springImport uri="classpath:/spring-security.xml" />
 			<springImport file="custom_spring.xml"/>
