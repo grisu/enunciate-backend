@@ -24,7 +24,7 @@
 
 		<cxf.version>2.7.0</cxf.version>
 		<grisu.version>0.7.6-SNAPSHOT</grisu.version>
-        <jgrith.version>1.0</jgrith.version>
+        <jgrith.version>1.0.2</jgrith.version>
 	</properties>
 
 	<scm>
