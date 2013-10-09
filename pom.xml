@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>grisu.backend</groupId>
 	<artifactId>enunciate-backend</artifactId>
-	<version>0.7.9-SNAPSHOT</version>
+	<version>0.7.10-SNAPSHOT</version>
 	<name>Grisu-API</name>
 	<description>A module that takes care of creating SOAP, REst &amp;
 		GWT-RPC endpoints for a Grisu backend. It also automatically creates
@@ -23,7 +23,7 @@
 		<spring.security.version>3.1.3.RELEASE</spring.security.version>
 
 		<cxf.version>2.7.0</cxf.version>
-		<grisu.version>0.7.9-SNAPSHOT</grisu.version>
+		<grisu.version>0.7.10-SNAPSHOT</grisu.version>
         <jgrith.version>1.0.3</jgrith.version>
 	</properties>
 
