@@ -23,7 +23,7 @@
 		<spring.security.version>3.1.3.RELEASE</spring.security.version>
 
 		<cxf.version>2.7.0</cxf.version>
-		<grisu.version>0.7.14</grisu.version>
+		<grisu.version>0.7.15-SNAPSHOT</grisu.version>
         <jgrith.version>1.0.3</jgrith.version>
 	</properties>
 
